@@ -1,0 +1,524 @@
+/* overrides */
+#header
+  .container
+    padding: 0, 10px
+  .logo
+    height: 63px
+    width: 180px
+    margin: 13px 0 0 0
+    padding: 0
+
+#notice
+  color: #000
+#alert
+  padding: 18px 20px 18px 40px
+  margin: 10px 20px
+
+.lightbox
+  background: transparent
+
+
+/* additional styles */
+
+.wrapper
+  margin: 0 auto
+  width: 100%
+  clear: both
+
+
+.line:after, .lastUnit:after
+  clear: both
+  display: block
+  visibility: hidden
+  overflow: hidden
+  height: 0 !important
+  line-height: 0
+  font-size: xx-large
+  content: " x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x "
+
+.line
+  *zoom: 1
+
+.unit
+  float: left
+
+.lastUnit
+  display: table-cell
+  float: none
+  width: auto
+  *display: block
+  *zoom: 1
+  _position: relative
+  _left: -3px
+  _margin-right: -3px
+
+
+#container_right_content
+  margin: 0 auto
+  padding: 20px 20px 60px 0
+  min-width: 940px
+  position: absolute
+  left: 340px
+  overflow-x: hidden
+  //background: url('/assets/infinite2060columns.png')
+
+#container_page_header
+  margin: 0 80px 18px 20px
+  padding: 0 20px 0 0
+  display: block
+
+#container_page_header span
+  height: 36px
+  font: normal normal normal 0.875em / 18px Helvetica, Arial, sans-serif
+
+#container_page_title
+  margin: 0 450px 0 0
+  height: 100%
+  float: left
+  color: #de6d26
+  white-space: normal
+  display: -moz-inline-stack
+  display: inline-block
+  zoom: 1
+  *display: inline
+  vertical-align: top  /* Cross-browser Inline-block */
+
+#container_page_details
+  margin: 0 40px 0 -440px
+  width: 400px
+  height: 40px
+  float: right
+  display: -moz-inline-stack
+  display: inline-block
+  zoom: 1
+  *display: inline
+  vertical-align: top  /* Cross-browser Inline-block */
+
+#container_page_content
+  margin: 0 80px 18px 20px
+  padding: 0 20px 0 0
+  display: block
+
+
+#container_page_buttons
+  margin: 2px 0 0 20px
+
+// RIGHT - CONTAINER ACTIONS
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+
+#container_page_actions
+  margin: 0 20px 18px 20px
+  height: 30px
+  display: block
+
+// RIGHT - CONTAINER CONTENT
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+.system_left_col
+  margin: 0 20px 0 0
+
+.system_right_col
+  padding: 0 20px 0 0
+  width: 100%
+
+.system_left_col h3, .system_right_col h3, h3
+  margin: 0 0 10px 0
+  border-bottom: 1px solid #CCC
+  display: block
+
+.system_right_col a
+  color: #de6d26
+// RIGHT - MEMBERS TABLE
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+
+table#members_table
+  margin: 0 0 20px 0
+  width: 300px
+  border: 0px solid
+  border-collapse: collapse
+  font: normal normal normal 0.875em Helvetica, Arial, sans-serif
+  tr
+    border: 0px solid #666666
+  td
+    padding: 0 0 0 10px
+    height: 36px
+
+
+/* LAYOUT - INNER LEFT
+/////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+#container_left_navigation
+  margin: 0 0 0 0
+  padding: 0 0 0 20px
+  left: 0px
+  width: 300px
+  top: 128px
+  bottom: 57px
+  overflow-y: hidden
+  display: block
+  font-size: 0.875em
+  border-right: 1px solid #BDBDBD /*this is just for #right to reference it's overflow point from*/
+  position: absolute
+  z-index: 2 /*layer it above the #faux column*/
+  float: left
+  clear: both
+
+* html #container_left_navigation
+  margin-right: -3px   /*kill IE6 3px jog*/
+
+
+
+/* BASE STYLES - CLEARFIX
+/////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+/* Apply this class to floated elements within a wrapper/container div to ensure they fill out the height */
+
+.clearfix:after
+  visibility: hidden
+  display: block
+  font-size: 0
+  line-height: 0
+  content: " "
+  clear: both
+  height: 0
+  width: 0
+
+.clearfix
+  display: inline-block
+
+/* start commented backslash hack \*/
+* html .clearfix
+  height: 1%
+
+.clearfix
+  display: block
+
+/* close commented backslash hack */
+
+#sidebar
+  .actions
+    margin: 18px 0 0 20px
+
+
+#container_userlogin h3, #container_usersignup h3, #container_useredit h3
+  margin: 0 0 36px 0
+
+#container_userlogin label, #container_usersignup_forms label, #container_useredit_forms label
+  margin: 0
+  padding: 0 20px 0 0
+  width: 140px
+  font: normal normal normal 1.1em / 36px helvetica, arial, sans-serif
+  color: #000
+  text-align: left
+  display: -moz-inline-stack
+  display: inline-block
+  zoom: 1
+  *display: inline
+  vertical-align: top
+  /* Cross-browser Inline-block */
+
+#container_usersignup_forms input, #container_useredit_forms input
+  margin: 0
+  padding: 0 7px
+  width: 444px
+  height: 32px
+  font: normal normal normal 1em / 32px helvetica, arial, sans-serif
+  display: -moz-inline-stack
+  display: inline-block
+  zoom: 1
+  *display: inline
+  vertical-align: top
+  /* Cross-browser Inline-block */
+
+#container_userlogin input
+  margin: 0
+  padding: 0 7px
+  width: 444px
+  height: 32px
+  font: normal normal normal 1.3em / 32px helvetica, arial, sans-serif
+  display: -moz-inline-stack
+  display: inline-block
+  zoom: 1
+  *display: inline
+  vertical-align: top
+  /* Cross-browser Inline-block */
+
+#container_useredit_forms input[type=checkbox]
+  width: 18px
+  line-height: 36px
+  text-align: left
+  border: 0px solid
+
+.contentbox_actions
+  width: 100%
+  text-align: right
+  .left
+    float: left
+  a
+    /* color: #666666; */
+    text-decoration: none
+    vertical-align: middle
+
+.input_group .note
+  margin: 0 0 0 10px
+  padding: 0 0 0 25%
+  font-size: 0.7em
+
+.members_picker
+  padding: 10px 0 0 0
+  width: 80%
+  label
+    width: auto
+
+#members_list select
+  min-width: 10em
+  width: 100%
+  border: 1px solid #E5E5E5
+
+ul#members_list
+  list-style-type: square
+  list-style-image: none
+  list-style-position: inside
+
+.field_like
+  padding: 2px
+  height: auto
+  width: auto
+  border: 1px solid #CCCCCC
+
+
+// BUTTONS - GENERAL ICONS
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.add span
+  //* Add button icon
+  padding: 0 0 0 20px
+  background: url('../assets/ICON_VECTOR_12_PLUS_000000.png') no-repeat left center
+  line-height: 18px
+
+.edit span
+  //* Edit button icon
+  padding: 0 0 0 20px
+  background: url('../assets/ICON_VECTOR_12_EDIT_000000.png') no-repeat left center
+  line-height: 18px
+
+.down span
+  //* Down button icon
+  padding: 0 0 0 20px
+  background: url('../assets/ICON_VECTOR_12_ARROW_STALK_DOWN_000000.png') no-repeat left center
+  line-height: 18px
+
+.delete span
+  //* Delete button icon
+  padding: 0 0 0 20px
+  background: url('../assets/ICON_VECTOR_12_DEL_000000.png') no-repeat left center
+  line-height: 18px
+
+// BUTTONS - PROJECT / EXPERIMENT / SAMPLE / DATASET
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.data_object span
+  //* Experiment button icon
+  padding: 0 0 0 25px
+  background: url('../assets/ICON_VECTOR_12_EXP_000000.png') no-repeat left center
+  line-height: 18px
+
+.manage_system span
+  //* Experiment button icon
+  padding: 0 0 0 25px
+  background: url('../assets/ICON_VECTOR_12_EXP_000000.png') no-repeat left center
+  line-height: 18px
+
+.file_type span
+  //* Sample button icon
+  padding: 0 0 0 25px
+  background: url('../assets/ICON_VECTOR_12_DOCSTACK_000000.png') no-repeat left center
+  line-height: 18px
+
+.security_group span
+  //* Dataset button icon
+  padding: 0 0 0 25px
+  background: url('../assets/ICON_VECTOR_12_DOC_000000.png') no-repeat left center
+  line-height: 18px
+
+.remove_button
+  //* Remove button icon
+  margin: 0
+  padding: 15px 20px 0px 0
+  background: url('../assets/ICON_VECTOR_12_DEL_000000.png') no-repeat right center
+  font: normal normal bold 1em Helvetica, Arial, sans-serif
+  color: #000
+  text-decoration: none
+  cursor: pointer
+  display: -moz-inline-stack
+  display: inline-block
+  zoom: 1
+  *display: inline
+  vertical-align: top
+
+/////////
+
+.icon
+  width: 20px
+
+.left
+  float: left
+
+.right
+  float: right
+
+.flushright
+  text-align: right
+
+
+// BUTTONS - BLUE / RED / GREEN COLOURS
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+
+input.blue, button.blue, .blue
+  /* Blue Button style */
+  padding: 5px 10px
+  min-width: 140px
+  border: 1px solid #3079ed
+  border-radius: 2px
+  -moz-border-radius: 2px
+  -webkit-border-radius: 2px
+  font: normal normal normal 14px / 18px Helvetica, Arial, sans-serif
+  text-decoration: none
+  text-align: center
+  display: -moz-inline-stack
+  display: inline-block
+  zoom: 1
+  *display: inline
+  vertical-align: top
+  /* Cross-browser Inline-block */
+  font-size: 1em
+  color: #FFF
+  background-color: #FFFFFF
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#4d90fe), to(#4787ed))
+  background-image: -webkit-linear-gradient(top, #4d90fe, #4787ed)
+  background-image: -moz-linear-gradient(top, #4d90fe, #4787ed)
+  background-image: -ms-linear-gradient(top, #4d90fe, #4787ed)
+  background-image: -o-linear-gradient(top, #4d90fe, #4787ed)
+  background-image: linear-gradient(top, #4d90fe, #4787ed)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#4d90fe', EndColorStr = '#4787ed')
+  cursor: pointer
+
+button.blue
+  height: 30px
+
+input.blue
+  &[submit]
+    height: 30px
+  &:hover
+    border: 1px solid #2f5bb7
+    text-decoration: none
+    background-color: #357ae8
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#4d90fe), to(#357ae8))
+    background-image: -webkit-linear-gradient(top, #4d90fe, #357ae8)
+    background-image: -moz-linear-gradient(top, #4d90fe, #357ae8)
+    background-image: -ms-linear-gradient(top, #4d90fe, #357ae8)
+    background-image: -o-linear-gradient(top, #4d90fe, #357ae8)
+    background-image: linear-gradient(top, #4d90fe, #357ae8)
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#4d90fe', EndColorStr = '#357ae8')
+
+button.blue:hover, .blue:hover
+  border: 1px solid #2f5bb7
+  text-decoration: none
+  background-color: #357ae8
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#4d90fe), to(#357ae8))
+  background-image: -webkit-linear-gradient(top, #4d90fe, #357ae8)
+  background-image: -moz-linear-gradient(top, #4d90fe, #357ae8)
+  background-image: -ms-linear-gradient(top, #4d90fe, #357ae8)
+  background-image: -o-linear-gradient(top, #4d90fe, #357ae8)
+  background-image: linear-gradient(top, #4d90fe, #357ae8)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#4d90fe', EndColorStr = '#357ae8')
+
+button.blue:active, .blue:active
+  box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.3)
+  -moz-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.3)
+  -webkit-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.3)
+
+.green
+  /* Green Button style */
+  padding: 5px 10px
+  height: 18px
+  border: 1px solid #5BC666
+  border-radius: 2px
+  -moz-border-radius: 2px
+  -webkit-border-radius: 2px
+  display: -moz-inline-stack
+  display: inline-block
+  zoom: 1
+  *display: inline
+  vertical-align: top
+  /* Cross-browser Inline-block */
+  font: normal normal bold 14px / 18px Helvetica, Arial, sans-serif
+  color: #000
+  text-decoration: none
+  background-color: #FFFFFF
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#6ef077), to(#51db58))
+  background-image: -webkit-linear-gradient(top, #6ef077, #51db58)
+  background-image: -moz-linear-gradient(top, #6ef077, #51db58)
+  background-image: -ms-linear-gradient(top, #6ef077, #51db58)
+  background-image: -o-linear-gradient(top, #6ef077, #51db58)
+  background-image: linear-gradient(top, #6ef077, #51db58)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#6EF077', EndColorStr = '#51DB58')
+  cursor: pointer
+  &:hover
+    border: 1px solid #5BC666
+    text-decoration: none
+    background-color: #357ae8
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#6bd04c), to(#51db58))
+    background-image: -webkit-linear-gradient(top, #6bd04c, #51db58)
+    background-image: -moz-linear-gradient(top, #6bd04c, #51db58)
+    background-image: -ms-linear-gradient(top, #6bd04c, #51db58)
+    background-image: -o-linear-gradient(top, #6bd04c, #51db58)
+    background-image: linear-gradient(top, #6bd04c, #51db58)
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#6BD04C', EndColorStr = '#51DB58')
+  &:active
+    box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.3)
+    -moz-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.3)
+    -webkit-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.3)
+
+.red, input.red
+  /* Red Button style */
+  padding: 5px 10px
+  height: 18px
+  border: 1px solid #E25358
+  border-radius: 2px
+  -moz-border-radius: 2px
+  -webkit-border-radius: 2px
+  display: -moz-inline-stack
+  display: inline-block
+  zoom: 1
+  *display: inline
+  vertical-align: top
+  /* Cross-browser Inline-block */
+  font: normal normal bold 14px / 18px Helvetica, Arial, sans-serif
+  color: #000
+  text-decoration: none
+  background-color: #FFFFFF
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#ff8789), to(#ff5e61))
+  background-image: -webkit-linear-gradient(top, #ff8789, #ff5e61)
+  background-image: -moz-linear-gradient(top, #ff8789, #ff5e61)
+  background-image: -ms-linear-gradient(top, #ff8789, #ff5e61)
+  background-image: -o-linear-gradient(top, #ff8789, #ff5e61)
+  background-image: linear-gradient(top, #ff8789, #ff5e61)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#FF8789', EndColorStr = '#FF5E61')
+  cursor: pointer
+
+.red
+  &:hover
+    border: 1px solid #E25358
+    text-decoration: none
+    background-color: #357ae8
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#e25358), to(#ff5e61))
+    background-image: -webkit-linear-gradient(top, #e25358, #ff5e61)
+    background-image: -moz-linear-gradient(top, #e25358, #ff5e61)
+    background-image: -ms-linear-gradient(top, #e25358, #ff5e61)
+    background-image: -o-linear-gradient(top, #e25358, #ff5e61)
+    background-image: linear-gradient(top, #e25358, #ff5e61)
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#E25358', EndColorStr = '#FF5E61')
+  &:active
+    box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.3)
+    -moz-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.3)
+    -webkit-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.3)

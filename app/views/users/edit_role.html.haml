@@ -1,0 +1,11 @@
+= form_header "Edit role For #{@user.email}"
+= form_for(@user, :url => update_role_user_path(@specimen)) do |f|
+  .contentbox_body
+    = render "shared/error_messages", :target => @user
+    .input_group
+      = f.label :role_id, "Role"
+      = f.collection_select(:role_id, @roles, :id, :name, {:include_blank => ""})
+  .form_actions
+    .add_variables
+      = f.submit "Save"
+      = link_to 'Back', @user

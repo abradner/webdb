@@ -1,0 +1,16 @@
+#body_container
+  #body_container_inner
+    .contentbox_header
+      %strong User Sign Up
+  = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+    .contentbox_body
+      = render "shared/error_messages", :target => @user
+      = render :partial => 'account_details', :locals  => {:f => f}
+      = render :partial => 'personal_details', :locals  => {:f => f}
+    .hr
+    .form_actions
+      .add_variables
+        = f.submit "Submit Request"
+        &nbsp;
+        = link_to 'Cancel', root_path
+  .push

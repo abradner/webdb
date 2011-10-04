@@ -1,0 +1,12 @@
+.input_group
+  = f.label :email, "Email Address"
+  = f.text_field :email
+  %a.asterisk_icon{:title => "Required"}
+.input_group
+  = f.label :password
+  = f.password_field :password
+  %a.asterisk_icon{:title => "Required"}
+.input_group
+  = f.label :password_confirmation, "Confirm Password"
+  = f.password_field :password_confirmation
+  %a.asterisk_icon{:title => "Required"}

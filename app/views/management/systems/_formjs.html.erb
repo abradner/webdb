@@ -1,0 +1,29 @@
+<script>
+    $("#member").autocomplete({
+        source: '/users/list',
+        minLength: 2,
+        select: function(event, ui) {
+                    if (ui) {
+                        var member_id = ui.item.id;
+                        var selector = $("li#member_" + member_id);
+                        if (selector.length == 0) {
+                            var member_name = ui.item.value;
+                            $('ul#member_list').append('<li id="member_'
+                                    + member_id
+                                    + '"><input type="hidden" name="project[member_ids][]" value="'
+                                    + member_id
+                                    + '">'
+                                    + member_name
+                                    + '<span name="remove_member" class="remove_button basic_field"></span></li>');
+                        }
+                        $('#member').val('');
+                    }
+                }
+    });
+
+    $(".remove_button").live('click', function() {
+        $(this).parent().remove();
+        return false;
+    });
+</script>
+

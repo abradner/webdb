@@ -1,0 +1,61 @@
+#container_page_header.wrapper.clearfix
+  #container_page_title
+    %h1.title=@system.name
+
+  #container_page_buttons.right
+    -if can? :admin, User
+      =link_to "Edit", edit_management_system_path(@system), :class => "button"
+      =link_to '<span>Delete</span>'.html_safe, management_system_path, :method => "delete",
+                            :confirm =>"Are you sure you want to delete this system and all related data?",
+                            :id => 'system_delete_link', :class => 'button red'
+
+  #container_page_details.right.flushright.details
+    .entry
+      %p
+        Code:
+        =@system.code
+
+    .entry
+      %p
+        Colour scheme:
+        =@system.colour_scheme.present? ? @system.colour_scheme : "Default"
+
+#container_page_actions.wrapper
+  .unit
+    -if can? :admin, User #TODO change this to :system_admin
+      =link_to "<span>Add Data Object</span>".html_safe, edit_management_system_path(@system), :class => "button data_object"
+      =link_to "<span>Manage Security Groups</span>".html_safe, system_path(@system), :class => "button security_group",
+                :confirm =>"TODO (currently does nothing)"
+      =link_to "<span>Manage Filetypes</span>".html_safe, system_path(@system), :class => "button file_type",
+                :confirm =>"TODO (currently does nothing)"
+
+
+#container_page_content.wrapper
+  .unit.system_left_col
+    %h3 System Administrators:
+    .row.information
+      - unless @system.administrators.present?
+        .bold
+          Warning: No Administrators!
+      - @system.administrators.each do |sa|
+        %p=sa.name
+
+  .lastUnit.system_right_col
+    .left.line
+      %h3 System Information:
+    .information
+      %span.bold System Description:
+      %p=@system.description
+
+#container_page_content.wrapper
+  %h2 Data Objects
+  - unless @system.data_objects.present?
+    No Data Ojbects configured.
+  - @system.data_objects.each do |dobj|
+    .entry
+      .label
+        =dobj.name
+      .item
+        =dobj.descriptions
+
+

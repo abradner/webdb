@@ -1,0 +1,12 @@
+#public_login
+  #loginbox_identifier.loginbox_container
+    .contentbox_header
+      %h3 Please enter your email and password to log in
+    .contentbox_body
+      .input_group
+        = f.label :email
+        = f.text_field :email
+      .input_group
+        = f.label :password
+        = f.password_field :password
+      %button{:type => "submit", :value => "Log in"} Login

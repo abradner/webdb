@@ -1,0 +1,18 @@
+#body_container
+  #body_container_inner
+    = form_header "Change Your Password"
+    = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => {:method => :put}) do |f|
+      = f.hidden_field :reset_password_token
+      .contentbox_body
+        = render "shared/error_messages", :target => @user
+        .input_group
+          = f.label :password
+          = f.password_field :password
+          %a.asterisk_icon{:title => "Required"}
+        .input_group
+          = f.label :password_confirmation
+          = f.password_field :password_confirmation
+          %a.asterisk_icon{:title => "Required"}
+      .form_actions
+        .add_variables
+          = f.submit "Change Your Password"

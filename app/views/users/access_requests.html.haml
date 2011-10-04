@@ -1,0 +1,22 @@
+- title 'Access Requests'
+%table#access_requests.data_table.margin_top_small
+  %tr
+    %th First name
+    %th Last name
+    %th Email
+    %th Actions
+  - @users.each do |user|
+    %tr{:class => cycle('field_bg', 'field_nobg')}
+      %td= user.first_name
+      %td= user.last_name
+      %td= user.email
+      %td
+        - if can?(:approve, user) then
+          = link_to icon('approve') + "Approve", edit_approval_user_path(user), :id => "approve_#{user.id}"
+          &nbsp;
+        - if can?(:reject, user) then
+          = link_to icon('reject') + "Reject", reject_user_path(user), :method => :put, :id => "reject_#{user.id}"
+          &nbsp;
+          = link_to icon('spam') + "Reject as Spam", reject_as_spam_user_path(user), :method => :put, :id => "reject_as_spam_#{user.id}"
+          &nbsp;
+        = link_to icon('view') + "View Details", user, :id => "view_#{user.id}"

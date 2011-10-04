@@ -1,0 +1,7 @@
+- title 'User Management'
+#adminbuttons
+  %ul#adminbuttons
+    - if can?(:read, User)
+      %li#approvedusers= link_to "List Approved Users", users_path
+    - if can?(:access_requests, User)
+      %li#accessrequests= link_to "View Access Requests", access_requests_users_path

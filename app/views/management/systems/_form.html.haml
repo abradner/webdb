@@ -1,0 +1,52 @@
+%h2
+  - if action.eql?("new")
+    Create New System
+  - else
+    Edit System
+
+- if @system.errors.any?
+  #alert
+    %p
+      %h2
+        =pluralize(@system.errors.count, "error")
+        prohibited
+        this #{@system.class.name.underscore.humanize.downcase}
+        from being saved:
+    %ul
+      - @system.errors.full_messages.each do |msg|
+        %li= msg
+
+= form_for [:management, @system] do |f|
+  .lightbox
+    .field.line
+      = f.label :name, 'Name:<span class="required">*</span>'.html_safe
+      .lastUnit
+        = f.text_field :name, :class => "text basic_field", :placeholder => "The name of your system"
+    .field.line
+      = f.label :code, 'System Code:<span class="required">*</span>'.html_safe
+      .lastUnit
+        = f.text_field :code, :class => "text basic_field", :placeholder => "XXXXXXXX"
+    .field.line
+      = f.label :description, 'Description:<span class="required">*</span>'.html_safe
+      .lastUnit
+        = f.text_area :description, :rows => 5, :class => "text", :placeholder => "A description of your system"
+    #member_picker
+      .field.line
+        %label{:for => "member"} System Administrators:
+        .lastUnit
+          = text_field_tag 'member', nil, :title => 'Start typing a name', :class => "text basic_field",  :placeholder => "Search here for members to add"
+      .field.line
+        %span.details{:for => "member_list"} Current administrators:
+        %ul#member_list
+          - if @system.administrations.present?
+            - @system.memberships.each do |system_membership|
+              %li{:id => "member_#{system_membership.user_id}"}
+                = system_membership.user.full_name
+                %input{:name => "system[member_ids][]", :type => "hidden", :value => system_membership.user_id}
+                  %span.remove_button.basic_field{:name => "remove_member"}
+
+    .field.line
+      .field.actions
+        = f.submit :class => "blue basic_field"
+
+= render :partial => "management/systems/formjs", :locals => {:action => action}

@@ -1,0 +1,24 @@
+#container_left_navigation
+  .customScrollBox
+    .horWrapper.clearfix
+      .container
+        #project_nav.content
+          - if can? :admin, User
+            #sidebar_actions
+              = link_to '<span>Manage WebDB</span>'.html_safe, management_overview_path, :class => "button manage_system"
+              = link_to '<span>New System</span>'.html_safe, new_management_system_path, :class => 'button add'
+            %p &nbsp;
+            - if @systems.present?
+              %h3 All configured systems:
+              - @systems.each do |s|
+                = render :partial => "shared/list_systems", :locals => {:system => s, :system_class => 'system'}
+            - else
+              No systems are configured!
+          - if @administrations.present?
+            %h3 Systems you administer:
+            - @administrations.each do |s|
+              = render :partial => "shared/list_systems", :locals => {:system => s, :system_class => 'system_administrator'}
+          - if @collaborations.present?
+            %h3 Systems you can access:
+      .dragger_container
+        .dragger

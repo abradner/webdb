@@ -1,0 +1,18 @@
+#header
+  .container
+    .logo
+      = link_to root_path, :id => :owner_logo_container do
+        = image_tag "university_sydney_logo_mono.gif", :border => "0"
+      -#= t('app_name')
+    .menu
+      %ul
+        - if user_signed_in?
+          - if can? :admin, User
+            %li= link_to 'WebDB Management', management_overview_path
+          %li= link_to 'Systems', root_path
+          %li= link_to 'Preferences', edit_user_registration_path
+          %li= link_to 'Logout', destroy_user_session_path
+        - else
+          %li= link_to "Sign Up", new_user_registration_path
+          %li= link_to "Login", new_user_session_path
+          %li= link_to "Forgot your password?", new_user_password_path
