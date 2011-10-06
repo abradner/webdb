@@ -7,6 +7,9 @@ class User < ActiveRecord::Base
   # 2011-09-29 - users don't "have" systems, since their is no concept of a system owner.
   #has_many :systems
 
+  has_many :security_groups, :through => :user_security_groups
+  has_many :user_security_groups, :dependent => :destroy
+
   has_many :memberships, :class_name => "SystemMember"
   has_many :collaborations, :class_name => "SystemMember", :conditions => {:administrator => false}
   has_many :administrations, :class_name => "SystemMember", :conditions => {:administrator => true}

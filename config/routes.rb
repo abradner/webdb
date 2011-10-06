@@ -39,6 +39,7 @@ end
 
   resources :systems do #, :only => [:show] do
     resources :data_objects
+    resources :security_groups
   end
 
   root :to => "pages#home"

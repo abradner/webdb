@@ -17,14 +17,14 @@ class DataObjectsController < ApplicationController
   end
 
   def edit
+  end
+
+  def update
     if @data_object.update_attributes(params[:data_object])
       redirect_to system_data_object_path(@system), :notice => "The System was successfully updated."
     else
       render :edit
     end
-  end
-
-  def update
   end
 
   def destroy
