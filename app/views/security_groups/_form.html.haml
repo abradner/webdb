@@ -6,15 +6,11 @@
     .field.line
       = f.label :name, required_field('Name:')
       .lastUnit
-        = f.text_field :name, :class => "text basic_field", :placeholder => "The name of the data object"
+        = f.text_field :name, :class => "text basic_field", :placeholder => "The name of the security group"
     .field.line
       = f.label :short_description, required_field('Summary:')
       .lastUnit
-        = f.text_area :short_description, :class => "text description_field small_desc_field", :placeholder => "A short description of your data object (1-2 sentences)"
-    .field.line
-      = f.label :description, 'Description:'
-      .lastUnit
-        = f.text_area :description, :class => "text description_field", :placeholder => "A detailed description of your data object"
+        = f.text_area :short_description, :class => "text description_field small_desc_field", :placeholder => "A short description of the security group (1-2 sentences)"
     .field.line
       .field.actions
         = f.submit :class => "blue basic_field"

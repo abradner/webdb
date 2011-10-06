@@ -79,6 +79,10 @@ class Ability
     #  system.can_remove?(user)
     #end
 
+
+    #Security Group privileges
+    can :manage, SecurityGroup, :system_id => system_administrations
+
     # Data Object privileges
     can :create, DataObject, :system_id => system_administrations
     can :update, DataObject, :system_id => system_administrations

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111005045431) do
+ActiveRecord::Schema.define(:version => 20111006041929) do
 
   create_table "colour_schemes", :force => true do |t|
     t.string   "name"
@@ -71,6 +71,8 @@ ActiveRecord::Schema.define(:version => 20111005045431) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "short_description", :limit => 512
+    t.integer  "system_id"
   end
 
   create_table "system_members", :id => false, :force => true do |t|

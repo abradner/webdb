@@ -3,7 +3,8 @@ class SecurityGroupsController < ApplicationController
   before_filter :systems_and_memberships, :only => [:index, :new, :create, :show, :edit, :update] #TODO remove the viewless actions
 
   load_and_authorize_resource :system
-  load_and_authorize_resource :data_object, :through => :system
+  load_and_authorize_resource :security_group, :through => :system
+  #load_and_authorize_resource :data_object, :through => :system
 
   def new
   end
@@ -40,5 +41,6 @@ class SecurityGroupsController < ApplicationController
   end
 
   def index
+    @security_groups = SecurityGroup.all
   end
 end

@@ -5,54 +5,44 @@
 
   -#TODO fix up
   #container_page_buttons.right
-    =button_link_to "Rename", edit_system_security_group_path(@system, @security_group)
-    =button_link_to "Delete", management_system_path, :method => "delete",
-                          :confirm =>"Are you sure you want to delete this system and all related data?",
-                          :id => 'system_delete_link', :class => 'red'
+    =button_link_to "Delete", system_security_group_path(@system), :method => "delete",
+                          :confirm =>"Are you sure you want to delete this security group and revoke all permissions?",
+                          :id => 'security_group_delete_link', :class => 'red'
 
-  #container_page_details.right.flushright.details
-    .entry
-      %p
-        Data Objects utilising group:
-        = "TODO" #TODO
-
-    .entry
-      %p
-        Users governed by group:
-        = "TODO" #TODO
 
 #container_page_actions.wrapper
   .unit
-    -if can? :admin, User #TODO change this to :system_admin
-      =button_link_to "Add Data Object", new_system_security_group_path(@system), :class => "security_group"
-      =button_link_to "Manage Security Groups", system_path(@system), :class => "security_group",
-                :confirm =>"TODO (currently does nothing)"
-      =button_link_to "Manage Filetypes", system_path(@system), :class => "file_type",
-                :confirm =>"TODO (currently does nothing)"
+    =button_link_to "Here's a button", "#", :class => "security_group"
+    =button_link_to "There's a button", "#", :class => "security_group"
+    =button_link_to "Fuzzy button", "#", :class => "security_group"
+    =button_link_to "Funny button", "#", :class => "security_group"
+    =button_link_to "Buttons buttons", "#", :class => "security_group"
+    =button_link_to "Cheesecake button", "#", :class => "security_group"
+    =button_link_to "Button Button", "#", :class => "security_group"
+    =button_link_to "", "#", :class => "duck"
+
+
 
 
 #container_page_content.wrapper
   .unit.system_left_col
-    %h3 System Administrators:
+    %h3 Statistics:
     .row.information
-      - unless @system.administrators.present?
-        .bold
-          Warning: No Administrators!
-      - @system.administrators.each do |sa|
-        %p=sa.name
+      .bold Data Objects utilising group:
+      = "TODO" #TODO
+      .bold Users governed:
+      = "TODO" #TODO
 
   .lastUnit.system_right_col
     .left.line
-      %h3 System Information:
+      %h3 Group Information:
     .information
       %span.bold Summary:
       %p=@security_group.short_description
-    - if @security_group.description.present?
-      .information
-        %span.bold Full Description:
-        %p=@security_group.description
 
 #container_page_content.wrapper
-  %h2 Contents
+  %h3 Users
+  %p Here will be a management interface for adding and removing users TODO
+  -#TODO
   - unless true #TODO @security_group.things
     Nothing here!

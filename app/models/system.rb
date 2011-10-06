@@ -4,6 +4,8 @@ class System < ActiveRecord::Base
 #  has_many :file_data_types, :dependent => :destroy
   has_many :data_objects, :dependent => :destroy
 
+  has_many :security_groups
+
   #See comment in User model on has_many :systems
   #belongs_to :user
 

@@ -24,8 +24,7 @@
   .unit
     -if can? :admin, User #TODO change this to :system_admin
       =button_link_to "Add Data Object", new_system_data_object_path(@system), :class => "data_object"
-      =button_link_to "Manage Security Groups", system_path(@system), :class => "security_group",
-                :confirm =>"TODO (currently does nothing)"
+      =button_link_to "Manage Security Groups", system_security_groups_path(@system), :class => "security_group"
       =button_link_to "Manage Filetypes", system_path(@system), :class => "file_type",
                 :confirm =>"TODO (currently does nothing)"
 

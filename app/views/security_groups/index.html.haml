@@ -1,0 +1,16 @@
+
+%h2 Security Groups Management
+%ul
+  %li= button_link_to 'New Security Group', new_system_security_group_path(@system), :class => "add"
+
+%h3 Security Groups
+%table
+  %tr
+    %th Name
+    %th Description
+  - @security_groups.each do |sg|
+    %tr
+      %td= link_to sg.name, system_security_group_path(@system, sg)
+      %td= sg.short_description
+
+
