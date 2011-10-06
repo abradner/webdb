@@ -7,7 +7,11 @@
       = render 'layouts/banner'
       - if user_signed_in?
         = render 'shared/left_nav'
-      #container_right_content
+        #container_right_content
+          = render 'layouts/messages'
+          = yield
+      - else
+        #container_right_content
         = render 'layouts/messages'
         = yield
     #wizard

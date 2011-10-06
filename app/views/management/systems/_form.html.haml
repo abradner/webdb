@@ -1,35 +1,24 @@
-%h2
-  - if action.eql?("new")
-    Create New System
-  - else
-    Edit System
-
-- if @system.errors.any?
-  #alert
-    %p
-      %h2
-        =pluralize(@system.errors.count, "error")
-        prohibited
-        this #{@system.class.name.underscore.humanize.downcase}
-        from being saved:
-    %ul
-      - @system.errors.full_messages.each do |msg|
-        %li= msg
+= render :partial => "shared/form_header", :locals => {:action => action, :obj => "System"}
+= render :partial => "shared/form_errors", :locals => {:obj => @system}
 
 = form_for [:management, @system] do |f|
   .lightbox
     .field.line
-      = f.label :name, 'Name:<span class="required">*</span>'.html_safe
+      = f.label :name, required_field('Name:')
       .lastUnit
         = f.text_field :name, :class => "text basic_field", :placeholder => "The name of your system"
     .field.line
-      = f.label :code, 'System Code:<span class="required">*</span>'.html_safe
+      = f.label :code, required_field('System Code:')
       .lastUnit
         = f.text_field :code, :class => "text basic_field", :placeholder => "XXXXXXXX"
     .field.line
-      = f.label :description, 'Description:<span class="required">*</span>'.html_safe
+      = f.label :description, required_field('Description:')
       .lastUnit
-        = f.text_area :description, :rows => 5, :class => "text", :placeholder => "A description of your system"
+        = f.text_area :description, :rows => 5, :class => "text description_field", :placeholder => "A description of your system"
+    .field.line
+      = f.label :colour_scheme_id, "Colour Scheme:"
+      .lastUnit
+        = f.select :colour_scheme_id, options_from_collection_for_select(@colour_schemes, :id, :name) #TODO default
     #member_picker
       .field.line
         %label{:for => "member"} System Administrators:
@@ -49,4 +38,4 @@
       .field.actions
         = f.submit :class => "blue basic_field"
 
-= render :partial => "management/systems/formjs", :locals => {:action => action}
+= render :partial => "shared/form_autocomplete_helper"

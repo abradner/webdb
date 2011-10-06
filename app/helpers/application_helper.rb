@@ -52,4 +52,13 @@ module ApplicationHelper
     false
   end
 
+  def button_link_to(name, options = {}, html_options = {})
+    html_options[:class] = [ html_options[:class], 'button' ].compact * ' '
+    link_to content_tag(:span, name), options, html_options
+  end
+
+  def required_field(text)
+    "#{text}<span class=\"required\">*</span>".html_safe
+  end
+
 end

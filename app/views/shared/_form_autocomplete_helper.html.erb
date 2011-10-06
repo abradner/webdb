@@ -1,7 +1,7 @@
 <script>
     $("#member").autocomplete({
         source: '/users/list',
-        minLength: 2,
+        minLength: 1,
         select: function(event, ui) {
                     if (ui) {
                         var member_id = ui.item.id;
@@ -10,7 +10,7 @@
                             var member_name = ui.item.value;
                             $('ul#member_list').append('<li id="member_'
                                     + member_id
-                                    + '"><input type="hidden" name="project[member_ids][]" value="'
+                                    + '"><input type="hidden" name="member_ids[]" value="'
                                     + member_id
                                     + '">'
                                     + member_name

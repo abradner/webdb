@@ -6,6 +6,9 @@ def create_roles_and_permissions
   superuser = "manager"
   Role.create!(:name => superuser)
 
+  user = "user"
+  Role.create!(:name => user)
+
   #TODO: set your own permissions here
   create_permission("User", "read", [superuser])
   create_permission("User", "update_role", [superuser])

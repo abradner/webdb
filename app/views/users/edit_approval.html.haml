@@ -7,5 +7,5 @@
       = f.collection_select(:role_id, @roles, :id, :name, {:include_blank => ""})
   .form_actions
     .add_variables
-      = f.submit("Approve")
-      = link_to 'Back', access_requests_users_path
+      = f.submit "Approve", :class => "blue basic_field"
+      = button_link_to 'Back', access_requests_users_path

@@ -1,3 +1,15 @@
-Colour schemes management page placeholder
+%h2 Colour schemes Management
 %ul
-  %li= link_to 'New', new_management_colour_scheme_path
+  %li= button_link_to 'New Colour Scheme', new_management_colour_scheme_path, :class => "add"
+
+%h3 Colour Schemes
+%table
+  %tr
+    %th Name
+    %th Preview
+  - @colour_scheme.each do |cs|
+    %tr
+      %td= cs.name
+      %td TODO
+
+

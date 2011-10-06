@@ -1,0 +1,18 @@
+%h2
+  - if action.eql?("new")
+    Create New Colour Scheme
+  - else
+    Edit Colour Scheme
+
+%h2 TODO!
+= render :partial => "shared/form_errors", :locals => {:obj => @colour_scheme}
+
+= form_for [:management, @colour_scheme] do |f|
+  .lightbox
+    .field.line
+      = f.label :name, required_field('Name:')
+      .lastUnit
+        = f.text_field :name, :class => "text basic_field", :placeholder => "The name of your colour scheme"
+    .field.line
+      .field.actions
+        = f.submit :class => "blue basic_field"

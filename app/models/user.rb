@@ -170,6 +170,10 @@ class User < ActiveRecord::Base
     full_name
   end
 
+  def is_superuser?
+    self.role.name.eql?("manager")
+  end
+
   private
 
   def initialize_status

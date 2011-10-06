@@ -5,8 +5,25 @@
         #project_nav.content
           - if can? :admin, User
             #sidebar_actions
-              = link_to '<span>Manage WebDB</span>'.html_safe, management_overview_path, :class => "button manage_system"
-              = link_to '<span>New System</span>'.html_safe, new_management_system_path, :class => 'button add'
+              = button_link_to "Manage WebDB", management_overview_path, :class => "manage_system"
+              = button_link_to "New System", new_management_system_path, :class => "add"
+          - else
+            = button_link_to 'Request System Access', root_path, :confirm => "TODO list systems with a button to contact the administrators", :class => "add"
+          %p &nbsp;
+          - if @administrations.present?
+            %h3 Systems you administer:
+            - @administrations.each do |s|
+              = render :partial => "shared/list_systems", :locals => {:system => s, :system_class => 'system_administrator'}
+          - if @collaborations.present?
+            %h3 Systems you can access:
+            - @collaborations.each do |s|
+              = render :partial => "shared/list_systems", :locals => {:system => s, :system_class => 'system_collaborator'}
+          - if @memberships.blank?
+            %h3 Systems you can access:
+            .bold None.
+            Please speak to the administrator of a system you wish to access.
+
+          - if can? :admin, User
             %p &nbsp;
             - if @systems.present?
               %h3 All configured systems:
@@ -14,11 +31,5 @@
                 = render :partial => "shared/list_systems", :locals => {:system => s, :system_class => 'system'}
             - else
               No systems are configured!
-          - if @administrations.present?
-            %h3 Systems you administer:
-            - @administrations.each do |s|
-              = render :partial => "shared/list_systems", :locals => {:system => s, :system_class => 'system_administrator'}
-          - if @collaborations.present?
-            %h3 Systems you can access:
       .dragger_container
         .dragger

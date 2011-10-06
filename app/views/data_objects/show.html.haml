@@ -1,6 +1,7 @@
 #container_page_header.wrapper.clearfix
   #container_page_title
-    %h1.title=@system.name
+    -#TODO real, neat breadcrumb
+    %h1.title #{link_to @system.name, system_path(@system)} > #{@data_object.name}
 
   #container_page_buttons.right
     -if can? :admin, User
@@ -44,18 +45,14 @@
     .left.line
       %h3 System Information:
     .information
-      %span.bold System Description:
-      %p=@system.description
+      %span.bold Summary:
+      %p=@data_object.short_description
+    - if @data_object.description.present?
+      .information
+        %span.bold Full Description:
+        %p=@data_object.description
 
 #container_page_content.wrapper
-  %h2 Data Objects
-  - unless @system.data_objects.present?
-    No Data Ojbects configured.
-  - @system.data_objects.each do |dobj|
-    .entry
-      .label
-        =link_to dobj.name, system_data_object_path(@system, dobj)
-      .item
-        =dobj.short_description
-
-
+  %h2 Contents
+  - unless true #TODO @data_object.things
+    Nothing here!

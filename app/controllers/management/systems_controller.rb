@@ -2,30 +2,34 @@ class Management::SystemsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :systems_and_memberships
 
+  load_and_authorize_resource :system
+
   def new
-    @system = System.new
+    @colour_schemes = ColourScheme.all
   end
   def edit
-    @system = System.find(params[:id])
+    @colour_schemes = ColourScheme.all
   end
 
   def create
     sanitise_params_for_system!
     @system = System.new(params[:system])
-      if @system.save
-        redirect_to management_systems_path, :notice => "The System was successfully created."
-      else
-        render :new
-      end
+
+    if @system.save
+      redirect_to management_systems_path, :notice => "The System was successfully created."
+    else
+      @colour_schemes = ColourScheme.all
+      render :new
     end
+  end
 
   def update
-    @system = System.find(params[:id])
     sanitise_params_for_system!
 
     if @system.update_attributes(params[:system])
       redirect_to system_path(@system), :notice => "The System was successfully updated."
     else
+      @colour_schemes = ColourScheme.all
       render :edit
     end
   end
@@ -34,7 +38,6 @@ class Management::SystemsController < ApplicationController
   end
 
   def destroy
-    @system = System.find(params[:id])
     if @system.destroy
       redirect_to systems_url, :notice => "The system #{@system.name} has been successfully removed."
     else
@@ -46,8 +49,8 @@ class Management::SystemsController < ApplicationController
 
   def sanitise_params_for_system!
     params.delete(:member)
-    params[:system][:member_ids] = [] if params[:system][:member_ids].blank?
-    members = params[:system].delete(:member_ids)
+    params[:member_ids] = [] if params[:member_ids].blank?
+    members = params.delete(:member_ids)
 
     if members
       params[:system][:administrator_ids] = members

@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
 
     if can? :admin, User
     #  @partial_systems = System.part
-      @systems = System.all
+      @systems = System.all :order => :name
     end
 
   end

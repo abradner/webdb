@@ -107,6 +107,5 @@ end
 # It is here to handle routing errors
 # It should match every route not already matched
 # Solution taken from http://techoctave.com/c7/posts/36-rails-3-0-rescue-from-routing-error-solution
-  match '*a', :to => 'pages#routing_error'
-
+  match '*a', :to => 'pages#routing_error' unless Rails.env.development?
 end
