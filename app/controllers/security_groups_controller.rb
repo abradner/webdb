@@ -1,0 +1,2 @@
+class SecurityGroupsController < ApplicationController
+end
