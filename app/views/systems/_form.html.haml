@@ -1,37 +1,44 @@
 = render :partial => "shared/form_header", :locals => {:action => action, :obj => "System"}
 = render :partial => "shared/form_errors", :locals => {:obj => @system}
 
-= form_for [:management, @system] do |f|
+= form_for @system, :url => update_members_system_path do |f|
   .lightbox
     .field.line
       = f.label :name, required_field('Name:')
       .lastUnit
-        = f.text_field :name, :class => "text basic_field", :placeholder => "The name of your system"
+        = @system.name
     .field.line
       = f.label :code, required_field('System Code:')
       .lastUnit
-        = f.text_field :code, :class => "text basic_field", :placeholder => "XXXXXXXX"
+        = @system.code
     .field.line
       = f.label :description, required_field('Description:')
       .lastUnit
-        = f.text_area :description, :rows => 5, :class => "text description_field", :placeholder => "A description of your system"
+        = @system.description
     .field.line
       = f.label :colour_scheme_id, "Colour Scheme:"
       .lastUnit
-        = f.select :colour_scheme_id, options_from_collection_for_select(@colour_schemes, :id, :name) #TODO default
+        = @system.colour_scheme.name
     #member_picker
       .field.line
-        %label{:for => "member"} System Administrators:
+        %label{:for => "member"} System Users:
         .lastUnit
           = text_field_tag 'member', nil, :title => 'Start typing a name', :class => "text basic_field",  :placeholder => "Search here for members to add"
       .field.line
-        %span.details{:for => "member_list"} Current administrators:
-        %ul#member_list
+        %span.details{:for => "admin_list"} Current administrators:
+        %ul#member_list_admin
           - if @system.administrations.present?
-            - @system.administrations.each do |system_administration|
-              %li{:id => "member_#{system_administration.user_id}"}
-                = system_administration.user.full_name
-                %input{:name => "member_ids[]", :type => "hidden", :value => system_administration.user_id}
+            - @system.administrations.each do |system_administrations|
+              %li{:id => "admin_#{system_administrations.user_id}"}
+                = system_administrations.user.full_name
+      .field.line
+        %span.details{:for => "member_list"} Current Users:
+        %ul#member_list
+          - if @system.collaborations.present?
+            - @system.collaborations.each do |system_collaboration|
+              %li{:id => "member_#{system_collaboration.user_id}"}
+                = system_collaboration.user.full_name
+                %input{:name => "member_ids[]", :type => "hidden", :value => system_collaboration.user_id}
                   %span.remove_button.basic_field{:name => "remove_member"}
 
     .field.line

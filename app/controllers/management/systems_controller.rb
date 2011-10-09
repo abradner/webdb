@@ -12,7 +12,7 @@ class Management::SystemsController < ApplicationController
   end
 
   def create
-    sanitise_params_for_system!
+    sanitise_params_for_mgmt_system!
     @system = System.new(params[:system])
 
     if @system.save
@@ -24,7 +24,7 @@ class Management::SystemsController < ApplicationController
   end
 
   def update
-    sanitise_params_for_system!
+    sanitise_params_for_mgmt_system!
 
     if @system.update_attributes(params[:system])
       redirect_to system_path(@system), :notice => "The System was successfully updated."
@@ -47,11 +47,12 @@ class Management::SystemsController < ApplicationController
 
   private
 
-  def sanitise_params_for_system!
+  def sanitise_params_for_mgmt_system!
     params.delete(:member)
     params[:member_ids] = [] if params[:member_ids].blank?
     members = params.delete(:member_ids)
-    Rails.logger.debug "New user_ids = " + members.inspect unless Rails.env.production?
+    Rails.logger.debug "New user_ids = " + members.to_s unless Rails.env.production?
+    Rails.logger.debug params[:system].inspect unless Rails.env.production?
     if members
       params[:system][:administrator_ids] = members
     else

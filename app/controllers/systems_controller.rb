@@ -1,5 +1,5 @@
 class SystemsController < ApplicationController
-  before_filter :systems_and_memberships, :only => [:show, :index, :list_administrators, :list_collaborators, :list_members]
+  before_filter :systems_and_memberships #, :only => [:show, :index, :list_administrators, :list_collaborators, :list_members]
   load_and_authorize_resource :system
 
   def index
@@ -7,6 +7,18 @@ class SystemsController < ApplicationController
   end
 
   def show
+  end
+
+  def edit_members
+  end
+
+  def update_members
+    #TODO remove admins from the list of user ids
+    if @system.update_attribute(:collaborator_ids, params[:member_ids])
+      redirect_to management_systems_path, :notice => "The users of this system were updated."
+    else
+      render :edit_members
+    end
   end
 
   def list_members
@@ -42,5 +54,6 @@ class SystemsController < ApplicationController
     end
     users
   end
+
 
 end

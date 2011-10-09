@@ -44,6 +44,8 @@ end
       get :list_members
       get :list_administrators
       get :list_collaborators
+      get :edit_members
+      put :update_members
     end
   end
 

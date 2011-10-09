@@ -75,6 +75,8 @@ class Ability
     #can :edit_member, System, :id => system_administrations
     can :edit_permissions, System, :id => system_administrations
     can :edit_file_types, System, :id => system_administrations
+    can :edit_members, System, :id => system_administrations
+    can :update_members, System, :id => system_administrations
 
     can :list_members, System, :id => system_administrations
     can :list_administrators, System, :id => system_administrations

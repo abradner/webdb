@@ -44,11 +44,6 @@
   %h3 Users
 = form_for [@system, @security_group] do |f|
   .lightbox
-    .field.line
-      = f.label :name, required_field('Name:')
-      .lastUnit
-        = f.text_field :name, :class => "text basic_field", :placeholder => "The name of the security group"
-
     #member_picker
       .field.line
         %label{:for => "member"} Add Users:
