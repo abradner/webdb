@@ -1,6 +1,6 @@
 <script>
     $("#member").autocomplete({
-        source: '/users/list',
+        source: '<%=source%>',
         minLength: 1,
         select: function(event, ui) {
                     if (ui) {

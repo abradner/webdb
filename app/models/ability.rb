@@ -61,6 +61,7 @@ class Ability
       can :destroy, System
 
       can :manage, ColourScheme
+      can :manage, RawStorage
     end
 
     can :list, User
@@ -71,9 +72,15 @@ class Ability
     # System privileges
     can :read, System, :id => system_memberships
     can :update, System, :id => system_administrations
-    can :edit_member, System, :id => system_administrations
+    #can :edit_member, System, :id => system_administrations
     can :edit_permissions, System, :id => system_administrations
     can :edit_file_types, System, :id => system_administrations
+
+    can :list_members, System, :id => system_administrations
+    can :list_administrators, System, :id => system_administrations
+    can :list_collaborators, System, :id => system_administrations
+
+
     #TODO leaving a system
     #can :leave, System do |system|
     #  system.can_remove?(user)
@@ -82,6 +89,7 @@ class Ability
 
     #Security Group privileges
     can :manage, SecurityGroup, :system_id => system_administrations
+
 
     # Data Object privileges
     can :create, DataObject, :system_id => system_administrations

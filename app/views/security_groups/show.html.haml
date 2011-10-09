@@ -31,7 +31,7 @@
       .bold Data Objects utilising group:
       = "TODO" #TODO
       .bold Users governed:
-      = "TODO" #TODO
+      = @security_group.users.count || "0"
 
   .lastUnit.system_right_col
     .left.line
@@ -42,7 +42,34 @@
 
 #container_page_content.wrapper
   %h3 Users
-  %p Here will be a management interface for adding and removing users TODO
-  -#TODO
-  - unless true #TODO @security_group.things
-    Nothing here!
+= form_for [@system, @security_group] do |f|
+  .lightbox
+    .field.line
+      = f.label :name, required_field('Name:')
+      .lastUnit
+        = f.text_field :name, :class => "text basic_field", :placeholder => "The name of the security group"
+
+    #member_picker
+      .field.line
+        %label{:for => "member"} Add Users:
+        .lastUnit
+          %p By searching
+          = text_field_tag 'member', nil, :title => 'Start typing a name', :class => "text basic_field",  :placeholder => "Type here to search for members to add"
+      .field.line
+        .lastUnit
+          %p or pick from a list
+          = button_link_to "TODO", "#"
+      .field.line
+        %span.details{:for => "member_list"} Current members:
+        %ul#member_list
+          - if @security_group.users.present?
+            - @security_group.users.each do |u|
+              %li{:id => "member_#{u.id}"}
+                = u.full_name
+                %input{:name => "member_ids[]", :type => "hidden", :value => u.id}
+                  %span.remove_button.basic_field{:name => "remove_member"}
+    .field.line
+      .field.actions
+        = f.submit :class => "blue basic_field", :value => "Save Changes"
+
+= render :partial => "shared/form_autocomplete_helper" , :locals => {:source => list_members_system_path(@system, :format => :json) }

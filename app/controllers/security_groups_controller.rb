@@ -10,6 +10,7 @@ class SecurityGroupsController < ApplicationController
   end
 
   def create
+    sanitise_params_for_sec_group!
     if @security_group.save
       redirect_to system_security_group_path(@system, @security_group), :notice => "The Security Group has been created."
     else
@@ -21,7 +22,8 @@ class SecurityGroupsController < ApplicationController
   end
 
   def update
-    if @security_group.update_attributes(params[:data_object])
+    sanitise_params_for_sec_group!
+    if @security_group.update_attributes(params[:security_group])
       redirect_to system_security_group_path(@system, @security_group), :notice => "The Security Group has been updated."
     else
       render :edit
@@ -43,4 +45,19 @@ class SecurityGroupsController < ApplicationController
   def index
     @security_groups = SecurityGroup.all
   end
+
+  private
+
+  def sanitise_params_for_sec_group!
+    params.delete(:member)
+    params[:member_ids] = [] if params[:member_ids].blank?
+    members = params.delete(:member_ids)
+    Rails.logger.debug "New user_ids = " + members.to_s unless Rails.env.production?
+    if members
+      params[:security_group][:user_ids] = members
+    else
+      params[:security_group][:user_ids] = []
+    end
+  end
+
 end

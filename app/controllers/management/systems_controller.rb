@@ -51,7 +51,7 @@ class Management::SystemsController < ApplicationController
     params.delete(:member)
     params[:member_ids] = [] if params[:member_ids].blank?
     members = params.delete(:member_ids)
-
+    Rails.logger.debug "New user_ids = " + members.inspect unless Rails.env.production?
     if members
       params[:system][:administrator_ids] = members
     else

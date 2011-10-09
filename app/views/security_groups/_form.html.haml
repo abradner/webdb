@@ -11,6 +11,22 @@
       = f.label :short_description, required_field('Summary:')
       .lastUnit
         = f.text_area :short_description, :class => "text description_field small_desc_field", :placeholder => "A short description of the security group (1-2 sentences)"
+    #member_picker
+      .field.line
+        %label{:for => "member"} Users in Security Group (this can be changed shortly):
+        .lastUnit
+          = text_field_tag 'member', nil, :title => 'Start typing a name', :class => "text basic_field",  :placeholder => "Search here for members to add"
+      .field.line
+        %span.details{:for => "member_list"} Current members:
+        %ul#member_list
+          - if @security_group.users.present?
+            - @security_group.users.each do |u|
+              %li{:id => "member_#{u.id}"}
+                = u.full_name
+                %input{:name => "member_ids[]", :type => "hidden", :value => u.id}
+                  %span.remove_button.basic_field{:name => "remove_member"}
     .field.line
       .field.actions
         = f.submit :class => "blue basic_field"
+
+= render :partial => "shared/form_autocomplete_helper" , :locals => {:source => list_members_system_path(@system, :format => :json) }

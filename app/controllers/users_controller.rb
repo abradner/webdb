@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
 
-  before_filter :authenticate_user!
+  respond_to :json, :only => [:list]
+  respond_to :html, :except => [:list]
 
+  before_filter :authenticate_user!
   load_and_authorize_resource
 
   def index
@@ -16,16 +18,21 @@ class UsersController < ApplicationController
   end
 
   def list
-    potential_members = User.potential_members(params[:term])
-    #potential_members.delete_if { |user| user == current_user }
-
-    users = Array.new
-
-    potential_members.collect do |u|
-      users << Hash[:id => u.id, :label => "#{u.first_name} #{u.last_name}", :value => "#{u.first_name} #{u.last_name}"]
+    respond_to do |f|
+      f.json do
+        q = params[:term]
+        if q.blank?
+          render :json => nil and return
+        end
+        potential_members = User.potential_members(q)
+        #potential_members.delete_if { |user| user == current_user }
+        users = Array.new
+        potential_members.collect do |u|
+          users << Hash[:id => u.id, :label => "#{u.first_name} #{u.last_name}", :value => "#{u.first_name} #{u.last_name}"]
+        end
+        render :json => users
+      end
     end
-    
-    render :json => users
   end
 
   def access_requests

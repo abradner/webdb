@@ -31,11 +31,11 @@
             - @system.memberships.each do |system_membership|
               %li{:id => "member_#{system_membership.user_id}"}
                 = system_membership.user.full_name
-                %input{:name => "system[member_ids][]", :type => "hidden", :value => system_membership.user_id}
+                %input{:name => "member_ids[]", :type => "hidden", :value => system_membership.user_id}
                   %span.remove_button.basic_field{:name => "remove_member"}
 
     .field.line
       .field.actions
         = f.submit :class => "blue basic_field"
 
-= render :partial => "shared/form_autocomplete_helper"
+= render :partial => "shared/form_autocomplete_helper" , :locals => {:source => list_users_path(:format => :json) }

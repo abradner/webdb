@@ -1,6 +1,7 @@
 class System < ActiveRecord::Base
 #  has_many :storage_types
   belongs_to :colour_scheme
+  belongs_to :raw_storage
 #  has_many :file_data_types, :dependent => :destroy
   has_many :data_objects, :dependent => :destroy
 
@@ -52,7 +53,9 @@ class System < ActiveRecord::Base
   #  nil
   #end
 
-  def first_name
-    
+  private
+  def get_members
+
   end
+
 end

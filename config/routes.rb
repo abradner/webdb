@@ -6,12 +6,12 @@ end
 
   namespace :management do
     resources :systems do
-      post :create
+      post :create, :on => :member
     end
 
     resources :colour_schemes
     resource :overview do 
-      get :index
+      get :index, :on => :collection
     end#, :only => [:index]
   end
 
@@ -40,6 +40,11 @@ end
   resources :systems do #, :only => [:show] do
     resources :data_objects
     resources :security_groups
+    member do
+      get :list_members
+      get :list_administrators
+      get :list_collaborators
+    end
   end
 
   root :to => "pages#home"
