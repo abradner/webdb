@@ -16,5 +16,34 @@
       .lastUnit
         = f.text_area :description, :class => "text description_field", :placeholder => "A detailed description of your data object"
     .field.line
+      %label Security Groups
+      %p Change user access by adding (to the right box) or remove (from the right box).
+      .lastUnit
+        - unless @system.security_groups.blank?
+          =field_set_tag do
+            = hidden_field_tag :security_groups, :id => "security_groups"
+            %div
+              #leftList
+                %p
+                  %strong Deselected
+                %select#leftSelect{:multiple => "multiple", :size => "10"}
+                  - @unselected_sec_groups.each do |d|
+                    %option{:value => d.id}=d.name
+              #middleButtons
+                #addRemoveButtons
+                  %button#addButton.button{:type => "button"} Add
+                  %button#removeButton.button{:type => "button"} Remove
+                #addAllRemoveAllButtons
+                  %button#addAllButton.button{:type => "button"} Add All
+                  %button#removeAllButton.button{:type => "button"} Remove All
+              #rightList
+                %p
+                  %strong Selected
+                %select#rightSelect{:multiple => "multiple", :size => "10"}
+                  - @data_object.security_groups.each do |a|
+                    %option{:value => a.id}= a.name
+        - else
+          .error Can't set permissions - no security groups found!
+    .field.line
       .field.actions
         = f.submit :class => "blue basic_field"

@@ -3,6 +3,9 @@ class DataObject < ActiveRecord::Base
   #has_many :custom_fields  # the builder could be smart - custom fields can be suggested from existing templates
   #has_one  :file_system, :dependent => :destroy
   belongs_to :system
+  has_many :security_groups, :through => :data_object_security_groups
+  has_many :data_object_security_groups, :dependent => :destroy
+
 
   validates :name, :presence => true
   validates_uniqueness_of :name, :case_sensitive => false, :scope => :system_id, :message => "has been taken in this system"

@@ -17,9 +17,31 @@ class DataObjectsController < ApplicationController
   end
 
   def edit
+
+    @unselected_sec_groups = @system.security_groups - @data_object.security_groups
+
+    unless Rails.env.production?
+      output = "Unselected Groups:\n"
+      @unselected_sec_groups.each do |u|
+        output << u.id << ": " << u.name << "\n"
+      end
+
+      output << "Selected Groups:\n"
+      @data_object.security_groups.each do |s|
+        output << s.id << ": " << s.name << "\n"
+      end
+
+      output << "All Groups:\n"
+      @system.security_groups.each do |a|
+        output << a.id << ": " << a.name << "\n"
+      end
+
+      Rails.logger.debug output
+    end
   end
 
   def update
+    params[:data_object][:security_group_ids] = params[:security_groups].split ","
     if @data_object.update_attributes(params[:data_object])
       redirect_to system_data_object_path(@system), :notice => "The System was successfully updated."
     else
