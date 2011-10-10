@@ -31,7 +31,7 @@ $(function() {
         }
 
 
-        $('#security_groups').val(state);
+        $('#list_selected').val(state);
 
     };
     /* this function allows the user to tab through buttons to another without firing their onkeyup event handlers */

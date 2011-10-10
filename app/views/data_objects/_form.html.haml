@@ -21,7 +21,7 @@
       .lastUnit
         - unless @system.security_groups.blank?
           =field_set_tag do
-            = hidden_field_tag :security_groups, :id => "security_groups"
+            = hidden_field_tag :list_selected, :id => "list_selected"
             %div
               #leftList
                 %p

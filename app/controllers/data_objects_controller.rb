@@ -10,6 +10,7 @@ class DataObjectsController < ApplicationController
   end
 
   def create
+    params[:data_object][:security_group_ids] = params[:list_selected].split ","
     if @data_object.save
       redirect_to system_path(@system), :notice => "The Data Object has been created."
     else
@@ -19,17 +20,17 @@ class DataObjectsController < ApplicationController
 
   def edit
     prepare_unselected_sec_group
-
   end
 
   def update
-    params[:data_object][:security_group_ids] = params[:security_groups].split ","
+    params[:data_object][:security_group_ids] = params[:list_selected].split ","
     if @data_object.update_attributes(params[:data_object])
       redirect_to system_data_object_path(@system), :notice => "The System was successfully updated."
     else
       render :edit
     end
   end
+
 
   def destroy
     if @data_object.destroy
@@ -46,7 +47,22 @@ class DataObjectsController < ApplicationController
   def index
   end
 
+
+  def edit_file_types
+    @unselected_file_types = @system.file_types - @data_object.file_types
+  end
+
+  def update_file_types
+    #params[:data_object][:file_type_ids] = params[:list_selected].split ","
+    if @data_object.update_attribute(:file_type_ids, params[:list_selected].split(","))
+      redirect_to system_data_object_path(@system), :notice => "The File types were successfully updated."
+    else
+      render :edit
+    end
+  end
+
   private
+
 
   def prepare_unselected_sec_group
     @unselected_sec_groups = @system.security_groups - @data_object.security_groups

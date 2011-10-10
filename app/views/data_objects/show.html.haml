@@ -25,7 +25,8 @@
   .unit
     =button_link_to "Import", "#", :class => "security_group"
     =button_link_to "Metadata", "#", :class => "security_group"
-    =button_link_to "Data Analysis", "#", :class => "security_group"
+    =button_link_to "Data Analysis", "#", :class => "data_analysis"
+    =button_link_to "Manage File Types", edit_file_types_system_data_object_path(@system), :class => "file_type"
     =button_link_to "Manage Security", edit_security_system_data_object_path(@system), :class => "security_group"
 
 -# TODO: WORST CODE EVER!
@@ -64,6 +65,7 @@
       .information
         %span.bold Full Description:
         %p=@data_object.description
+
 
 #container_page_content.wrapper
   %h2 Contents

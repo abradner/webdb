@@ -44,6 +44,8 @@ end
       member do
         get :edit_security
         put :update_security
+        get :edit_file_types
+        put :update_file_types
       end
     end
     resources :security_groups

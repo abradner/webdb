@@ -1,0 +1,37 @@
+= render :partial => "shared/form_header", :locals => {:action => "edit", :obj => "Data Object File Types"}
+= render :partial => "shared/form_errors", :locals => {:obj => @data_object}
+
+= form_for [@system, @data_object], :url => update_file_types_system_data_object_path(@system)  do |f|
+  .lightbox
+    .field.line
+      %label File Types
+      %p Change enabled file types by adding to or removing from the right box.
+      .lastUnit
+        - unless @system.file_types.blank?
+          =field_set_tag do
+            = hidden_field_tag :list_selected, :id => "list_selected"
+            %div
+              #leftList
+                %p
+                  %strong Deselected
+                %select#leftSelect{:multiple => "multiple", :size => "10"}
+                  - @unselected_file_types.each do |u|
+                    %option{:value => u.id}=u.name
+              #middleButtons
+                #addRemoveButtons
+                  %button#addButton.button{:type => "button"} Add
+                  %button#removeButton.button{:type => "button"} Remove
+                #addAllRemoveAllButtons
+                  %button#addAllButton.button{:type => "button"} Add All
+                  %button#removeAllButton.button{:type => "button"} Remove All
+              #rightList
+                %p
+                  %strong Selected
+                %select#rightSelect{:multiple => "multiple", :size => "10"}
+                  - @data_object.file_types.each do |s|
+                    %option{:value => s.id}= s.name
+        - else
+          .error Can't set file types - none found!
+    .field.line
+      .field.actions
+        = f.submit :class => "blue basic_field"

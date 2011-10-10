@@ -5,6 +5,7 @@ class DataObject < ActiveRecord::Base
   belongs_to :system
   has_many :security_groups, :through => :data_object_security_groups
   has_many :data_object_security_groups, :dependent => :destroy
+  has_and_belongs_to_many :file_types
 
 
   validates :name, :presence => true

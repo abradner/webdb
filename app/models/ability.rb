@@ -100,6 +100,9 @@ class Ability
     can :create, DataObject, :system_id => system_administrations
     can :update, DataObject, :system_id => system_administrations
     can :edit_security, DataObject, :system_id => system_administrations #TODO admin security groups & administrators
+    can :update_security, DataObject, :system_id => system_administrations #TODO admin security groups & administrators
+    can :edit_file_types, DataObject, :system_id => system_administrations #TODO admin security groups & administrators
+    can :update_file_types, DataObject, :system_id => system_administrations #TODO admin security groups & administrators
 
     can :show, DataObject, :system_id => system_memberships
 
