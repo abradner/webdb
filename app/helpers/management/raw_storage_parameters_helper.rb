@@ -1,2 +1,0 @@
-module Management::RawStorageParametersHelper
-end

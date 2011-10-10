@@ -1,11 +1,12 @@
 class System < ActiveRecord::Base
 #  has_many :storage_types
   belongs_to :colour_scheme
-  belongs_to :raw_storage
+  belongs_to :storage
 #  has_many :file_data_types, :dependent => :destroy
   has_many :data_objects, :dependent => :destroy
+  has_many :security_groups, :dependent => :destroy
+  has_many :file_types, :dependent => :destroy
 
-  has_many :security_groups
 
   #See comment in User model on has_many :systems
   #belongs_to :user

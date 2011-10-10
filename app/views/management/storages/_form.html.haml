@@ -1,0 +1,26 @@
+= render :partial => "shared/form_header", :locals => {:action => action, :obj => "Raw Storage"}
+= render :partial => "shared/form_errors", :locals => {:obj => @storage}
+
+= form_for [:management, @storage] do |f|
+  .lightbox
+    .field.line
+      = f.label :name, required_field('Name:')
+      .lastUnit
+        = f.text_field :name, :class => "text basic_field", :placeholder => "The name of your system"
+    .field.line
+      = f.label :storage_type, required_field('Storage Type:')
+      .lastUnit
+        = f.hidden_field :storage_type, :value => "fs"
+        %p This is locked to 'fs' in this prototype.
+    .field.line
+      = f.label :location, required_field('Location:')
+      .lastUnit
+        = f.text_field :location, :class => "text basic_field", :placeholder => "Exact path on the fs to be used as RawStore root. include trailing /"
+    .field.line
+      .field.actions
+        = f.submit :class => "blue basic_field"
+
+%h2 Optional:
+%p can specify which systems can see each raw storage, or delegate that to each system's administrators.
+
+-#= render :partial => "shared/form_autocomplete_helper" , :locals => {:source => list_users_path(:format => :json) }

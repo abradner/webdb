@@ -13,26 +13,22 @@
   #container_page_details.right.flushright.details
     .entry
       %p
-        Code:
-        =@system.code
+        Info 1:
+        =0
 
     .entry
       %p
-        Colour scheme:
-        =@system.colour_scheme.present? ? @system.colour_scheme.name : "Default"
+        Info 2:
+        =0
 
 #container_page_actions.wrapper
   .unit
-    =button_link_to "Here's a button", "#", :class => "security_group"
-    =button_link_to "There's a button", "#", :class => "security_group"
-    =button_link_to "Fuzzy button", "#", :class => "security_group"
-    =button_link_to "Funny button", "#", :class => "security_group"
-    =button_link_to "Buttons buttons", "#", :class => "security_group"
-    =button_link_to "Cheesecake button", "#", :class => "security_group"
-    =button_link_to "Button Button", "#", :class => "security_group"
-    =button_link_to "", "#", :class => "duck"
+    =button_link_to "Import", "#", :class => "security_group"
+    =button_link_to "Metadata", "#", :class => "security_group"
+    =button_link_to "Data Analysis", "#", :class => "security_group"
+    =button_link_to "Manage Security", edit_security_system_data_object_path(@system), :class => "security_group"
 
--# WORST CODE EVER!
+-# TODO: WORST CODE EVER!
 #container_page_content.wrapper
   .unit.system_left_col
     %h3 Security:

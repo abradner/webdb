@@ -8,6 +8,7 @@ end
     resources :systems do
       post :create, :on => :member
     end
+    resources :storages
 
     resources :colour_schemes
     resource :overview do 
@@ -38,7 +39,13 @@ end
   end
 
   resources :systems do #, :only => [:show] do
-    resources :data_objects
+    resources :file_types
+    resources :data_objects do
+      member do
+        get :edit_security
+        put :update_security
+      end
+    end
     resources :security_groups
     member do
       get :list_members

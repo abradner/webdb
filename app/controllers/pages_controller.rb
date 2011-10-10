@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_filter :systems_and_memberships, :only => [:home]
+  before_filter :systems_and_memberships, :only => [:home, :routing_error]
 
   def home
   end

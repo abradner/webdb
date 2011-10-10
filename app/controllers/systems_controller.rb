@@ -1,4 +1,5 @@
 class SystemsController < ApplicationController
+  before_filter :authenticate_user!
   before_filter :systems_and_memberships #, :only => [:show, :index, :list_administrators, :list_collaborators, :list_members]
   load_and_authorize_resource :system
 

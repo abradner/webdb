@@ -6,6 +6,7 @@ class DataObjectsController < ApplicationController
   load_and_authorize_resource :data_object, :through => :system
 
   def new
+    prepare_unselected_sec_group
   end
 
   def create
@@ -17,27 +18,8 @@ class DataObjectsController < ApplicationController
   end
 
   def edit
+    prepare_unselected_sec_group
 
-    @unselected_sec_groups = @system.security_groups - @data_object.security_groups
-
-    unless Rails.env.production?
-      output = "Unselected Groups:\n"
-      @unselected_sec_groups.each do |u|
-        output << u.id << ": " << u.name << "\n"
-      end
-
-      output << "Selected Groups:\n"
-      @data_object.security_groups.each do |s|
-        output << s.id << ": " << s.name << "\n"
-      end
-
-      output << "All Groups:\n"
-      @system.security_groups.each do |a|
-        output << a.id << ": " << a.name << "\n"
-      end
-
-      Rails.logger.debug output
-    end
   end
 
   def update
@@ -62,5 +44,29 @@ class DataObjectsController < ApplicationController
   end
 
   def index
+  end
+
+  private
+
+  def prepare_unselected_sec_group
+    @unselected_sec_groups = @system.security_groups - @data_object.security_groups
+    unless Rails.env.production?
+      output = "Unselected Groups:\n"
+      @unselected_sec_groups.each do |u|
+        output << u.id << ": " << u.name << "\n"
+      end
+
+      output << "Selected Groups:\n"
+      @data_object.security_groups.each do |s|
+        output << s.id << ": " << s.name << "\n"
+      end
+
+      output << "All Groups:\n"
+      @system.security_groups.each do |a|
+        output << a.id << ": " << a.name << "\n"
+      end
+
+      Rails.logger.debug output
+    end
   end
 end
