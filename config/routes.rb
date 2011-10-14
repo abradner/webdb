@@ -41,6 +41,7 @@ end
   resources :systems do #, :only => [:show] do
     resources :file_types
     resources :data_objects do
+      resources :data_object_relationships
       member do
         get :edit_security
         put :update_security

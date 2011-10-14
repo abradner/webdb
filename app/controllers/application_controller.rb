@@ -1,6 +1,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  #check_authorization #TODO make sure this passes
+
+  
   # catch access denied and redirect to the home page
   rescue_from CanCan::AccessDenied do |exception|
     flash[:alert] = exception.message

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111010004239) do
+ActiveRecord::Schema.define(:version => 20111011020745) do
 
   create_table "colour_schemes", :force => true do |t|
     t.string   "name"
@@ -24,6 +24,13 @@ ActiveRecord::Schema.define(:version => 20111010004239) do
     t.string   "a_visited",  :limit => 6
     t.string   "a_active",   :limit => 6
     t.string   "a_hover",    :limit => 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "data_object_relationships", :force => true do |t|
+    t.integer  "data_object_id"
+    t.integer  "relative_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

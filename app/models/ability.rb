@@ -96,17 +96,25 @@ class Ability
     can :manage, FileType, :system_id => system_administrations
 
 
+
     # Data Object privileges
     can :create, DataObject, :system_id => system_administrations
     can :update, DataObject, :system_id => system_administrations
+
+    can :show, DataObject, :system_id => system_memberships
+    #can :read, DataObject, :system_id => system_administrations
+
+    #Data Object Relationship privileges
+    can :manage, DataObjectRelationship, :system_id => system_administrations ##TODO admin security groups (both objects )& administrators
+
+    #Data Object Security privileges
     can :edit_security, DataObject, :system_id => system_administrations #TODO admin security groups & administrators
     can :update_security, DataObject, :system_id => system_administrations #TODO admin security groups & administrators
+
+    #Data Object FileType privileges
     can :edit_file_types, DataObject, :system_id => system_administrations #TODO admin security groups & administrators
     can :update_file_types, DataObject, :system_id => system_administrations #TODO admin security groups & administrators
 
-    can :show, DataObject, :system_id => system_memberships
-
-    #can :read, DataObject, :system_id => system_administrations
 
   end
 end

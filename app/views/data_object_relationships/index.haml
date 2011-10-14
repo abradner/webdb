@@ -1,0 +1,50 @@
+#container_page_header.wrapper.clearfix
+  #container_page_title
+    -#TODO real, neat breadcrumb
+    %h2.title #{link_to @system.name, system_path(@system)} > #{link_to @data_object.name, system_data_object_path(@system, @data_object)} > Manage Relationships
+
+-# TODO: WORST CODE EVER!
+#container_page_content.wrapper
+  .unit.system_left_col
+    %h3 Links from this Data Object
+    .row.information
+      - @data_object.data_object_relationships.each do |link|
+        %span.bold= link.relative.name
+        %p Shared Fields, keys etc
+        %p= button_link_to "Remove Link", system_data_object_data_object_relationship_path(@system, @data_object, link), :method => "delete",
+                      :confirm =>"Sever outbound link?",
+                      :id => 'outbound_link_delete_link', :class => 'red'
+
+  .unit.system_left_col
+    %h3 Linking to this object
+    .row.information
+      - @data_object.inverse_data_object_relationships.each do |link|
+        %span.bold= link.relative.name
+        %p Shared Fields, keys etc
+        %p= button_link_to "Manage Target Data Object", system_data_object_path(@system, link.data_object)
+
+
+  -#.lastUnit.system_right_col
+  -#  .left.line
+  -#    %h3 System Information:
+  -#  .information
+  -#    %span.bold Summary:
+  -#    %p=@data_object.short_description
+  -#  - if @data_object.description.present?
+  -#    .information
+  -#      %span.bold Full Description:
+  -#      %p=@data_object.description
+
+
+#container_page_content.wrapper
+= render :partial => "shared/form_errors", :locals => {:obj => @data_object}
+
+= form_for [@system, @data_object, @data_object_relationship] do |f|
+  .lightbox
+    .field.line
+      = f.label :colour_scheme_id, "New Link:"
+      .lastUnit
+        = f.select :relative_id, options_from_collection_for_select(@data_object.unrelated, :id, :name)
+    .field.line
+      .field.actions
+        = f.submit :class => "blue basic_field"

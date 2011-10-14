@@ -7,6 +7,11 @@ class DataObject < ActiveRecord::Base
   has_many :data_object_security_groups, :dependent => :destroy
   has_and_belongs_to_many :file_types
 
+  has_many :data_object_relationships, :dependent => :destroy
+  has_many :relatives, :through => :data_object_relationships
+
+  has_many :inverse_data_object_relationships, :class_name => "DataObjectRelationship", :foreign_key => "relative_id"
+  has_many :inverse_relatives, :through => :inverse_data_object_relationships, :source => :data_object
 
   validates :name, :presence => true
   validates_uniqueness_of :name, :case_sensitive => false, :scope => :system_id, :message => "has been taken in this system"
@@ -17,6 +22,11 @@ class DataObject < ActiveRecord::Base
 
   before_validation do
     name.strip! if name
+  end
+
+  def unrelated
+    ids = System.find(self.system_id).data_object_ids - self.relative_ids - Array(self.id)
+    DataObject.find(ids)
   end
 
 end

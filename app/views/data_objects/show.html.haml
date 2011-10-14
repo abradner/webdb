@@ -23,14 +23,28 @@
 
 #container_page_actions.wrapper
   .unit
-    =button_link_to "Import", "#", :class => "security_group"
-    =button_link_to "Metadata", "#", :class => "security_group"
-    =button_link_to "Data Analysis", "#", :class => "data_analysis"
+    =button_link_to "X Import", "#", :class => ""
+    =button_link_to "X Metadata", "#", :class => ""
+    =button_link_to "X Data Analysis", "#", :class => "data_analysis"
     =button_link_to "Manage File Types", edit_file_types_system_data_object_path(@system), :class => "file_type"
     =button_link_to "Manage Security", edit_security_system_data_object_path(@system), :class => "security_group"
+    =button_link_to "Manage Dataset Links", system_data_object_data_object_relationships_path(@system, @data_object), :class => "data_object_links"
+
 
 -# TODO: WORST CODE EVER!
 #container_page_content.wrapper
+  .unit.system_left_col
+    %h3 External Data Relationships
+    .row.information
+      %span.bold Linked Data Objects:
+      %ul
+        - @data_object.relatives.each do |rel|
+          %li=link_to rel.name, system_data_object_path(@system, rel)
+      %span.bold Data Objects Linking to this:
+      %ul
+        - @data_object.inverse_relatives.each do |irel|
+          %li=link_to irel.name, system_data_object_path(@system, irel)
+
   .unit.system_left_col
     %h3 Security:
     .row.information
