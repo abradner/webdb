@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   # Include devise modules
   devise :database_authenticatable, :registerable, :lockable, :recoverable, :trackable, :validatable, :timeoutable
+  include Tenacity
 
   belongs_to :role
 
@@ -29,6 +30,7 @@ class User < ActiveRecord::Base
            :class_name => 'System',
            :source => :system
 
+  t_has_many :raw_storage_containers
 
   # Setup accessible attributes (status/approved flags should NEVER be accessible by mass assignment)
   attr_accessible :email, :password, :password_confirmation, :first_name, :last_name

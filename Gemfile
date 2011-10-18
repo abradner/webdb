@@ -62,8 +62,6 @@ gem 'mysql'
 gem 'sqlite3'
 gem 'mongoid'
 
-gem 'carrierwave'
-gem 'carrierwave-mongoid', :require => "carrierwave/mongoid"
 
 gem 'haml'
 gem "haml-rails"
@@ -79,7 +77,11 @@ gem 'system_timer'
 #gem 'nested_form'
 #gem 'rails3-jquery-autocomplete'
 
+gem 'tenacity'
 
 # File handling
-gem 'paperclip'
+#gem 'paperclip'
+gem 'carrierwave' # file upload
+gem 'carrierwave-mongoid', :require => "carrierwave/mongoid"
 gem 'remotipart' #ajax upload
+gem 'mini_magick' # Image processing

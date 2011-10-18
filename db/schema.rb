@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111011020745) do
+ActiveRecord::Schema.define(:version => 20111018021614) do
 
   create_table "colour_schemes", :force => true do |t|
     t.string   "name"
@@ -24,6 +24,13 @@ ActiveRecord::Schema.define(:version => 20111011020745) do
     t.string   "a_visited",  :limit => 6
     t.string   "a_active",   :limit => 6
     t.string   "a_hover",    :limit => 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "data_object_files", :force => true do |t|
+    t.integer  "data_object_id"
+    t.string   "raw_storage_container_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -127,11 +134,12 @@ ActiveRecord::Schema.define(:version => 20111011020745) do
 
   create_table "systems", :force => true do |t|
     t.string   "name"
-    t.string   "code",             :limit => 12
+    t.string   "code",                     :limit => 12
     t.integer  "colour_scheme_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "description",      :limit => 255
+    t.text     "description",              :limit => 255
+    t.string   "raw_storage_container_id"
   end
 
   create_table "user_security_groups", :id => false, :force => true do |t|

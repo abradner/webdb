@@ -1,4 +1,5 @@
 class System < ActiveRecord::Base
+  include Tenacity
 #  has_many :storage_types
   belongs_to :colour_scheme
   belongs_to :storage
@@ -6,7 +7,11 @@ class System < ActiveRecord::Base
   has_many :data_objects, :dependent => :destroy
   has_many :security_groups, :dependent => :destroy
   has_many :file_types, :dependent => :destroy
+  has_many :storages, :through => :file_types #TODO this is going to be slow
 
+  has_many :file_containers, :class_name => "SystemFile"
+
+  t_has_many :raw_storage_containers 
 
   #See comment in User model on has_many :systems
   #belongs_to :user
@@ -44,7 +49,13 @@ class System < ActiveRecord::Base
     name.strip! if name
   end
 
+  def files
+    raw_storage_container_id
+  end
 
+  def file(object_id)
+
+  end
  # scope :partial_systems, joins(:users).
 
 
