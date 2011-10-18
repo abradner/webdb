@@ -9,7 +9,7 @@ class System < ActiveRecord::Base
   has_many :file_types, :dependent => :destroy
   has_many :storages, :through => :file_types #TODO this is going to be slow
 
-  has_many :file_containers, :class_name => "SystemFile"
+  #has_many :file_containers, :class_name => "SystemFile"
 
   t_has_many :raw_storage_containers 
 

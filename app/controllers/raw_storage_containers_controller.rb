@@ -1,0 +1,2 @@
+class RawStorageContainersController < ApplicationController
+end

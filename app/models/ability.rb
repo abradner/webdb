@@ -54,7 +54,7 @@ class Ability
       can :activate_deactivate, User
       can :approve, User
       can :reject, User
-     #can :manage, System
+      can :manage, System
 
       can :create, System
       can :update, System

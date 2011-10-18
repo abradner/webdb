@@ -10,7 +10,7 @@ class DataObjectsController < ApplicationController
   end
 
   def create
-    params[:data_object][:security_group_ids] = params[:list_selected].split ","
+    params[:data_object][:security_group_ids] = params[:list_selected].split "," unless params[:data_object][:security_group_ids].blank?
     if @data_object.save
       redirect_to system_path(@system), :notice => "The Data Object has been created."
     else
