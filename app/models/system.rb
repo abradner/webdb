@@ -11,7 +11,7 @@ class System < ActiveRecord::Base
 
   #has_many :file_containers, :class_name => "SystemFile"
 
-  t_has_many :raw_storage_containers 
+  t_has_many :raw_storage_containers, :dependent => :destroy
 
   #See comment in User model on has_many :systems
   #belongs_to :user
@@ -44,6 +44,8 @@ class System < ActiveRecord::Base
   validates_uniqueness_of :name, :case_sensitive => false
   validates_length_of :name, :maximum => 255
   validates_length_of :description, :maximum => 5000
+
+  #updated_by
 
   before_validation do
     name.strip! if name

@@ -7,6 +7,7 @@ class Role < ActiveRecord::Base
 
   scope :by_name, order('name')
   scope :superuser_roles, where(:name => 'manager')
+  #updated_by
 
   def has_permission(entity, action)
     permissions.each do |perm|

@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/jweslley/nested_form.git
+  revision: 74ba19cb7a14907c84e3f50434922c8be5b1ab94
+  specs:
+    nested_form (0.1.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -264,6 +270,7 @@ GEM
       ffi (>= 1.0.7)
       json_pure
       rubyzip
+    settingslogic (2.0.6)
     sexp_processor (3.0.7)
     shoulda (2.11.3)
     simplecov (0.5.3)
@@ -325,12 +332,14 @@ DEPENDENCIES
   mini_magick
   mongoid
   mysql
+  nested_form!
   rails (= 3.1.0)
   rails3-generators
   remotipart
   rspec-rails
   ruby-debug
   sass-rails (~> 3.1.0)
+  settingslogic
   shoulda
   simplecov (>= 0.3.8)
   sqlite3

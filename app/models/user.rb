@@ -46,6 +46,8 @@ class User < ActiveRecord::Base
 
   before_validation :initialize_status
 
+  #cattr_accessor :current_user
+
   scope :pending_approval, where(:status => 'U').order(:email)
   scope :approved, where(:status => 'A').order(:email)
   scope :deactivated_or_approved, where("status = 'D' or status = 'A' ").order(:email)

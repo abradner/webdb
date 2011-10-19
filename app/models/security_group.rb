@@ -15,6 +15,7 @@ class SecurityGroup < ActiveRecord::Base
   validates_length_of :name, :maximum => 255
   validates_length_of :short_description, :maximum => 512
 
+  #updated_by
 
   before_validation do
     name.strip! if name

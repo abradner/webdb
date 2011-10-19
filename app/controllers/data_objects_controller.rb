@@ -7,6 +7,7 @@ class DataObjectsController < ApplicationController
 
   def new
     prepare_unselected_sec_group
+    AppConfig.attribute_types
   end
 
   def create

@@ -2,6 +2,17 @@ defaults: &defaults
   password_reset_email_sender: pwd-reset@intersect.org.au
   account_request_user_status_email_sender: account-status@intersect.org.au
   account_request_admin_notification_sender: account-request@intersect.org.au
+  attribute_types: # Used for Data Object Attributes
+    DateTime: Date & Time
+    Char: Single Character
+    String: String (Sentences of text)
+    Text: Paragraphs of text
+    Integer: Integer Value
+    Float: Decimal Value
+    Multi: Checkbox (Multi-select)
+    Radio: Radio Button (Single-select)
+    Select: Drop-down List (Single-select)
+    Blob: File Input
 
 development:
   <<: *defaults

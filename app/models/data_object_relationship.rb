@@ -6,4 +6,5 @@ class DataObjectRelationship < ActiveRecord::Base
   validates_presence_of :relative_id
   validates_presence_of :data_object_id
 
+  #updated_by
 end

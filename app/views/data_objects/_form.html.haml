@@ -1,8 +1,9 @@
 = render :partial => "shared/form_header", :locals => {:action => action, :obj => "Data Object"}
 = render :partial => "shared/form_errors", :locals => {:obj => @data_object}
 
-= form_for [@system, @data_object] do |f|
+= nested_form_for [@system, @data_object] do |f|
   .lightbox
+    %h3 Information
     .field.line
       = f.label :name, required_field('Name:')
       .lastUnit
@@ -15,6 +16,11 @@
       = f.label :description, 'Description:'
       .lastUnit
         = f.text_area :description, :class => "text description_field", :placeholder => "A detailed description of your data object"
+    .field.line
+      = f.label :description, 'Columns To Display:'
+      .lastUnit
+        = "#TODO" #f.text_area :description, :class => "text description_field", :placeholder => "A detailed description of your data object"
+    %h3 Security
     .field.line
       %label Security Groups
       %p Change user access by adding (to the right box) or remove (from the right box).
@@ -44,6 +50,50 @@
                     %option{:value => a.id}= a.name
         - else
           .error Can't set permissions - no security groups found!
+
+    .field.line
+      %h3 Attributes
+      .lastUnit
+        =f.link_to_add "<span>Add</span>".html_safe, :data_object_attributes, :class => "add button"
+      .lastUnit
+        -f.fields_for :data_object_attributes do |attr|
+          .field.line
+            .lastUnit
+              = attr.link_to_remove "Remove", :class => "button red"
+              Attribute #{attr.id} (#TODO human readable)
+          .field.line
+            %label= required_field("Attribute Information:")
+            .lastUnit
+              = attr.text_field :name, :class => "small_text basic_field", :placeholder => "Attribute Name (max 45 chars)"
+            .lastUnit
+              = attr.text_field :label, :class => "small_text basic_field", :placeholder => "Display Label (max 255 chars)"
+          .field.line
+            %label= required_field("Attribute Parameters")
+            .lastUnit
+              = "Attribute Type: "
+              = attr.select :type, options_for_select(AppConfig.attribute_types.invert)
+            .lastUnit
+              = attr.text_field :length, :class => "small_text basic_field", :placeholder => "Length or Decimal Places"
+          .field.line
+            %label= required_field("Attribute Options:")
+            .lastUnit
+              = attr.label :editable, "Editable?"
+              = attr.check_box :editable, :default => true
+            .lastUnit
+              = attr.label :is_id, "Is an ID?"
+              = attr.check_box :is_id, :default => false
+            .lastUnit
+              = attr.label :required, "Required?"
+              = attr.check_box :required, :default => false
+          .field.line
+            %label= required_field("Display Column:")
+            .lastUnit
+              \#TODO (Draw with JS)
+        -#.field.line
+        -#  = f.label :description, 'Description:'
+        -#  .lastUnit
+        -#    = f.text_area :description, :class => "text description_field", :placeholder => "A detailed description of your data object"
+    %h3 Save
     .field.line
       .field.actions
         = f.submit :class => "blue basic_field"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111018021614) do
+ActiveRecord::Schema.define(:version => 20111019063028) do
 
   create_table "colour_schemes", :force => true do |t|
     t.string   "name"
@@ -24,6 +24,20 @@ ActiveRecord::Schema.define(:version => 20111018021614) do
     t.string   "a_visited",  :limit => 6
     t.string   "a_active",   :limit => 6
     t.string   "a_hover",    :limit => 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "data_object_attributes", :force => true do |t|
+    t.integer  "data_object_id"
+    t.string   "name",           :limit => 45
+    t.string   "label"
+    t.string   "attribute_type", :limit => 45
+    t.integer  "length"
+    t.boolean  "required",                     :default => false
+    t.boolean  "is_id",                        :default => false
+    t.boolean  "editable",                     :default => true
+    t.integer  "column"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -61,6 +75,7 @@ ActiveRecord::Schema.define(:version => 20111018021614) do
     t.integer  "system_id"
     t.text     "description"
     t.string   "short_description", :limit => 512
+    t.integer  "display_columns"
   end
 
   create_table "data_objects_file_types", :id => false, :force => true do |t|
@@ -141,6 +156,17 @@ ActiveRecord::Schema.define(:version => 20111018021614) do
     t.text     "description",              :limit => 255
     t.string   "raw_storage_container_id"
   end
+
+  create_table "updated_actions", :force => true do |t|
+    t.integer  "updated_id"
+    t.string   "updated_type"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "updated_actions", ["updated_id", "updated_type"], :name => "index_updated_actions_on_updated_id_and_updated_type"
 
   create_table "user_security_groups", :id => false, :force => true do |t|
     t.integer  "user_id",           :null => false
