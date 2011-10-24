@@ -54,6 +54,7 @@ class User < ActiveRecord::Base
   scope :approved_superusers, joins(:role).merge(User.approved).merge(Role.superuser_roles)
 
   #TODO: use metasearch
+  #TODO: sql injection vector?
   def self.potential_members(name_part)
     escaped_name_part = name_part.gsub('%', '\%').gsub('_', '\_')
     name_start = escaped_name_part + '%'

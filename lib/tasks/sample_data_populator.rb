@@ -11,11 +11,15 @@ def create_test_users
   create_user(:email => "shuqian@intersect.org.au", :first_name => "Shuqian", :last_name => "Hon")
   create_user(:email => "alexb@intersect.org.au", :first_name => "Alex", :last_name => "Bradner")
   create_user(:email => "marc@intersect.org.au", :first_name => "Marc", :last_name => "Ziani De Ferranti")
+  create_user(:email => "antoni.piotrowski@sydney.edu.au", :first_name => "Antoni", :last_name => "Piotrowski")
+  create_user(:email => "khoa.nguyen@sydney.edu.au", :first_name => "Khoa", :last_name => "Nguyen")
   create_unapproved_user(:email => "unapproved1@intersect.org.au", :first_name => "Unapproved", :last_name => "One")
   create_unapproved_user(:email => "unapproved2@intersect.org.au", :first_name => "Unapproved", :last_name => "Two")
   set_role("shuqian@intersect.org.au", "manager")
   set_role("alexb@intersect.org.au", "manager")
   set_role("marc@intersect.org.au", "manager")
+  set_role("antoni.piotrowski@sydney.edu.au", "manager")
+  set_role("khoa.nguyen@sydney.edu.au", "manager")
 
 end
 
