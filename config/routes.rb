@@ -39,14 +39,21 @@ end
   end
 
   resources :systems do #, :only => [:show] do
-    resources :file_types
+    resources :file_types do
+      resources :raw_storage_containers
+    end
     resources :data_objects do
       resources :data_object_relationships
+      resources :data_object_attributes
+      resources :data_object_file_types
+      resources :data_object_security_settings
       member do
-        get :edit_security
-        put :update_security
-        get :edit_file_types
-        put :update_file_types
+        #get :edit_security
+        #get :edit_file_types
+        #get :edit_attributes
+        #put :update_security
+        #put :update_file_types
+        #put :update_attributes
       end
     end
     resources :security_groups

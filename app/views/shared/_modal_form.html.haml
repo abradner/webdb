@@ -1,0 +1,10 @@
+= image_tag "btn_close_x.png", :border => 0, :class => 'lightbox_close_icon jqmClose', :alt =>'Cancel', :id => 'close_modal'
+
+%h2
+  = modal_title
+
+#form_errors_container.hidden
+  = render :partial => "shared/form_errors", :locals => {:obj => obj}
+#modal_flash
+  - if flash[:notice]
+    %p#notice= flash[:notice]

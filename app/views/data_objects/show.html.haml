@@ -5,7 +5,7 @@
 
   #container_page_buttons.right
     -if can? :admin, User
-      =button_link_to "Edit", edit_system_data_object_path(@system)
+      =button_link_to "Edit", edit_system_data_object_path(@system), :remote => true
       =button_link_to "Delete", system_data_object_path, :method => "delete",
                             :confirm =>"Are you sure you want to delete this Data Object and all related data?",
                             :id => 'data_object_delete_link', :class => 'red'
@@ -26,8 +26,8 @@
     =button_link_to "X Import", "#", :class => ""
     =button_link_to "X Metadata", "#", :class => ""
     =button_link_to "X Data Analysis", "#", :class => "data_analysis"
-    =button_link_to "Manage File Types", edit_file_types_system_data_object_path(@system), :class => "file_type"
-    =button_link_to "Manage Security", edit_security_system_data_object_path(@system), :class => "security_group"
+    -#=button_link_to "Manage File Types", system_data_object_file_types_path(@system, @data_object), :class => "file_type"
+    -#=button_link_to "Manage Security", system_data_object_security_settings_path(@system, @data_object), :class => "security_group"
     =button_link_to "Manage Dataset Links", system_data_object_data_object_relationships_path(@system, @data_object), :class => "data_object_links"
 
 
@@ -80,8 +80,22 @@
         %span.bold Full Description:
         %p=@data_object.description
 
+-#TODO Move this
+- cols = Array.new
+- @data_object.data_object_attributes.each do |attr|
+  - if attr.column.present?
+    -cols[attr.column] = attr
+
+
 
 #container_page_content.wrapper
   %h2 Contents
-  - if true #TODO @data_object.things
-    %p Nothing here! This is where data object fields would be displayed.
+  %span
+    %table{:width => "100%"}
+      %tr
+        - @data_object.display_columns.times do |n|
+          %td{:align => "center", :width => "#{100 / @data_object.display_columns}%", "data-id" => n }
+            - if cols[n+1].present?
+              %h3= cols[n+1].name
+            - else
+              %h3 Empty Column!

@@ -15,11 +15,14 @@ class DataObject < ActiveRecord::Base
 
   has_many :data_object_attributes
 
+  scope :inactive, where(:is_active => false)
+  scope :active, where(:is_active => true)
+
   accepts_nested_attributes_for :data_object_attributes, :allow_destroy => true, :reject_if => :all_blank
 
-  validates :name, :presence => true
+  validates :name, :presence => true #, :if => Proc.new { |d| d.is_active?}
   validates_uniqueness_of :name, :case_sensitive => false, :scope => :system_id, :message => "has been taken in this system"
-  validates :short_description, :presence => true
+  validates :short_description, :presence => true #, :if => Proc.new { |d| d.is_active?}
   validates_length_of :name, :maximum => 255
   validates_length_of :description, :maximum => 5000
   validates_length_of :short_description, :maximum => 512

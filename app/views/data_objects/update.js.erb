@@ -1,0 +1,2 @@
+<% partial = @errors ?  "shared/process_modal_errors" : "data_object_attributes/edit" %>
+<%= render :partial => partial, :locals => {:obj => @data_object} %>

@@ -1,0 +1,58 @@
+=render :partial => 'shared/modal_form', :locals => {:obj => @data_object_attribute, :modal_title => "Build Data Object 2/3: Attributes"}
+
+#attribute_display_container
+  = render :partial => 'data_object_attributes/attribute_display'
+
+
+.field.line
+  .field.actions
+    #add_attribute_button.button.add
+      %span Add Attribute
+
+#new_attribute_container.hidden
+  = render :partial => 'data_object_attributes/form_innards'
+
+
+#bottom_actions_container
+  .field.line
+    .field.actions
+      = button_link_to "Back", edit_system_data_object_path(@system, @data_object), :remote => true
+      = link_to "Continue", system_data_object_data_object_security_settings_path(@system, @data_object), :remote => true, :class => "blue basic_field"
+
+:javascript
+  jQuery(function() {
+    $("#add_attribute_button").click(function() {
+        $(this).slideToggle();
+        $("#bottom_actions_container").slideToggle();
+        $("#new_attribute_container").slideToggle();
+    });
+
+    $("#cancel_attribute_button").click(function() {
+        $("#add_attribute_button").slideToggle();
+        $("#bottom_actions_container").slideToggle();
+        $("#new_attribute_container").slideToggle();
+    });
+
+    $('.draggable').draggable({
+        revert:true,
+        helper:'clone',
+        opacity: 0.5
+    });
+
+    $('.column').droppable({
+        activeClass: 'dropActive',
+        drop: function(event,ui){
+          event.stopPropagation();
+          ui.helper.hide();
+          var $drag = $(ui.draggable),
+              $drop = $(this),
+              $data = {};
+
+          $(this).html("<span class=\"attribute_label\">" + $drag.data('id') + '-' + $drag.text() + "</div>");
+          //$(this).addClass("attribute_column");
+
+        }
+    });
+
+  });
+

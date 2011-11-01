@@ -5,7 +5,47 @@
 // the compiled file.
 //
 //= require jquery
-//= require nested_form/jquery
+//= require jquery-ui
 //= require jquery_ujs
+//= require jqModal
+//= require selectToUISlider.jQuery
+//= require nested_form/jquery
 //= require jquery.remotipart
-//= require_tree .
+//= require_self
+// #= require_tree .
+
+$(document).ready(function() {
+    setTimeout(function() {
+        // Appear/Disappear
+        $('.expandable > li > a.expanded').parent().find('> ul').show();
+        $('.expandable a[id="arrow"]').click(function() {
+            $(this).toggleClass('expanded').toggleClass('collapsed').parent().find('> ul').toggle();
+        });
+    }, 250);
+});
+
+$(function() {
+    $('[id^=show_][id$=_wizard]').click(function() {
+        $(this).addClass('ac_loading');
+    });
+
+    $('#back_button').live('click', function() {
+        $(this).addClass('ac_loading');
+    });
+
+    $('input[type=submit]', '#wizard').live('click', function() {
+        $(this).addClass('ac_loading');
+    });
+
+    $('form', '#wizard').live('submit', function() {
+        $('.basic_field').attr('disabled', 'disabled');
+        $('.remove_button').css('visibility', 'hidden');
+    });
+
+    $(document).keydown(function(e) {
+        if (e.which == 27) {  // escape, close box
+            $('#close_modal').click();
+        }
+    });
+
+});

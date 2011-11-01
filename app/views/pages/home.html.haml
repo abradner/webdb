@@ -2,3 +2,23 @@
 - if !user_signed_in?
   = form_for("user", :url => user_session_path) do |f|
     = render(:partial => 'devise/sessions/form', :locals => { :f => f })
+- else
+  %h2 Your Systems
+  %p &nbsp;
+  - @memberships.each do |s|
+    #container_page_content.wrapper
+      .unit.system_left_col{:style => "width: 250px"}
+        %h3.truncate{:style =>"overflow: hidden; text-overflow: ellipsis;"}=link_to s.name, system_path(s)
+        .row.information
+          %ul
+            - s.data_objects.each do |dobj|
+              %p.details= link_to dobj.name, system_data_object_path(s, dobj)
+            - if s.data_objects.blank?
+              %p.details Empty
+          %p &nbsp;
+
+      .lastUnit.system_right_col
+        .left.line
+          %h3.light Details
+        .information
+          %p=s.description

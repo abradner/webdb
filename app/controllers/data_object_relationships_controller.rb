@@ -1,7 +1,7 @@
 class DataObjectRelationshipsController < ApplicationController
 
   before_filter :authenticate_user!
-  before_filter :systems_and_memberships, :only => [:index, :new, :create, :show, :edit, :update] #TODO remove the viewless actions
+  before_filter :systems_and_memberships, :only => [:index, :edit]
 
   load_and_authorize_resource :system
   

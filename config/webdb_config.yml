@@ -13,15 +13,21 @@ defaults: &defaults
     Radio: Radio Button (Single-select)
     Select: Drop-down List (Single-select)
     Blob: File Input
+  file_locations:
+    database: db
+    filesystem: fs
 
 development:
+  raw_storage_root_path: /tmp
   <<: *defaults
 
 test:
+  raw_storage_root_path: /tmp/test
   <<: *defaults
 
 production:
+  raw_storage_root_path: /
   <<: *defaults
 
 qa:
-  <<: *defaults
+  <<: *production

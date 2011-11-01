@@ -1,27 +1,9 @@
-/* overrides */
-#header
-  .container
-    padding: 0, 10px
-  .logo
-    height: 63px
-    width: 180px
-    margin: 13px 0 0 0
-    padding: 0
-
-#notice
-  color: #000
-#alert
-  padding: 18px 20px 18px 40px
-  margin: 10px 20px
-
-.lightbox
-  background: transparent
-
-.lightbox .actions
-  text-align: left
-
 
 /* additional styles */
+
+.hidden
+  display: none
+
 .italic
   font-style: italic
 
@@ -35,6 +17,12 @@
 .small_desc_field
   min-height: 40px
   line-height: 20px
+
+.lightbox_close_icon
+  width: 48x
+  background: transparent
+  margin-bottom: -3px
+
 
 .wrapper
   margin: 0 auto
@@ -68,6 +56,9 @@
   _left: -3px
   _margin-right: -3px
 
+.scrollbar
+  width: 200px
+  padding: 10px
 
 #container_right_content
   margin: 0 auto
@@ -308,25 +299,25 @@ ul#members_list
 .add span
   //* Add button icon
   padding: 0 0 0 20px
-  background: url('../assets/ICON_VECTOR_12_PLUS_000000.png') no-repeat left center
+  background: asset-url('ICON_VECTOR_12_PLUS_000000.png', image) no-repeat left center
   line-height: 18px
 
 .edit span
   //* Edit button icon
   padding: 0 0 0 20px
-  background: url('../assets/ICON_VECTOR_12_EDIT_000000.png') no-repeat left center
+  background: asset-url('ICON_VECTOR_12_EDIT_000000.png', image) no-repeat left center
   line-height: 18px
 
 .down span
   //* Down button icon
   padding: 0 0 0 20px
-  background: url('../assets/ICON_VECTOR_12_ARROW_STALK_DOWN_000000.png') no-repeat left center
+  background: asset-url('ICON_VECTOR_12_ARROW_STALK_DOWN_000000.png', image) no-repeat left center
   line-height: 18px
 
 .delete span
   //* Delete button icon
   padding: 0 0 0 20px
-  background: url('../assets/ICON_VECTOR_12_DEL_000000.png') no-repeat left center
+  background: asset-url('ICON_VECTOR_12_DEL_000000.png', image) no-repeat left center
   line-height: 18px
 
 // BUTTONS - PROJECT / EXPERIMENT / SAMPLE / DATASET
@@ -335,44 +326,50 @@ ul#members_list
 .data_object span
   //* Experiment button icon
   padding: 0 0 0 25px
-  background: url('../assets/ICON_VECTOR_12_EXP_000000.png') no-repeat left center
+  background: asset-url('ICON_VECTOR_12_EXP_000000.png', image) no-repeat left center
   line-height: 18px
 
 .data_analysis span
   //* Experiment button icon
   padding: 0 0 0 25px
-  background: url('../assets/ICON_VECTOR_12_EXP_000000.png') no-repeat left center
+  background: asset-url('ICON_VECTOR_12_EXP_000000.png', image) no-repeat left center
   line-height: 18px
 
 .manage_system span
   //* Experiment button icon
   padding: 0 0 0 25px
-  background: url('../assets/ICON_VECTOR_12_EXP_000000.png') no-repeat left center
+  background: asset-url('ICON_VECTOR_12_EXP_000000.png', image) no-repeat left center
   line-height: 18px
 
 .file_type span
   //* Sample button icon
   padding: 0 0 0 25px
-  background: url('../assets/ICON_VECTOR_12_DOCSTACK_000000.png') no-repeat left center
+  background: asset-url('ICON_VECTOR_12_DOCSTACK_000000.png', image) no-repeat left center
+  line-height: 18px
+
+.attribute_label
+  //* Sample button icon
+  padding: 0 0 0 25px
+  background: asset-url('ICON_VECTOR_12_DOCSTACK_000000.png', image) no-repeat left center
   line-height: 18px
 
 .security_group span
   //* Dataset button icon
   padding: 0 0 0 25px
-  background: url('../assets/ICON_VECTOR_12_DOC_000000.png') no-repeat left center
+  background: asset-url('ICON_VECTOR_12_DOC_000000.png', image) no-repeat left center
   line-height: 18px
 
 .duck span
   //* Dataset button icon
   padding: 0 0 0 25px
-  background: url('../assets/ICON_VECTOR_12_DUCK_000000.gif') no-repeat left center
+  background: asset-url('ICON_VECTOR_12_DUCK_000000.gif', image) no-repeat left center
   line-height: 18px
 
 .remove_button
   //* Remove button icon
   margin: 0
   padding: 15px 20px 0px 0
-  background: url('../assets/ICON_VECTOR_12_DEL_000000.png') no-repeat right center
+  background: asset-url('ICON_VECTOR_12_DEL_000000.png', image) no-repeat right center
   font: normal normal bold 1em Helvetica, Arial, sans-serif
   color: #000
   text-decoration: none

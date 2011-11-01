@@ -1,0 +1,23 @@
+%li#system_item{:class => is_current_system?(system) ? "open" : "closed"}
+  - if system.data_objects.present?
+    %a#arrow{:class => is_current_system?(system) ? "expanded" : "collapsed"}  
+    = link_to system.name, system #, :id => "system_#{system.id}", :title => system.name, :class => [system_class, is_current_system?(system) ? "current" : ""]
+    %span{:class => system_class}
+    / Data Object level
+    - system.data_objects.each do |dobj|
+      %ul#system_dobj.expandable
+        %li
+          -# if dobj.samples.present? #TODO support for raw_data inside dobj?
+            %a#arrow.expanded  
+          -# else
+            %span.dobj_empty
+          = link_to dobj.name, system_data_object_path(system, dobj) #, :id => "dobj_#{dobj.id}", :title => dobj.name, :class => ["system_dobj", is_current_dobj?(dobj) ? "current" : ""]
+          -#/ Sample level
+          -#= render :partial => 'shared/sample_list', :locals => {:system => system, :samples => dobj.samples}
+    / end data object
+    -#= render :partial => 'shared/sample_list', :locals => {:system => system, :samples => system.samples}
+  - else
+    %span.system_empty  
+    = link_to system.name, system #, :id => "system_#{system.id}", :title => system.name, :class => [system_class, "system_empty", is_current_system?(system) ? "current" : ""]
+    %span{:class => system_class}
+    

@@ -1,0 +1,14 @@
+= render :partial => "shared/form_header", :locals => {:action => action, :obj => "Data Object"}
+= render :partial => "shared/form_errors", :locals => {:obj => @data_object}
+
+  = nested_form_for [@system, @data_object] do |f|
+    %h3 Information
+    = render :partial => "form", :locals => {:f => f}
+    %h3 Security
+    = render :partial => "form_security", :locals => {:f => f}
+    %h3 Attributes
+    = render :partial => "form_attributes_old", :locals => {:f => f}
+    %h3 Save
+    .field.line
+      .field.actions
+        = f.submit :class => "blue basic_field"

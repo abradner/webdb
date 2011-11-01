@@ -1,0 +1,4 @@
+$('#wizard').jqmHide();
+$('#wizard').html('<%= escape_javascript(render :partial => 'data_object_attributes/form' ) %>');
+$('#wizard').jqmShow();
+$('[id^=show_][id$=_wizard]').removeClass('ac_loading');

@@ -3,7 +3,16 @@ class ApplicationController < ActionController::Base
 
   #check_authorization #TODO make sure this passes
 
-  
+  layout :layout_by_resource
+
+  def layout_by_resource
+    if devise_controller?
+      "guest"
+    else
+      "application"
+    end
+  end
+
   # catch access denied and redirect to the home page
   rescue_from CanCan::AccessDenied do |exception|
     flash[:alert] = exception.message

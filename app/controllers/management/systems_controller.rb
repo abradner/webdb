@@ -4,6 +4,8 @@ class Management::SystemsController < ApplicationController
 
   load_and_authorize_resource :system
 
+  layout 'management'
+
   def new
     @colour_schemes = ColourScheme.all
   end

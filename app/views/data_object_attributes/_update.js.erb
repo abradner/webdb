@@ -1,0 +1,32 @@
+<%= render :partial => "shared/process_modal_errors", :locals => {:obj => @data_object_attribute} if @errors %>
+$('#attribute_display_container').html('<%= escape_javascript(render :partial => 'data_object_attributes/attribute_display' ) %>');
+<% unless @errors %>
+    $("#add_attribute_button").slideToggle();
+    $("#bottom_actions_container").slideToggle();
+    $("#new_attribute_container").slideToggle();
+    $("#form_errors_container").slideUp();
+    $('.basic_field').removeAttr('disabled');
+
+    //#TODO Make this into a function that can be called rather than sending the whole js back
+    $('.draggable').draggable({
+        revert:true,
+        helper:'clone',
+        opacity: 0.5
+    });
+
+    $('.column').droppable({
+        activeClass: 'dropActive',
+        drop: function(event,ui){
+          event.stopPropagation();
+          ui.helper.hide();
+          var $drag = $(ui.draggable),
+              $drop = $(this),
+              $data = {};
+
+          $(this).html("<span class=\"attribute_label\">" + $drag.data('id') + '-' + $drag.text() + "</div>");
+          //$(this).addClass("attribute_column");
+
+        }
+    });
+
+<% end %>

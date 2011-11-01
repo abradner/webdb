@@ -1,0 +1,37 @@
+.field.line
+  .lastUnit
+    =f.link_to_add "<span>Add</span>".html_safe, :data_object_attributes, :class => "add button"
+  .lastUnit
+    -f.fields_for :data_object_attributes do |attr|
+      .field.line
+        .lastUnit
+          = attr.link_to_remove "Remove", :class => "button red"
+          Attribute #{attr.id} (#TODO human readable)
+      .field.line
+        %label= required_field("Attribute Information:")
+        .lastUnit
+          = attr.text_field :name, :class => "small_text basic_field", :placeholder => "Attribute Name (max 45 chars)"
+        .lastUnit
+          = attr.text_field :label, :class => "small_text basic_field", :placeholder => "Display Label (max 255 chars)"
+      .field.line
+        %label= required_field("Attribute Parameters")
+        .lastUnit
+          = "Attribute Type: "
+          = attr.select :type, options_for_select(AppConfig.attribute_types.invert)
+        .lastUnit
+          = attr.text_field :length, :class => "small_text basic_field", :placeholder => "Length or Decimal Places"
+      .field.line
+        %label= required_field("Attribute Options:")
+        .lastUnit
+          = attr.label :editable, "Editable?"
+          = attr.check_box :editable, :default => true
+        .lastUnit
+          = attr.label :is_id, "Is an ID?"
+          = attr.check_box :is_id, :default => false
+        .lastUnit
+          = attr.label :required, "Required?"
+          = attr.check_box :required, :default => false
+      .field.line
+        %label= required_field("Display Column:")
+        .lastUnit
+          \#TODO (Draw with JS)

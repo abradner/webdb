@@ -1,0 +1,6 @@
+$("#form_errors_container").html("<%= escape_javascript(render :partial => "shared/form_errors", :locals => {:obj => obj}) %>");
+$("#form_errors_container").addClass('alert');
+$("#form_errors_container").slideDown();
+$('input[type=submit]', '#wizard').removeClass('ac_loading');
+$('.basic_field').removeAttr('disabled');
+$('.remove_button').css('visibility', 'visible');

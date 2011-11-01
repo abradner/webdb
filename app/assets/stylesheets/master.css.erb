@@ -103,7 +103,7 @@ input:focus, textarea:focus { outline: none; border-color: #3079ED; }
 #alert {
   padding: 18px 20px 18px 40px; margin: 10px 20px;
   font-size: 0.9em; color: #F00;
-  background: #ffcccc url(/assets/exclamation.png) no-repeat 10px center; border: red solid 1px;
+  background: #ffcccc url(<%= asset_path 'exclamation.png' %>) no-repeat 10px center; border: red solid 1px;
 }
 
 /* BASE STYLES - STRUCTURE MODULES
@@ -232,19 +232,19 @@ input[disabled]:active { box-shadow: none; -moz-box-shadow: none; -webkit-box-sh
 /////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 .add img { /* Add button icon */
-  padding: 0 0 0 20px; background: url('/assets/ICON_VECTOR_12_PLUS_000000.png') no-repeat left center; line-height: 18px;
+  padding: 0 0 0 20px; background: url(<%= asset_path 'ICON_VECTOR_12_PLUS_000000.png' %> %>) no-repeat left center; line-height: 18px;
 }
 
 .edit img { /* Edit button icon */
-  padding: 0 0 0 20px; background: url('/assets/ICON_VECTOR_12_EDIT_000000.png') no-repeat left center; line-height: 18px;
+  padding: 0 0 0 20px; background: url(<%= asset_path 'ICON_VECTOR_12_EDIT_000000.png' %> %>) no-repeat left center; line-height: 18px;
 }
 
 .down img { /* Down button icon */
-  padding: 0 0 0 20px; background: url('/assets/ICON_VECTOR_12_ARROW_STALK_DOWN_000000.png') no-repeat left center; line-height: 18px;
+  padding: 0 0 0 20px; background: url(<%= asset_path 'ICON_VECTOR_12_ARROW_STALK_DOWN_000000.png' %> %>) no-repeat left center; line-height: 18px;
 }
 
 .delete img { /* Delete button icon */
-  padding: 0 0 0 20px; background: url('/assets/ICON_VECTOR_12_DEL_000000.png') no-repeat left center; line-height: 18px;
+  padding: 0 0 0 20px; background: url(<%= asset_path 'ICON_VECTOR_12_DEL_000000.png' %> %>) no-repeat left center; line-height: 18px;
 }
 
 /* LAYOUT ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -258,7 +258,7 @@ input[disabled]:active { box-shadow: none; -moz-box-shadow: none; -webkit-box-sh
 
 #header {
   margin: 0; padding: 0; height: 88px; position: relative;
-  background: url('/assets/header-bg.png') top left repeat-x; color: #666;
+  background: url(<%= asset_path 'header-bg.png' %>) top left repeat-x; color: #666;
 }
 
 #header .container { margin: 0 auto; padding:0 20px; min-width: 940px; min-height: 100%; }
@@ -323,7 +323,7 @@ body:before { /*Opera min-height 100% Fix (Kohoutec)*/
 #footer .logo {
   margin: 0 10px 0 0; height: 14px; width: 14px;
   display: -moz-inline-stack; display: inline-block; zoom: 1; *display: inline; vertical-align: bottom; /* Cross-browser Inline-block */
-  background: url(/assets/intersect_logo.png) bottom;
+  background: url(<%= asset_path 'intersect_logo.png' %>) bottom;
 }
 
 /* LAYOUT - 404
@@ -450,12 +450,12 @@ a.jbar-cross{
 	position:absolute;
 	width:31px;
 	height:31px;
-	background:transparent url(/assets/cross.png) no-repeat top left;	
+	background:transparent url(<%= asset_path 'cross.png' %>) no-repeat top left;	
 	cursor:pointer;
 	right:10px;
 }
 a.jbar-cross:hover{
-	background-image: url(/assets/cross_hover.png)
+	background-image: url(<%= asset_path 'cross_hover.png' %>)
 }
 .jbar-top a.jbar-cross{
 	top:8px;	

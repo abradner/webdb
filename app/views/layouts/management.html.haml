@@ -1,0 +1,14 @@
+!!!
+%html
+  %head
+    = render 'layouts/head'
+  %body
+    #content_wrapper
+      = render 'layouts/banner'
+      = render 'shared/left_nav_management'
+      #container_right_content
+        = render 'layouts/messages'
+        = yield
+
+      #wizard.jqmWindow.lightbox
+    = render 'layouts/footer'

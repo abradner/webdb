@@ -1,0 +1,15 @@
+#container_left_navigation
+  .customScrollBox
+    .horWrapper.clearfix
+      .container
+        #project_nav.content
+          - if @administrations.present?
+            %h3 Systems you administer:
+            - @administrations.each do |s|
+              = render :partial => "shared/list_systems", :locals => {:system => s, :system_admin => true}
+          - if @collaborations.present?
+            %h3 Systems you can access:
+            - @collaborations.each do |s|
+              = render :partial => "shared/list_systems", :locals => {:system => s, :system_admin => false}
+      .dragger_container
+        .dragger

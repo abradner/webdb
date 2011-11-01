@@ -4,6 +4,8 @@ class Management::StoragesController < ApplicationController
 
   load_and_authorize_resource :storage
 
+  layout 'management'
+
   def new
   end
   
@@ -20,7 +22,7 @@ class Management::StoragesController < ApplicationController
   end
   
   def update
-    if @storage.update_attributes(params[:raw_storage])
+    if @storage.update_attributes(params[:storage])
       redirect_to management_storages_path, :notice => "The storage location  was successfully updated."
     else
       render :edit

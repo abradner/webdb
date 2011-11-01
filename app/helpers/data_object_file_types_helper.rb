@@ -1,0 +1,2 @@
+module DataObjectFileTypesHelper
+end

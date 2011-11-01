@@ -33,6 +33,12 @@
                 = system_administration.user.full_name
                 %input{:name => "member_ids[]", :type => "hidden", :value => system_administration.user_id}
                   %span.remove_button.basic_field{:name => "remove_member"}
+          - else
+            %li{:id => "member_#{current_user.id}"}
+              = current_user.full_name
+              (you are automatically added)
+              %input{:name => "member_ids[]", :type => "hidden", :value => current_user.id}
+                %span.remove_button.basic_field{:name => "remove_member"}
 
     .field.line
       .field.actions

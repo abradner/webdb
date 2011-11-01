@@ -6,13 +6,17 @@
 class RawStorageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
-  def self.use_grid_fs(answer)
+  def self.set_storage
     answer ? storage(:grid_fs) : storage(:file)
   end
 
-  def store_dir(path = nil)
+  def set_store_dir(path = nil)
     Rails.logger.debug "WARNING: no store_dir set for upload!" if path.blank? && Rails.env.production?
-    path || "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    @store_dir = path || "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+  end
+
+  def store_dir
+    @store_dir
   end
 end
 

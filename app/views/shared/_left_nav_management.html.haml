@@ -1,0 +1,25 @@
+#container_left_navigation
+  .customScrollBox
+    .horWrapper.clearfix
+      .container
+        #project_nav.content
+          #sidebar_actions
+            = button_link_to "New System", new_management_system_path, :class => "add"
+          %p &nbsp;
+          - if @administrations.present?
+            %h3 Systems you administer:
+            - @administrations.each do |s|
+              = render :partial => "shared/list_systems_management", :locals => {:system => s}
+          - if @collaborations.present?
+            %h3 Systems you can access:
+            - @collaborations.each do |s|
+              = render :partial => "shared/list_systems_management", :locals => {:system => s}
+          %p &nbsp;
+          - if @systems.present?
+            %h3 All configured systems:
+            - @systems.each do |s|
+              = render :partial => "shared/list_systems_management", :locals => {:system => s}
+          - else
+            No systems are configured!
+      .dragger_container
+        .dragger

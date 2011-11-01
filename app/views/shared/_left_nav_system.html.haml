@@ -1,0 +1,13 @@
+#container_left_navigation
+  .customScrollBox
+    .horWrapper.clearfix
+      .container
+        #project_nav.content
+          %h3 #{@system.name}:
+          - @system.data_objects.each do |dobj|
+            #system_item{:class => "closed"}
+              = link_to dobj.name, system_data_object_path(@system, dobj) #, :id => "dobj_#{dobj.id}", :title => dobj.name, :class => ["system_dobj", is_current_dobj?(dobj) ? "current" : ""]
+          - if @system.data_objects.blank?
+            No data objects configured
+      .dragger_container
+        .dragger

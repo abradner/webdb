@@ -11,7 +11,7 @@ class System < ActiveRecord::Base
 
   #has_many :file_containers, :class_name => "SystemFile"
 
-  t_has_many :raw_storage_containers, :dependent => :destroy
+#  t_has_many :raw_storage_containers, :dependent => :destroy
 
   #See comment in User model on has_many :systems
   #belongs_to :user
@@ -35,12 +35,14 @@ class System < ActiveRecord::Base
            :class_name => 'User',
            :source => :user
 
+  scope :inactive, where(:is_active => false)
+  scope :active, where(:is_active => true)
 
   accepts_nested_attributes_for :memberships, :administrators
 
-  validates :name, :presence => true
-  validates :description, :presence => true
-  validates :code, :presence => true
+  validates :name, :presence => true, :if => Proc.new { |s| s.is_active?}
+  validates :description, :presence => true, :if => Proc.new { |s| s.is_active?}
+  validates :code, :presence => true, :if => Proc.new { |s| s.is_active?}
   validates_uniqueness_of :name, :case_sensitive => false
   validates_length_of :name, :maximum => 255
   validates_length_of :description, :maximum => 5000

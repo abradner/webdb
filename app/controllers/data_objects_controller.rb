@@ -1,89 +1,57 @@
 class DataObjectsController < ApplicationController
+  respond_to :js, :except => [:show, :index]
+
   before_filter :authenticate_user!
-  before_filter :systems_and_memberships, :only => [:index, :new, :create, :show, :edit, :update] #TODO remove the viewless actions
+  before_filter :systems_and_memberships, :only => [:index, :show]
 
   load_and_authorize_resource :system
   load_and_authorize_resource :data_object, :through => :system
 
-  def new
-    prepare_unselected_sec_group
-    AppConfig.attribute_types
-  end
+  def index; end
+  def show; end
+  def new; end
+  def edit; end
 
-  def create
-    params[:data_object][:security_group_ids] = params[:list_selected].split "," unless params[:data_object][:security_group_ids].blank?
-    if @data_object.save
-      redirect_to system_path(@system), :notice => "The Data Object has been created."
-    else
-      render :new
-    end
-  end
-
-  def edit
-    prepare_unselected_sec_group
-  end
-
-  def update
-    params[:data_object][:security_group_ids] = params[:list_selected].split ","
-    if @data_object.update_attributes(params[:data_object])
-      redirect_to system_data_object_path(@system), :notice => "The System was successfully updated."
-    else
-      render :edit
-    end
-  end
-
-
-  def destroy
-    if @data_object.destroy
-      redirect_to system_data_object_url, :notice => "The data object #{@data_object.name} has been successfully removed."
-    else
-      redirect_to :back, :alert => "The data object #{@data_object.name} could not be deleted."
-    end
-
-  end
-
-  def show
-  end
-
-  def index
-  end
+    #case params[:step]
+    #  when 1
+    #  when 2
+    #  else
+    #end
 
 
   def edit_file_types
     @unselected_file_types = @system.file_types - @data_object.file_types
   end
 
-  def update_file_types
-    #params[:data_object][:file_type_ids] = params[:list_selected].split ","
-    if @data_object.update_attribute(:file_type_ids, params[:list_selected].split(","))
-      redirect_to system_data_object_path(@system), :notice => "The File types were successfully updated."
-    else
-      render :edit
+  def create
+    @errors = true unless @data_object.save
+    prepare_attributes_for_wizard! unless @errors
+  end
+
+  def update
+    @errors = true unless @data_object.update_attributes(params[:data_object])
+    prepare_attributes_for_wizard! unless @errors
+  end
+
+  def activate
+    if false #write tests here
+      @data_object.update_attribute(is_active, true)
     end
+  end
+
+  def destroy
+    if @data_object.destroy
+      redirect_to system_url(@data_object.system), :notice => "The data object #{@data_object.name} has been successfully removed."
+    else
+      redirect_to :back, :alert => "The data object #{@data_object.name} could not be deleted."
+    end
+
   end
 
   private
-
-
-  def prepare_unselected_sec_group
-    @unselected_sec_groups = @system.security_groups - @data_object.security_groups
-    unless Rails.env.production?
-      output = "Unselected Groups:\n"
-      @unselected_sec_groups.each do |u|
-        output << u.id << ": " << u.name << "\n"
-      end
-
-      output << "Selected Groups:\n"
-      @data_object.security_groups.each do |s|
-        output << s.id << ": " << s.name << "\n"
-      end
-
-      output << "All Groups:\n"
-      @system.security_groups.each do |a|
-        output << a.id << ": " << a.name << "\n"
-      end
-
-      Rails.logger.debug output
-    end
+  def prepare_attributes_for_wizard!
+    @data_object_attributes = @data_object.data_object_attributes
+    @data_object_attribute = DataObjectAttribute.new
   end
+
 end

@@ -27,7 +27,7 @@
 #container_page_actions.wrapper
   .unit
     -if can? :update, System
-      =button_link_to "Add Data Object", new_system_data_object_path(@system), :class => "add"
+      =button_link_to "Add Data Object", new_system_data_object_path(@system), :remote => true, :class => "add"
       =button_link_to "Add To Raw Storage", new_system_data_object_path(@system), :class => "add"
       =button_link_to "Manage Security Groups", system_security_groups_path(@system), :class => "security_group"
       =button_link_to "Manage Filetypes", system_file_types_path(@system), :class => "file_type"
@@ -55,13 +55,16 @@
 #container_page_content.wrapper
   .unit.system_right_col
     %h3 Storage:
+    -#toggle_hidden.button Upload #TODO
+    .button Upload (Disabled)
     .row.information
       - @system.storages.each do |s|
         - s.file_types.each do |ft|
           %p.bold Type "#{ft.name}" (Stored on #{s.name}):
+          = render :partial => "upload_file", :locals => {:file_type => ft}
           %p.light= "Empty" unless ft.raw_storage_containers.present?
           - ft.raw_storage_containers.each do |rsc|
-            %p.light=rsc.name
+            %p.light=rsc.raw_file_identifier
           %p &nbsp;
     .row.information
       %p blah

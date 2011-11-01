@@ -1,5 +1,7 @@
 class UserPasswordsController < Devise::PasswordsController
 
+  layout 'overview'
+
   def create
     # Override the devise controller so we don't show errors (since we don't want to reveal if the email exists)
     # https://github.com/plataformatec/devise/blob/v1.4.2/app/controllers/devise/passwords_controller.rb

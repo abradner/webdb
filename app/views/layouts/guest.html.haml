@@ -1,0 +1,11 @@
+!!!
+%html
+  %head
+    = render 'layouts/head'
+  %body
+    #content_wrapper
+      = render 'layouts/banner'
+      #container_right_content
+      = render 'layouts/messages'
+      = yield
+    = render 'layouts/footer'
