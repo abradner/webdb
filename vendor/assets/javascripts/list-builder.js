@@ -10,11 +10,7 @@ $(function() {
 
     /* this function returns the first numeric value in a string as a number */
     var numericValue = function(value) {
-        var digits = value.match(/[0-9]+/);
-        if (digits && digits.length > 0) {
-            return Number(digits[0]);
-        }
-        return Number(0);
+        return value.replace("px", "");
     };
     /* this function copies the state of the list builder into the listBuilderState hidden input */
     var updateListBuilderState = function() {
@@ -194,7 +190,7 @@ $(function() {
     var removeButton = $('#removeButton');
     var addAllButton = $('#addAllButton');
     var removeAllButton = $('#removeAllButton');
-    divWidth = middleButtons.width();
+    divWidth = middleButtons.width()+80;
     var addMargin = ((divWidth - addButton.width()) / 2) + 'px';
     addButton.css({ 'margin-left': addMargin, 'margin-right': addMargin });
     var removeMargin = ((divWidth - removeButton.width()) / 2) + 'px';
@@ -240,8 +236,8 @@ $(function() {
     // set the width and height of each select, even when empty
     var leftSelect = $('#leftSelect');
     var rightSelect = $('#rightSelect');
-    var selectWidth = Math.max(leftSelect.width(), rightSelect.width());
-    var selectHeight = Math.max(leftSelect.height(), rightSelect.height());
+    var selectWidth = Math.max(leftSelect.width(), rightSelect.width(), 210);
+    var selectHeight = Math.max(leftSelect.height(), rightSelect.height(), 250);
     leftSelect.width(selectWidth).height(selectHeight);
     rightSelect.width(selectWidth).height(selectHeight);
     // the right select div must also be set to this width to ensure that the right buttons are placed correctly

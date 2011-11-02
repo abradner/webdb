@@ -48,7 +48,7 @@
               $drop = $(this),
               $data = {};
 
-          $(this).html("<span class=\"attribute_label\">" + $drag.data('id') + '-' + $drag.text() + "</div>");
+          $(this).append("<span class=\"attribute_label\">" + $drag.data('id') + '-' + $drag.text() + "</span>");
           //$(this).addClass("attribute_column");
 
         }

@@ -4,9 +4,12 @@ class PagesController < ApplicationController
   layout 'overview'
 
   def home
-    if @memberships.count.eql? 1
+    render :layout => 'guest' and return unless user_signed_in?
+
+    if @memberships.count.eql?(1)
       redirect_to system_path(@memberships.first)
     end
+
   end
 
   def routing_error

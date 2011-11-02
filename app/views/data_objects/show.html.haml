@@ -5,10 +5,11 @@
 
   #container_page_buttons.right
     -if can? :admin, User
-      =button_link_to "Edit", edit_system_data_object_path(@system), :remote => true
+      =button_link_to "Import", "#", :class => "green add"
+      =button_link_to "Manage", manage_system_data_object_path(@system, @data_object), :class => "edit", :remote => true
       =button_link_to "Delete", system_data_object_path, :method => "delete",
                             :confirm =>"Are you sure you want to delete this Data Object and all related data?",
-                            :id => 'data_object_delete_link', :class => 'red'
+                            :id => 'data_object_delete_link', :class => 'red delete'
 
   #container_page_details.right.flushright.details
     .entry
@@ -20,16 +21,6 @@
       %p
         Info 2:
         =0
-
-#container_page_actions.wrapper
-  .unit
-    =button_link_to "X Import", "#", :class => ""
-    =button_link_to "X Metadata", "#", :class => ""
-    =button_link_to "X Data Analysis", "#", :class => "data_analysis"
-    -#=button_link_to "Manage File Types", system_data_object_file_types_path(@system, @data_object), :class => "file_type"
-    -#=button_link_to "Manage Security", system_data_object_security_settings_path(@system, @data_object), :class => "security_group"
-    =button_link_to "Manage Dataset Links", system_data_object_data_object_relationships_path(@system, @data_object), :class => "data_object_links"
-
 
 -# TODO: WORST CODE EVER!
 #container_page_content.wrapper

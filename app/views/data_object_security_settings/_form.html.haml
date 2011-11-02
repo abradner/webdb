@@ -8,7 +8,7 @@
     - unless @system.security_groups.blank?
       =field_set_tag do
         = hidden_field_tag :list_selected, :id => "list_selected"
-        %div
+        %span
           #leftList
             %p
               %strong Deselected
@@ -17,11 +17,11 @@
                 %option{:value => d.id}=d.name
           #middleButtons
             #addRemoveButtons
-              %button#addButton.button{:type => "button"} Add
-              %button#removeButton.button{:type => "button"} Remove
+              %button#addButton.list_builder_button{:type => "button"} Add
+              %button#removeButton.list_builder_button{:type => "button"} Remove
             #addAllRemoveAllButtons
-              %button#addAllButton.button{:type => "button"} Add All
-              %button#removeAllButton.button{:type => "button"} Remove All
+              %button#addAllButton.list_builder_button{:type => "button"} Add All
+              %button#removeAllButton.list_builder_button{:type => "button"} Remove All
           #rightList
             %p
               %strong Selected
@@ -36,3 +36,5 @@
     .field.actions
       = button_link_to "Back", system_data_object_data_object_attributes_path(@system, @data_object), :remote => true
       = link_to "Save and close", "#", :remote => true, :class => "blue basic_field jqmClose" #TODO Fix!
+
+= javascript_include_tag 'list-builder'

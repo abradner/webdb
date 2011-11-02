@@ -9,7 +9,6 @@ end
       post :create, :on => :member
     end
     resources :storages
-
     resources :colour_schemes
     resource :overview do 
       get :index, :on => :collection
@@ -45,7 +44,7 @@ end
     resources :data_objects do
       resources :data_object_relationships
       resources :data_object_attributes
-      resources :data_object_file_types
+      resources :data_object_file_mappings
       resources :data_object_security_settings
       member do
         #get :edit_security
@@ -54,6 +53,7 @@ end
         #put :update_security
         #put :update_file_types
         #put :update_attributes
+        get :manage
       end
     end
     resources :security_groups

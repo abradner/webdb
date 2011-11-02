@@ -75,7 +75,7 @@ class Ability
     can :update, System, :id => system_administrations
     #can :edit_member, System, :id => system_administrations
     can :edit_permissions, System, :id => system_administrations
-    can :edit_file_types, System, :id => system_administrations
+    can :edit_file_types_old, System, :id => system_administrations
     can :edit_members, System, :id => system_administrations
     can :update_members, System, :id => system_administrations
 
@@ -100,6 +100,7 @@ class Ability
     # Data Object privileges
     can :create, DataObject, :system_id => system_administrations
     can :update, DataObject, :system_id => system_administrations
+    can :manage, DataObject, :system_id => system_administrations
 
     can :show, DataObject, :system_id => system_memberships
     #can :read, DataObject, :system_id => system_administrations
@@ -112,8 +113,7 @@ class Ability
     can :update_security, DataObject, :system_id => system_administrations #TODO admin security groups & administrators
 
     #Data Object FileType privileges
-    can :edit_file_types, DataObject, :system_id => system_administrations #TODO admin security groups & administrators
-    can :update_file_types, DataObject, :system_id => system_administrations #TODO admin security groups & administrators
+    can :manage, DataObjectFileMapping, :data_object => {:system_id => system_administrations} #TODO admin security groups & administrators
 
 
   end

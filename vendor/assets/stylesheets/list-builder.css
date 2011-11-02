@@ -15,7 +15,7 @@ fieldset {
   margin-top: 15px;
 }
 
-/*.button {*/
-  /*display: block;*/
-  /*margin-bottom: 3px;*/
-/*}*/
+.list_builder_button {
+  display: block;
+  margin-bottom: 3px;
+}

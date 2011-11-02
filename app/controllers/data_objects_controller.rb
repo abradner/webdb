@@ -19,7 +19,7 @@ class DataObjectsController < ApplicationController
     #end
 
 
-  def edit_file_types
+  def edit_file_types_old
     @unselected_file_types = @system.file_types - @data_object.file_types
   end
 
@@ -34,7 +34,7 @@ class DataObjectsController < ApplicationController
   end
 
   def activate
-    if false #write tests here
+    if false #TODO write tests here
       @data_object.update_attribute(is_active, true)
     end
   end
@@ -45,6 +45,10 @@ class DataObjectsController < ApplicationController
     else
       redirect_to :back, :alert => "The data object #{@data_object.name} could not be deleted."
     end
+
+  end
+
+  def manage
 
   end
 
