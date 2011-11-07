@@ -8,13 +8,9 @@
       .lastUnit
         = f.text_field :name, :class => "text basic_field", :placeholder => "The name of your file type"
     .field.line
-      = f.label :storage_id, required_field('Storage Type:')
+      = f.label :storage_location_id, required_field('Storage Type:')
       .lastUnit
-        = f.select :storage_id, options_from_collection_for_select(@storages, :id, :name) #TODO default
-    .field.line
-      = f.label :file_content_type_id, required_field('Content Type:')
-      .lastUnit
-        = f.select :file_content_type_id, ["TODO"]
+        = f.select :storage_location_id, options_from_collection_for_select(@storage_locations, :id, :name) #TODO default
     .field.line
       .field.actions
         = f.submit :class => "blue basic_field"

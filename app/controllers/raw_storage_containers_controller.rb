@@ -7,15 +7,15 @@ class RawStorageContainersController < ApplicationController
 
 
   def create
-    @raw_storage_container = RawStorageContainer.new(params[:raw_storage_container])
-    @raw_storage_container.user = current_user
-    @raw_storage_container.file_type = @file_type
+    @raw_file = RawFile.new(params[:raw_file])
+    @raw_file.user = current_user
+    @raw_file.file_type = @file_type
 
 
-    if @raw_storage_container.save
+    if @raw_file.save
       redirect_to system_path(@system), :notice => "File Successfully uploaded to #{@file_type.name}"
     else
-      redirect_to :back, :alert => @raw_storage_container.errors.each {|e| e.to_s} #"The file failed to upload. #TODO reason"
+      redirect_to :back, :alert => @raw_file.errors.each {|e| e.to_s} #"The file failed to upload. #TODO reason"
     end
   end
 

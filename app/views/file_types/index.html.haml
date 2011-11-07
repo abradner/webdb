@@ -7,18 +7,14 @@
   %tr
     %th Name
     %th Type
-    %th Content
-    %th Content Type
-    %th Data Objects utilising this type
+    %th Data Objects utilising this type #TODO display through import mappings
     %th Actions
 
   - @file_types.each do |ft|
     %tr
       %td= ft.name
-      %td= ft.storage.name
-      %td= "TODO" #ft.file_content_type.name     # TODO fix n+1 queries with eager loading
-      %td= "TODO" #ft.file_content_type.id
-      %td= ft.data_objects.count
+      %td= ft.storage_location.name
+      %td= ft.import_mappings.count
       %td
         = button_link_to "E", edit_system_file_type_path(@system, ft)
         = button_link_to "X", system_file_type_path(@system, ft), :method => "delete",

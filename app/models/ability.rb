@@ -61,8 +61,8 @@ class Ability
       can :destroy, System
 
       can :manage, ColourScheme
-      can :manage, Storage
-      can :manage, FileContentType
+      can :manage, StorageLocation
+      #can :manage, FileContentType
     end
 
     can :list, User
@@ -113,7 +113,7 @@ class Ability
     can :update_security, DataObject, :system_id => system_administrations #TODO admin security groups & administrators
 
     #Data Object FileType privileges
-    can :manage, DataObjectFileMapping, :data_object => {:system_id => system_administrations} #TODO admin security groups & administrators
+    can :manage, ImportMapping, :data_object => {:system_id => system_administrations} #TODO admin security groups & administrators
 
 
   end

@@ -1,17 +1,17 @@
 class DataObjectFileMappingsController < AjaxDataObjectController
 
-  load_resource :data_object_file_mapping
+  load_resource :import_mapping
 
   def index
-    @data_object_file_mapping = DataObjectFileMapping.new
+    @import_mapping = ImportMapping.new
   end
 
   def create
-    @errors = true unless @data_object_file_mapping.save
+    @errors = true unless @import_mapping.save
   end
 
   def update
-    @errors = true unless @data_object_file_mapping.update_attributes(params[:data_object_file_mapping])
+    @errors = true unless @import_mapping.update_attributes(params[:import_mapping])
   end
 
 end

@@ -1,12 +1,14 @@
-class FileType < ActiveRecord::Base
+class FileType < ActiveRecord::Base #TODO convert to mongo
   include Tenacity
   belongs_to :system
-  belongs_to :storage
-  belongs_to :file_content_type
-  #TODO security
-  has_and_belongs_to_many :data_objects
+  belongs_to :storage_location
+  t_has_many :import_mappings
+  t_has_many :raw_files
 
-  t_has_many :raw_storage_containers
+  #Metadata Schema
+
+  #TODO security
+
   #updated_by
 
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111107002851) do
+ActiveRecord::Schema.define(:version => 20111107023922) do
 
   create_table "colour_schemes", :force => true do |t|
     t.string   "name"
@@ -38,13 +38,6 @@ ActiveRecord::Schema.define(:version => 20111107002851) do
     t.boolean  "is_id",                        :default => false
     t.boolean  "editable",                     :default => true
     t.integer  "column"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "data_object_files", :force => true do |t|
-    t.integer  "data_object_id"
-    t.string   "raw_storage_container_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -79,27 +72,10 @@ ActiveRecord::Schema.define(:version => 20111107002851) do
     t.boolean  "is_active"
   end
 
-  create_table "data_objects_file_types", :id => false, :force => true do |t|
-    t.integer  "data_object_id", :null => false
-    t.integer  "file_type_id",   :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "data_objects_file_types", ["data_object_id"], :name => "data_objects_file_types_data_object_id_index"
-
-  create_table "file_content_types", :force => true do |t|
-    t.string   "name"
-    t.string   "mime_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "file_types", :force => true do |t|
     t.string   "name"
-    t.integer  "storage_id"
+    t.integer  "storage_location_id"
     t.integer  "system_id"
-    t.integer  "file_content_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -130,12 +106,13 @@ ActiveRecord::Schema.define(:version => 20111107002851) do
     t.integer  "system_id"
   end
 
-  create_table "storages", :force => true do |t|
+  create_table "storage_locations", :force => true do |t|
     t.string   "name"
     t.string   "storage_type"
     t.string   "location"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "system_id"
   end
 
   create_table "system_members", :id => false, :force => true do |t|

@@ -1,6 +1,6 @@
-=render :partial => 'shared/modal_form', :locals => {:obj => @data_object_file_mapping, :modal_title => "Data Object File Types"}
+=render :partial => 'shared/modal_form', :locals => {:obj => @import_mapping, :modal_title => "Data Object File Types"}
 
-= form_for [@system, @data_object, @data_object_file_mapping] do |f|
+= form_for [@system, @data_object, @import_mapping] do |f|
   .lightbox
     .field.line
       %label File Types

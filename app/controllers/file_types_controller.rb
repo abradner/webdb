@@ -9,7 +9,7 @@ class FileTypesController < ApplicationController
   #load_and_authorize_resource :data_object, :through => :system
 
   def new
-    @storages = Storage.all
+    @storage_locations = StorageLocation.all
   end
 
   def create
@@ -21,7 +21,7 @@ class FileTypesController < ApplicationController
   end
 
   def edit
-    @storages = Storage.all
+    @storage_locations = StorageLocation.all
   end
 
   def update

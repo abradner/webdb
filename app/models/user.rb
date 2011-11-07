@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
            :class_name => 'System',
            :source => :system
 
-  t_has_many :raw_storage_containers
+  t_has_many :raw_files
 
   # Setup accessible attributes (status/approved flags should NEVER be accessible by mass assignment)
   attr_accessible :email, :password, :password_confirmation, :first_name, :last_name

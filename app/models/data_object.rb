@@ -1,11 +1,11 @@
 class DataObject < ActiveRecord::Base
+  include Tenacity
   #has_and_belongs_to_many :file_data_types
   #has_many :custom_fields  # the builder could be smart - custom fields can be suggested from existing templates
   #has_one  :file_system, :dependent => :destroy
   belongs_to :system
   has_many :security_groups, :through => :data_object_security_groups
   has_many :data_object_security_groups, :dependent => :destroy
-  has_and_belongs_to_many :file_types
 
   has_many :data_object_relationships, :dependent => :destroy
   has_many :relatives, :through => :data_object_relationships
@@ -14,6 +14,7 @@ class DataObject < ActiveRecord::Base
   has_many :inverse_relatives, :through => :inverse_data_object_relationships, :source => :data_object
 
   has_many :data_object_attributes
+  t_has_many :import_mappings
 
   scope :inactive, where(:is_active => false)
   scope :active, where(:is_active => true)

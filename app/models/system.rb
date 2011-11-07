@@ -2,12 +2,10 @@ class System < ActiveRecord::Base
   include Tenacity
 #  has_many :storage_types
   belongs_to :colour_scheme
-  belongs_to :storage
-#  has_many :file_data_types, :dependent => :destroy
   has_many :data_objects, :dependent => :destroy
   has_many :security_groups, :dependent => :destroy
   has_many :file_types, :dependent => :destroy
-  has_many :storages, :through => :file_types #TODO this is going to be slow
+  has_many :storage_locations, :dependent => :destroy
 
   #has_many :file_containers, :class_name => "SystemFile"
 

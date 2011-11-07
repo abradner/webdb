@@ -1,12 +1,12 @@
 require 'carrierwave/mongoid'
 
-class RawStorageContainer
+class RawFile
   include Mongoid::Document
   include Mongoid::Timestamps
   include Tenacity
 
 
-  mount_uploader :raw_file, RawStorageUploader
+  mount_uploader :stored_file, RawStorageUploader
   embeds_one :file_metadata
 
   #linking back to the ActiveRecord fields
