@@ -1,6 +1,6 @@
 %h2 Raw Storage Management
 %ul
-  %li= button_link_to 'New Storage Location', new_management_storage_path, :class => "add"
+  %li= button_link_to 'New Storage Location', new_management_storage_location_path, :class => "add"
 
 %h3 Existing Locations
 %table
@@ -16,8 +16,8 @@
       %td= s.storage_type
       %td= s.location
       %td
-        = button_link_to "E", edit_management_storage_path(s)
-        = button_link_to "X", management_storage_path(s), :method => "delete",
+        = button_link_to "E", edit_management_storage_location_path(s)
+        = button_link_to "X", management_storage_location_path(s), :method => "delete",
                             :confirm =>"This will actually break things if you continue",
                             :id => 'storage_delete_link', :class => 'red'
 

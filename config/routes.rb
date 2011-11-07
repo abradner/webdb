@@ -8,7 +8,7 @@ end
     resources :systems do
       post :create, :on => :member
     end
-    resources :storages
+    resources :storage_locations
     resources :colour_schemes
     resource :overview do 
       get :index, :on => :collection

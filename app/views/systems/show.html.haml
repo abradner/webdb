@@ -53,7 +53,7 @@
 
 %h2 Content
 #container_page_content.wrapper
-  .unit.system_right_col
+  .unit.system_left_col
     %h3 Storage:
     -#toggle_hidden.button Upload #TODO
     .button Upload (Disabled)
@@ -65,8 +65,6 @@
         - ft.raw_files.each do |rsc|
           %p.light=rsc.stored_file_identifier
         %p &nbsp;
-    .row.information
-      %p blah
   .lastUnit.system_right_col
     %h3 Data Objects
     - unless @system.data_objects.present?

@@ -1,7 +1,7 @@
 = render :partial => "shared/form_header", :locals => {:action => action, :obj => "Raw Storage"}
-= render :partial => "shared/form_errors", :locals => {:obj => @storage}
+= render :partial => "shared/form_errors", :locals => {:obj => @storage_location}
 
-= form_for [:management, @storage] do |f|
+= form_for [:management, @storage_location] do |f|
   .lightbox
     .field.line
       = f.label :name, required_field('Name:')
