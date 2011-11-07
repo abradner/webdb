@@ -4,6 +4,7 @@ defaults: &defaults
   account_request_admin_notification_sender: account-request@intersect.org.au
   attribute_types: # Used for Data Object Attributes
     DateTime: Date & Time
+    Date: Date Only
     Char: Single Character
     String: String (Sentences of text)
     Text: Paragraphs of text

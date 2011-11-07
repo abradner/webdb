@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111025011739) do
+ActiveRecord::Schema.define(:version => 20111107002851) do
 
   create_table "colour_schemes", :force => true do |t|
     t.string   "name"
@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(:version => 20111025011739) do
     t.text     "description",              :limit => 255
     t.string   "raw_storage_container_id"
     t.boolean  "is_active"
+    t.string   "schema_name"
   end
 
   create_table "updated_actions", :force => true do |t|

@@ -12,6 +12,10 @@
       .lastUnit
         = f.text_field :code, :class => "text basic_field", :placeholder => "XXXXXXXX"
     .field.line
+      = f.label :schema_name, required_field('Internal Schema Name:')
+      .lastUnit
+        = f.text_field :schema_name, :class => "text basic_field", :placeholder => "A valid SQL schema name for this system"
+    .field.line
       = f.label :description, required_field('Description:')
       .lastUnit
         = f.text_area :description, :rows => 5, :class => "text description_field", :placeholder => "A description of your system"
