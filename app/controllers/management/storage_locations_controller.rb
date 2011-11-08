@@ -3,6 +3,8 @@ class Management::StorageLocationsController < ApplicationController
   before_filter :systems_and_memberships
 
   load_and_authorize_resource :storage_location
+  load_and_authorize_resource :system
+
 
   layout 'management'
 

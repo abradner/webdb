@@ -61,4 +61,14 @@ module ApplicationHelper
     "#{text}<span class=\"required\">*</span>".html_safe
   end
 
+  def is_current_object?(obj, obj_string)
+    if request.fullpath.starts_with?(systems_path)
+      id = params[:controller].eql?(obj_string) ? params[:id] : params["#{obj_string}_id"]
+      if obj.id.to_s.eql?(id)
+        return true
+      end
+    end
+    false
+  end
+
 end

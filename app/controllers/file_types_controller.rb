@@ -3,14 +3,13 @@ class FileTypesController < ApplicationController
 
   load_and_authorize_resource :system
   load_and_authorize_resource :file_type, :through => :system
+  load_and_authorize_resource :storage_location, :through => :system, :only => [:new, :edit]
 
   before_filter :systems_and_memberships, :only => [:index, :new, :create, :show, :edit, :update] #TODO remove the viewless actions
 
   #load_and_authorize_resource :data_object, :through => :system
 
-  def new
-    @storage_locations = StorageLocation.all
-  end
+  def new; end
 
   def create
     if @file_type.save
@@ -20,9 +19,7 @@ class FileTypesController < ApplicationController
     end
   end
 
-  def edit
-    @storage_locations = StorageLocation.all
-  end
+  def edit; end
 
   def update
     #sanitise_params_for_sec_group!

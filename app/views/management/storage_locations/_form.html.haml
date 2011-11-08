@@ -1,4 +1,4 @@
-= render :partial => "shared/form_header", :locals => {:action => action, :obj => "Raw Storage"}
+= render :partial => "shared/form_header", :locals => {:action => action, :obj => "Raw Storage Location"}
 = render :partial => "shared/form_errors", :locals => {:obj => @storage_location}
 
 = form_for [:management, @storage_location] do |f|
@@ -7,6 +7,10 @@
       = f.label :name, required_field('Name:')
       .lastUnit
         = f.text_field :name, :class => "text basic_field", :placeholder => "The name of your system"
+    .field.line
+      = f.label :system_id, required_field('Associated System:')
+      .lastUnit
+        = f.select :system_id, options_from_collection_for_select(@systems, :id, :name) #TODO default
     .field.line
       = f.label :storage_type, required_field('Storage Type:')
       .lastUnit
@@ -19,8 +23,3 @@
     .field.line
       .field.actions
         = f.submit :class => "blue basic_field"
-
-%h2 Optional:
-%p can specify which systems can see each raw storage, or delegate that to each system's administrators.
-
--#= render :partial => "shared/form_autocomplete_helper" , :locals => {:source => list_users_path(:format => :json) }

@@ -110,6 +110,196 @@
 #container_page_buttons
   margin: 2px 0 0 0
 
+
+// LEFT //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//*/
+
+// LEFT - LIST ICONS - ARROWS
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+
+a#arrow
+  margin: 0
+  padding: 0 0 0 15px
+  text-decoration: none
+  cursor: pointer
+
+.collapsible a
+  &.expanded
+    background: image-url('ICON_VECTOR_9_ARROW_ISO_DOWN_808080.png') no-repeat 0 center
+    &:active
+      background: image-url('ICON_VECTOR_9_ARROW_ISO_DOWN_000000.png') no-repeat 0 center
+  &.collapsed
+    background: image-url('ICON_VECTOR_9_ARROW_ISO_RIGHT_808080.png') no-repeat 0 center
+    &:active
+      background: image-url('ICON_VECTOR_9_ARROW_ISO_RIGHT_000000.png') no-repeat 0 center
+
+span
+  &.system_empty, &.experiment_empty
+    margin: 0
+    padding: 0 0 0 19px
+  &.sample_empty
+    margin: 0
+    padding: 0 0 0 18px
+
+// LEFT - LIST ICONS - TYPE
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+
+a
+  &.system_owner, &.system_collaborator, &.system_member
+    ///* Project Level
+    padding: 0 0 0 25px
+    background: image-url('ICON_VECTOR_12_FOLDER_000000.png') center left no-repeat
+  &.system_data_object
+    ///* Experiment Level
+    padding: 0 0 0 25px
+    background: image-url('ICON_VECTOR_12_EXP_000000.png') center left no-repeat
+  &.system_file_type
+    ///* Material Level
+    padding: 0 0 0 25px
+    background: image-url('ICON_VECTOR_12_DOCSTACK_000000.png') center left no-repeat
+  &.system_file
+    ///* Data Level
+    padding: 0 0 0 25px
+    background: image-url('ICON_VECTOR_12_DOC_000000.png') center left no-repeat
+
+// LEFT - LIST ICONS - OWNERSHIP
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+
+span
+  &.system_owner, &.system_collaborator
+    background: image-url('writable.png') center left no-repeat
+  &.system_member
+    background: image-url('viewable.png') center left no-repeat
+
+/* Owned system
+/* Collaboration system
+// Viewable Project *
+//
+///* LEFT - STRUCTURE
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+
+#system_nav a
+  font-weight: normal
+
+#system_list
+  font: normal normal normal 1em / 36px Helvetica, Arial, sans-serif
+  color: #000
+  a
+    overflow: hidden
+    text-overflow: ellipsis
+
+///* Master list style
+
+li
+  &#system_item
+    &.closed, &.open
+      width: 260px
+      overflow: hidden
+      text-overflow: ellipsis
+  .system_experiment
+    width: 120px
+    overflow: hidden
+    text-overflow: ellipsis
+
+#system_list
+  a:hover
+    text-decoration: none
+  li#system_item
+    margin: 0
+
+///* Master list hover style
+
+///* Expanded list style
+
+#system_item
+  margin: 0
+  padding: 0
+
+///* Area containing each list
+
+li#system_item
+  ///* Area containing each list, controlls headings.
+  margin: 0
+  padding: 0
+  font: normal normal normal 1em / 36px Helvetica, Arial, sans-serif
+  color: #000
+
+#system_dobj
+  margin: 0 0 0 25px
+  position: relative
+
+///* Area containing the expanded list
+
+#system_ftype
+  margin: 9px 0 0 25px
+  position: relative
+
+#system_file
+  margin: 0 0 0 46px
+  position: relative
+
+#system_dobj li, #system_ftype li
+  margin: 0
+  font: normal normal normal 1em / 18px Helvetica, Arial, sans-serif
+  color: #000
+
+///* Inner lists
+
+span
+  &.system_owner, &.system_member, &.system_collaborator
+    margin: 9px 0 0 0
+    padding: 9px
+    right: 0
+    position: absolute
+
+///* Collapsible list styles
+
+.collapsible
+  margin: 0
+  padding: 0
+  font-weight: normal
+  list-style: none
+  line-height: 18px
+  display: block
+  ul
+    margin: 0
+    padding: 0
+    list-style: none
+    overflow: hidden
+    text-overflow: ellipsis
+    white-space: nowrap
+
+#system_nav .collapsible a.current
+  font-weight: bold
+
+///* Styles for current position in list
+
+li#system_item.open
+  margin: 0 0 18px 0
+
+#system_item.closed ul
+  display: none
+
+#system_sample_empty
+  margin: 0 0 0 30px
+  position: relative
+
+// LEFT - PROJECT ACTIONS
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+
+#system_actions
+  margin: 18px 0 0 20px
+  
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+// RIGHT
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+  
+
 // RIGHT - CONTAINER ACTIONS
 ///*///////////////////////////////////////////////////////////////////////////////////////////////*/
 
@@ -565,3 +755,4 @@ button.blue:active, .blue:active
     box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.3)
     -moz-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.3)
     -webkit-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.3)
+   

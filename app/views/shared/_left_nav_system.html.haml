@@ -1,13 +1,37 @@
 #container_left_navigation
   .customScrollBox
     .horWrapper.clearfix
-      .container
+      #system_nav.container
         #project_nav.content
-          %h3 #{@system.name}:
-          - @system.data_objects.each do |dobj|
-            #system_item{:class => "closed"}
-              = link_to dobj.name, system_data_object_path(@system, dobj) #, :id => "dobj_#{dobj.id}", :title => dobj.name, :class => ["system_dobj", is_current_dobj?(dobj) ? "current" : ""]
-          - if @system.data_objects.blank?
-            No data objects configured
+          %h3 #{link_to @system.name, system_path(@system)}:
+          %ul#system_list.expandable.collapsible.truncate
+            %li#system_item.open
+              %a#arrow.expanded Data Objects
+              %ul#system_dobj
+                =#.expandable
+                - @system.data_objects.each do |dobj|
+                  %li#system_dobj
+                    =#.closed
+                    =#%a#arrow.collapsed
+                    = link_to dobj.name, system_data_object_path(@system, dobj), :id => "dobj_#{dobj.id}", :title => dobj.name, :class => ["system_data_object", is_current_object?(dobj,"data_objects") ? "current" : ""]
+                - if @system.data_objects.blank?
+                  No data objects configured
+          &nbsp;
+          %ul#system_list.expandable.collapsible.truncate
+            %li#system_item.open
+              %a#arrow.expanded System Storage
+              %ul#file_type.expandable
+                - @system.file_types.each do |ft|
+                  %li#file_type.closed
+                    %a#arrow.collapsed
+                    %a.file_type= ft.name# link_to ft.name, system_data_object_path(@system, dobj), :id => "dobj_#{dobj.id}", :title => dobj.name, :class => ["system_data_object", is_current_object?(dobj,"data_objects") ? "current" : ""]
+                    %ul#system_file.collapsible
+                      - ft.raw_files.each do |file|
+                        %li#file
+                          = link_to file.name, "#", :class => "file"
+                      - if ft.raw_files.blank?
+                        Empty
+                - if @system.file_types.blank?
+                  No file types configured
       .dragger_container
         .dragger
