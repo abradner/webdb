@@ -49,6 +49,12 @@ group :development do
   #gem 'mongrel'
 end
 
+#gem 'pg'
+gem 'bson_ext'
+gem 'mysql'
+gem 'sqlite3'
+gem 'mongoid'
+
 gem 'jquery-rails'
 gem 'devise'
 #gem 'updated_by', :git => 'git://github.com/lucasrenan/updated-by.git' # created/updated by hooks for each record wih devise
@@ -56,12 +62,6 @@ gem 'cancan'
 gem 'capistrano-ext'
 gem 'capistrano'
 
-
-#gem 'pg'
-gem 'bson_ext'
-gem 'mysql'
-gem 'sqlite3'
-gem 'mongoid'
 
 
 gem 'haml'

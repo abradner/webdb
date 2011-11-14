@@ -4,8 +4,8 @@ class System < ActiveRecord::Base
   belongs_to :colour_scheme
   has_many :data_objects, :dependent => :destroy
   has_many :security_groups, :dependent => :destroy
-  has_many :file_types, :dependent => :destroy
   has_many :storage_locations, :dependent => :destroy
+  t_has_many :file_types #dependent=>destroyed on removal of storage_location
 
   #has_many :file_containers, :class_name => "SystemFile"
 

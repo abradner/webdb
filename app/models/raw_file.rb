@@ -14,7 +14,6 @@ class RawFile
   t_belongs_to :user
   t_belongs_to :file_type
 
-
   validates_presence_of :user_id, :file_type_id
 
   before_save :update_asset_attributes

@@ -1,9 +1,21 @@
-class FileType < ActiveRecord::Base #TODO convert to mongo
+#class FileType < ActiveRecord::Base #TODO convert to mongo
+class FileType
+  include Mongoid::Document
+  include Mongoid::Timestamps
   include Tenacity
-  belongs_to :system
-  belongs_to :storage_location
-  t_has_many :import_mappings
-  t_has_many :raw_files
+  #belongs_to :system
+  #belongs_to :storage_location
+  #t_has_many :import_mappings
+  #t_has_many :raw_files
+
+  field :name, :type => String
+  field :extensions, :type => String
+
+  t_belongs_to :system
+  t_belongs_to :storage_location
+  has_many :import_mappings
+  has_many :raw_files
+  embeds_one :file_metadata_schema
 
   #Metadata Schema
 
@@ -20,6 +32,15 @@ class FileType < ActiveRecord::Base #TODO convert to mongo
   def self.storage_location
     #TODO does not check that everything is well formed. This is a big issue!
     File.join(AppConfig.raw_storage_root_path, self.storage.location, self.system.name, self.name)
+  end
+
+  def data_objects
+    dobjs = Array.new
+    self.import_mappings.each do |im|
+      dobj = im.data_object
+      dobjs.insert(dobj) unless dobjs.include?(dobj)
+    end
+    dobjs
   end
 
 end

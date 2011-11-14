@@ -12,6 +12,10 @@
       .lastUnit
         = f.select :storage_location_id, options_from_collection_for_select(@storage_locations, :id, :name) #TODO default
     .field.line
+      = f.label :extensions, 'Valid Extensions'
+      .lastUnit
+        = f.text_field :extensions, :class => "text basic_field", :placeholder => "Comma separated list of valid file extensions, eg: csv,txt,out"
+    .field.line
       .field.actions
         = f.submit :class => "blue basic_field"
 

@@ -1,7 +1,7 @@
 #container_page_header.wrapper.clearfix
   #container_page_title
-    -#TODO real, neat breadcrumb
-    %h1.title #{link_to @system.name, system_path(@system)} > #{@data_object.name}
+    %h1.title.data_object
+      %span=@data_object.name
 
   #container_page_buttons.right
     -if can? :admin, User

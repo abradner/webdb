@@ -1,4 +1,6 @@
 class DataObjectAttribute < ActiveRecord::Base
+#TODO - convert this model and its associated logic to mongo, similar to metadata
+
   #updated_by
   belongs_to :data_object
 

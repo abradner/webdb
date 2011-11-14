@@ -24,7 +24,7 @@ class Management::StorageLocationsController < ApplicationController
   end
 
   def update
-    if @storage_location.update_attributes(params[:storage])
+    if @storage_location.update_attributes(params[:storage_location])
       redirect_to management_storage_locations_path, :notice => "The storage location  was successfully updated."
     else
       render :edit

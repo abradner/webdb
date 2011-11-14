@@ -16,8 +16,8 @@ class ApplicationController < ActionController::Base
   # catch access denied and redirect to the home page
   rescue_from CanCan::AccessDenied do |exception|
     flash[:alert] = exception.message
-    Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}" unless Rails.env.production?
-    redirect_to root_url
+    Rails.logger.debug "Access denied on #{exception.action}, Details: \n#{exception.subject.inspect}" unless Rails.env.production?
+    redirect_to :back
   end
 
 

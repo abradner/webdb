@@ -7,6 +7,7 @@
   %tr
     %th Name
     %th Type
+    %th Associated System
     %th Path
     %th Actions
 
@@ -14,6 +15,7 @@
     %tr
       %td= s.name
       %td= s.storage_type
+      %td= link_to s.system.name, system_path(s.system)
       %td= s.location
       %td
         = button_link_to "E", edit_management_storage_location_path(s)

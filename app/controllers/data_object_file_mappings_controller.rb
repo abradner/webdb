@@ -4,6 +4,7 @@ class DataObjectFileMappingsController < AjaxDataObjectController
 
   def index
     @import_mapping = ImportMapping.new
+    @file_types = @system.file_types
   end
 
   def create
