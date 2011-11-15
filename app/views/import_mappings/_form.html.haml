@@ -1,0 +1,41 @@
+=render :partial => 'shared/modal_form', :locals => {:obj => @import_mapping, :modal_title => "Data Object Import Mappings"}
+
+.field.line
+  - if @import_mappings.present?
+    %label Select a file mapping to modify
+    - @import_mappings.each do |im|
+      %div
+        = im.name
+        = im.file_type.name
+  - else
+    %label No file mappings exist for this data object
+
+.field.line
+  .field.actions
+    #add_mapping_button.button.add
+      %span New Import Mapping
+
+#new_mapping_container.hidden
+  = render :partial => 'import_mappings/form_innards'
+
+#bottom_actions_container
+  .field.line
+    .field.actions
+      = button_link_to "Back", manage_system_data_object_path(@system, @data_object), :remote => true
+
+:javascript
+  jQuery(function() {
+    $("#add_mapping_button").click(function() {
+        $(this).slideToggle();
+        $("#bottom_actions_container").slideToggle();
+        $("#new_mapping_container").slideToggle();
+    });
+
+    $("#cancel_mapping_button").click(function() {
+        $("#add_mapping_button").slideToggle();
+        $("#bottom_actions_container").slideToggle();
+        $("#new_mapping_container").slideToggle();
+    });
+
+  });
+

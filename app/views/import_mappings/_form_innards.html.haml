@@ -1,0 +1,16 @@
+%h3 Add New Import Mapping
+= form_for [@system, @data_object, @import_mapping], :remote => true do |f|
+  .field.line
+    %label= required_field("Import Mapping Information:")
+    .lastUnit
+      = f.text_field :name, :class => "small_text basic_field", :placeholder => "Import Mapping Name (max 45 chars)"
+  .field.line
+    %label= required_field("Import Mapping Parameters")
+    .lastUnit
+      = "File Type: "
+      = f.select :file_type, options_for_select(@file_types.collect{ |ft| [ft.name, ft.id]})
+  .field.line
+    .field.actions
+      #cancel_mapping_button.button
+        %span Cancel
+      = f.submit "Save Attribute", :class => "blue basic_field"

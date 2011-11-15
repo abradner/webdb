@@ -112,6 +112,7 @@ GEM
       railties (>= 3.0.0)
     faker (1.0.0)
       i18n (~> 0.4)
+    fastercsv (1.5.4)
     fattr (2.2.0)
     ffi (1.0.9)
     flay (1.4.3)
@@ -324,6 +325,7 @@ DEPENDENCIES
   devise
   factory_girl_rails
   faker
+  fastercsv
   haml
   haml-rails
   jquery-rails

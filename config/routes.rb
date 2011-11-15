@@ -44,7 +44,7 @@ end
     resources :data_objects do
       resources :data_object_relationships
       resources :data_object_attributes
-      resources :data_object_file_mappings
+      resources :import_mappings
       resources :data_object_security_settings
       member do
         #get :edit_security

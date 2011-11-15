@@ -9,5 +9,5 @@
 .field.line
   %label Tools
   .lastUnit
-    =button_link_to "File Import Mappings", system_data_object_data_object_file_mappings_path(@system, @data_object), :remote => true, :class => "file_type"
+    =button_link_to "File Import Mappings", system_data_object_import_mappings_path(@system, @data_object), :remote => true, :class => "file_type"
     =button_link_to "External Links", system_data_object_data_object_relationships_path(@system, @data_object), :class => "dobj_link"

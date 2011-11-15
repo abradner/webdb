@@ -62,6 +62,7 @@ gem 'cancan'
 gem 'capistrano-ext'
 gem 'capistrano'
 
+gem 'fastercsv'
 
 
 gem 'haml'

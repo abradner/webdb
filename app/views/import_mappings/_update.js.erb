@@ -1,0 +1,11 @@
+<% partial = @errors ?  "shared/process_modal_errors" : "import_mappings/edit" %>
+
+<%= render :partial => partial, :locals => {:obj => @import_mapping} %>
+
+<% unless @errors %>
+//    $("#add_mapping_button").slideToggle();
+//    $("#bottom_actions_container").slideToggle();
+//    $("#new_mapping_container").slideToggle();
+//    $("#form_errors_container").slideUp();
+//    $('.basic_field').removeAttr('disabled');
+<% end %>

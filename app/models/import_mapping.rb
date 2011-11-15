@@ -1,8 +1,13 @@
 class ImportMapping
   include Mongoid::Document
   include Tenacity
-  #field :data_object_id, :type => Integer
-#  field :file_type_id, :type => Integer
-  t_belongs_to :file_type
+  belongs_to :file_type
   t_belongs_to :data_object
+
+  field :mappings, :type => Hash
+  field :name, :type => String
+
+  validates_uniqueness_of :name, :case_sensitive => false, :scope => [:data_object_id, :file_type_id], :message => "has been taken in this data object"
+  validates_presence_of :data_object_id, :file_type_id, :name
+
 end
