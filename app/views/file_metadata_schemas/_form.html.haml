@@ -1,0 +1,6 @@
+=render :partial => 'shared/modal_form', :locals => {:obj => @file_metadata_schema, :modal_title => "Add/Edit Metadata Fields"}
+#modal_content_container
+  #modal_right_container
+    = render :partial => 'shared/right_file_metadata'
+  #form_innards
+    = render :partial => 'file_metadata_schemas/form_innards' #picks the right one based on controller

@@ -34,10 +34,18 @@
       =button_link_to "Manage Filetypes", system_file_types_path(@system), :class => "file_type"
       =button_link_to "Manage System Members", edit_members_system_path(@system), :class => "duck"
 
-%h2 Parameters
+%h2 Details
 #container_page_content.wrapper
-  .unit.system_left_col
-    %h3 System Administrators:
+  .system_left_col
+    .left.line
+      %h3 System Information:
+    .information
+      %span.bold System Description:
+      %p=@system.description
+
+  .system_right_col
+    .left.line
+      %h3 System Administrators:
     .row.information
       - unless @system.administrators.present?
         .bold
@@ -45,36 +53,31 @@
       - @system.administrators.each do |sa|
         %p=sa.name
 
-  .lastUnit.system_right_col
-    .left.line
-      %h3 System Information:
-    .information
-      %span.bold System Description:
-      %p=@system.description
 
-%h2 Content
 #container_page_content.wrapper
-  .unit.system_left_col
-    %h3 Storage:
-    -#toggle_hidden.button Upload #TODO
-    .button Upload (Disabled)
-    .row.information
-      - @system.file_types.each do |ft|
-        %p.bold Type "#{ft.name}" (Stored on #{ft.storage_location.name}):
-        = render :partial => "upload_file", :locals => {:file_type => ft}
-        %p.light= "Empty" unless ft.raw_files.present?
-        - ft.raw_files.each do |rsc|
-          %p.light=rsc.stored_file_identifier
-        %p &nbsp;
-  .lastUnit.system_right_col
+  %h2 Content
+  .system_left_col
     %h3 Data Objects
     - unless @system.data_objects.present?
       No Data Objects configured.
+      %ul
     - @system.data_objects.each do |dobj|
-      .entry
-        .label
-          =link_to dobj.name, system_data_object_path(@system, dobj)
-        .item
+      =link_to system_data_object_path(@system, dobj) do
+        .entry.data_object
+          %span=dobj.name
+        .item.light.truncate
           =dobj.short_description
-      %p &nbsp;
 
+  .system_right_col
+    %h3 Storage:
+    -#-#toggle_hidden.button Upload #TODO
+    -#.button Upload (Disabled)
+    .row.information
+      - @system.file_types.sort_by(&:storage_location).each do |ft|
+        %p.bold [#{ft.storage_location.name}]::#{ft.name}
+        %p.light #{ft.raw_files.count} files, XXX MB
+        -#= render :partial => "upload_file", :locals => {:file_type => ft}
+        -#%p.light= "Empty" unless ft.raw_files.present?
+        -#- ft.raw_files.each do |rsc|
+        -#  %p.light=rsc.stored_file_identifier
+        %p &nbsp;

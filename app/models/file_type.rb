@@ -9,13 +9,14 @@ class FileType
   #t_has_many :raw_files
 
   field :name, :type => String
-  field :extensions, :type => String
+  field :content, :type => String
+  field :extensions, :type => String #change to array
 
   t_belongs_to :system
   t_belongs_to :storage_location
   has_many :import_mappings
   has_many :raw_files
-  embeds_one :file_metadata_schema
+  embeds_many :file_metadata_schemas
 
   #Metadata Schema
 

@@ -1,22 +1,6 @@
-= render :partial => "shared/form_header", :locals => {:action => action, :obj => "File Type"}
-= render :partial => "shared/form_errors", :locals => {:obj => @file_type}
-
-= form_for [@system, @file_type] do |f|
-  .lightbox
-    .field.line
-      = f.label :name, required_field('Name:')
-      .lastUnit
-        = f.text_field :name, :class => "text basic_field", :placeholder => "The name of your file type"
-    .field.line
-      = f.label :storage_location_id, required_field('Storage Type:')
-      .lastUnit
-        = f.select :storage_location_id, options_from_collection_for_select(@storage_locations, :id, :name) #TODO default
-    .field.line
-      = f.label :extensions, 'Valid Extensions'
-      .lastUnit
-        = f.text_field :extensions, :class => "text basic_field", :placeholder => "Comma separated list of valid file extensions, eg: csv,txt,out"
-    .field.line
-      .field.actions
-        = f.submit :class => "blue basic_field"
-
--#= render :partial => "shared/form_autocomplete_helper" , :locals => {:source => list_users_path(:format => :json) }
+=render :partial => 'shared/modal_form', :locals => {:obj => @file_type, :modal_title => "Manage File Types"}
+#modal_content_container
+  #modal_right_container
+    = render :partial => 'shared/right_file_metadata'
+  #form_innards
+    = render :partial => 'form_innards' #picks the right one based on controller

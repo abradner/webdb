@@ -1,0 +1,30 @@
+= form_for [@system, @file_type, @file_metadata_schema], :remote => true do |f|
+  #modal_left_container
+    %h3{:style => "margin:0 12px 10px 0"} Properties
+    #ft_details_container{:style => ["margin:0px 12px 0px 0px"]}
+
+      .field.line
+        %label= required_field("Field Information:")
+        .lastUnit
+          = f.text_field :label, :class => "small_text basic_field", :placeholder => "Display Label (max 255 chars)"
+      .field.line
+        %label= required_field("Attribute Parameters")
+        .lastUnit
+          = "Attribute Type: "
+          = f.select :field_type, options_for_select(AppConfig.metadata_types.invert)
+        #parameters_field.lastUnit
+          -#= f.text_field :length, :class => "small_text basic_field", :placeholder => "Length or Decimal Places"
+      .field.line
+        %label= required_field("Attribute Options:")
+        .lastUnit
+          = f.label :required, "Required?"
+          = f.check_box :required, :default => false
+      .field.line
+        .field.actions
+          = f.submit "Add", :class => "blue basic_field", :id => "save_button"
+
+  .field.line
+    .field.actions
+      = button_link_to "Back", edit_system_file_type_path(@system, @file_type), :remote => true
+      = button_link_to "Close", "", :remote => true, :class => "jqmClose"
+      -#= link_to "Save and Define Metadata", "#", :remote => true, :class => "blue basic_field", :id => "save_button"

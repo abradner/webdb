@@ -1,0 +1,34 @@
+= form_for [@system, @file_type], :remote => true do |f|
+  #modal_left_container
+    %h3{:style => "margin:0 12px 10px 0"} Properties
+    #ft_details_container{:style => ["margin:0px 12px 0px 0px"]}
+
+      .field.line
+        = f.label :name, required_field('Name:')
+        .lastUnit
+          = f.text_field :name, :class => "text narrow basic_field", :placeholder => "The name of your file type"
+      .field.line
+        = f.label :content, required_field('Content:')
+        .lastUnit
+          = f.text_field :content, :class => "text narrow basic_field", :placeholder => "A short description of expected file contents"
+      .field.line
+        = f.label :storage_location_id, required_field('Storage Type:')
+        .lastUnit
+          = f.select :storage_location_id, options_from_collection_for_select(@storage_locations, :id, :name) #TODO default
+      .field.line
+        = f.label :extensions, 'Valid Extensions'
+        .lastUnit
+          = f.text_field :extensions, :class => "text narrow basic_field", :placeholder => "Comma separated list of valid file extensions, eg: csv,txt,out"
+      .field.line
+        = f.label :extensions, 'Define Metadata Schema?'
+        #metadata_checkbox_container.lastUnit
+          = check_box_tag 'metadata', 1, true, :id => 'metadata_checkbox'
+  .field.line
+    .field.actions
+      = button_link_to "Cancel", "", :remote => true, :class => "jqmClose"
+      = f.submit "Save and Define Metadata", :class => "blue basic_field", :id => "save_button"
+
+#new_attribute_container.hidden
+  =# render :partial => 'data_object_attributes/form_innards'
+
+

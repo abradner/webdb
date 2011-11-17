@@ -12,6 +12,7 @@
 //= require selectToUISlider.jQuery
 //= require nested_form/jquery
 //= require jquery.remotipart
+//= require ios-checkboxes
 //= require_self
 // #= require_tree .
 
@@ -48,5 +49,15 @@ $(function() {
             $('#close_modal').click();
         }
     });
+
+//    $('#metadata_checkbox_container').click(function() {
+//        if ($('#metadata_checkbox').checked) {
+//            $("#save_button").text('Blah');
+//            alert();
+//        }
+//    });
+
+
+
 
 });

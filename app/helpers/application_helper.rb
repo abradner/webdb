@@ -28,7 +28,7 @@ module ApplicationHelper
 
   private
   def render_field_content(label, content)
-    div_class = cycle("field_bg","field_nobg")
+    div_class = cycle("field_bg", "field_nobg")
     div_id = label.tr(" ,", "_").downcase
     html = "<div class='#{div_class} inlineblock' id='display_#{div_id}'>"
     html << '<span class="label_view">'
@@ -53,7 +53,7 @@ module ApplicationHelper
   end
 
   def button_link_to(name, options = {}, html_options = {})
-    html_options[:class] = [ html_options[:class], 'button' ].compact * ' '
+    html_options[:class] = [html_options[:class], 'button'].compact * ' '
     link_to content_tag(:span, name), options, html_options
   end
 
@@ -71,4 +71,16 @@ module ApplicationHelper
     false
   end
 
+  # @param text [String]
+  def field_css_class(text)
+    'icon_field field_' << text.downcase
+  end
+
+  def get_controller_name
+    controller_name
+  end
+
+  def get_action_name
+    action_name
+  end
 end

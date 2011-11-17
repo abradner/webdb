@@ -24,7 +24,7 @@
 
 -# TODO: WORST CODE EVER!
 #container_page_content.wrapper
-  .unit.system_left_col
+  .unit.block_left_col
     %h3 External Data Relationships
     .row.information
       %span.bold Linked Data Objects:
@@ -36,7 +36,7 @@
         - @data_object.inverse_relatives.each do |irel|
           %li=link_to irel.name, system_data_object_path(@system, irel)
 
-  .unit.system_left_col
+  .unit.block_left_col
     %h3 Security:
     .row.information
       - if @data_object.security_groups.blank?
@@ -44,23 +44,23 @@
           No Security Groups Defined
       - @data_object.security_groups.each do |sg|
         %p=sg.name
-  .unit.system_left_col
+  .unit.block_left_col
     %h3 R
     .row.information
       - @data_object.data_object_security_groups.each do |sg|
         %p=sg.read? ? "Y" :"N"
-  .unit.system_left_col
+  .unit.block_left_col
     %h3 W
     .row.information
       - @data_object.data_object_security_groups.each do |sg|
         %p=sg.write? ? "Y" :"N"
-  .unit.system_left_col
+  .unit.block_left_col
     %h3 A
     .row.information
       - @data_object.data_object_security_groups.each do |sg|
         %p=sg.admin? ? "Y" :"N"
 
-  .lastUnit.system_right_col
+  .lastUnit.block_right_col
     .left.line
       %h3 System Information:
     .information

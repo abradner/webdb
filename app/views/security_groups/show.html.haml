@@ -18,7 +18,7 @@
 
 
 #container_page_content.wrapper
-  .unit.system_left_col
+  .unit.block_left_col
     %h3 Statistics:
     .row.information
       .bold Data Objects utilising group:
@@ -26,7 +26,7 @@
       .bold Users governed:
       = @security_group.users.count || "0"
 
-  .lastUnit.system_right_col
+  .lastUnit.block_right_col
     .left.line
       %h3 Group Information:
     .information

@@ -3,7 +3,7 @@ class FileMetadataSchema
   include Mongoid::Timestamps
 
   field :label, :type => String
-  field :type, :type => String
+  field :field_type, :type => String
   field :required, :type => Boolean
   field :select_options, :type => Array
   field :field_parameters

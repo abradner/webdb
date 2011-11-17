@@ -1,20 +1,13 @@
-class FileTypesController < ApplicationController
-  before_filter :authenticate_user!
+class FileTypesController < AjaxGenericController
 
-  load_and_authorize_resource :system
-  #load_and_authorize_resource :file_type, :through => :system_id
-  #load_and_authorize_resource :storage_location, :through => :system, :only => [:new, :edit]
-
-  before_filter :systems_and_memberships, :only => [:index, :new, :create, :show, :edit, :update] #TODO remove the viewless actions
+  load_and_authorize_resource :file_type
 
   def new
-    @file_type = FileType.new
     @storage_locations = @system.storage_locations
   end
 
-  def show; end
+  #def show; end
   def edit
-    @file_type = FileType.find(params[:id])
     @storage_locations = @system.storage_locations
   end
 
@@ -24,24 +17,13 @@ class FileTypesController < ApplicationController
 
 
   def create
-    @file_type = FileType.new(params[:file_type])
     @file_type.system = @system
-    if @file_type.save
-      redirect_to system_file_types_path(@system), :notice => "The file type has been created."
-    else
-      render :new
-    end
+    prepare_next_step(@file_type.save)
   end
 
 
   def update
-    @file_type = FileType.find(params[:id])
-    #sanitise_params_for_sec_group!
-    if @file_type.update_attributes(params[:file_type])
-      redirect_to system_file_types_path(@system), :notice => "The file type has been updated."
-    else
-      render :edit
-    end
+    prepare_next_step(@file_type.update_attributes(params[:file_type]))
   end
 
   def destroy
@@ -54,4 +36,22 @@ class FileTypesController < ApplicationController
   end
 
 
+  private
+  def prepare_metadata_for_wizard!
+    @file_metadata_schemas = @file_type.file_metadata_schemas
+    @file_metadata_schema = FileMetadataSchema.new
+  end
+
+  def prepare_next_step(operation)
+    if operation
+      if params[:metadata]
+        prepare_metadata_for_wizard!
+      else
+        @redirect_path = system_file_types_path(@system)
+      end
+    else
+      @errors = true
+      @storage_locations = @system.storage_locations
+    end
+  end
 end

@@ -7,7 +7,7 @@
   %p &nbsp;
   - @memberships.each do |s|
     #container_page_content.wrapper
-      .unit.system_left_col{:style => "width: 250px"}
+      .unit.block_left_col{:style => "width: 250px"}
         %h3.truncate{:style =>"overflow: hidden; text-overflow: ellipsis;"}=link_to s.name, system_path(s)
         .row.information
           %ul
@@ -17,7 +17,7 @@
               %p.details Empty
           %p &nbsp;
 
-      .lastUnit.system_right_col
+      .lastUnit.block_right_col
         .left.line
           %h3.light Details
         .information

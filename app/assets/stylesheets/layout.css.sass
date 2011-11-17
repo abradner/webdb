@@ -1,0 +1,116 @@
+////////////////////////////////////////////
+////////////////////////////////////////////
+// This file is currently unused
+////////////////////////////////////////////
+////////////////////////////////////////////
+
+
+// LAYOUT - HEADER
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+
+#container_header
+  margin: 0
+  padding: 18px
+  height: 72px
+  position: relative
+  ///*establish stacking order for z-index
+  z-index: 2
+  ///*layer it above the #faux column
+  color: #FFFFFF
+  text-align: left
+  background: #2C539E
+
+#header_title
+  margin: 5px 0 0 72px
+
+///* ACData Title
+
+#container_header
+  img
+    margin: 0 0 10px 0
+    display: block
+  div#header_menu
+    font: normal normal normal 0.875em Helvetica, Arial, sans-serif
+    color: #FFF
+    text-decoration: none
+    text-align: right
+    float: right
+  a
+    &:link, &:visited
+      font-weight: normal
+      color: #FFF
+      text-decoration: none
+    &:hover
+      text-decoration: underline
+
+///* UNSW + ACData images
+
+// LAYOUT - INNER LEFT
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+
+#container_left_navigation
+  margin: 0 0 0 0
+  padding: 0 0 0 20px
+  left: 0px
+  width: 300px
+  top: 128px
+  bottom: 57px
+  overflow-y: hidden
+  display: block
+  font-size: 0.875em
+  border-right: 1px solid #BDBDBD
+  ///*this is just for #right to reference it's overflow point from
+  position: absolute
+  z-index: 2
+  ///*layer it above the #faux column
+  float: left
+  clear: both
+
+* html #container_left_navigation
+  margin-right: -3px
+
+///*kill IE6 3px jog
+
+// LAYOUT - INNER RIGHT
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+
+#container_right_content
+  padding: 0
+  overflow-y: auto
+  overflow-x: hidden
+  ///*keep all elements from sliding under floated #left col(IE7 haslayout also)
+  ///*     background: #FFF; /*this needs to be the same as #wrapper bg color (or remove it completely)
+  ///* the bottom margin is the negative value of the footer's height
+  position: absolute
+  left: 321px
+  top: 128px
+  bottom: 37px
+
+* html #container_right_content
+  height: 1%
+  overflow: visible
+
+///*IE6 haslayout and overflow reset
+
+// LAYOUT - FOOTER
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+
+#footer
+  margin: 0 auto
+  padding: 8px 0 0 0
+  min-width: 600px
+  height: 28px
+  bottom: 0
+  left: 0
+  right: 0
+  border-top: 1px solid #E5E5E5
+  background: #F5F5F5
+  /* Old browsers
+  position: absolute
+  font-size: 0.875em
+  color: #666666
+  text-align: center
+  /*establish stacking order for z-index
+  z-index: 2
+  /*layer it above the #faux column
+  clear: both

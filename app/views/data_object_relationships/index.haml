@@ -5,7 +5,7 @@
 
 -# TODO: WORST CODE EVER!
 #container_page_content.wrapper
-  .unit.system_left_col
+  .unit.block_left_col
     %h3 Links from this Data Object
     .row.information
       - @data_object.data_object_relationships.each do |link|
@@ -15,7 +15,7 @@
                       :confirm =>"Sever outbound link?",
                       :id => 'outbound_link_delete_link', :class => 'red'
 
-  .unit.system_left_col
+  .unit.block_left_col
     %h3 Linking to this object
     .row.information
       - @data_object.inverse_data_object_relationships.each do |link|
@@ -24,7 +24,7 @@
         %p= button_link_to "Manage Target Data Object", system_data_object_path(@system, link.data_object)
 
 
-  -#.lastUnit.system_right_col
+  -#.lastUnit.block_right_col
   -#  .left.line
   -#    %h3 System Information:
   -#  .information

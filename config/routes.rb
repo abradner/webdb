@@ -40,6 +40,7 @@ end
   resources :systems do #, :only => [:show] do
     resources :file_types do
       resources :raw_files
+      resources :file_metadata_schemas
     end
     resources :data_objects do
       resources :data_object_relationships

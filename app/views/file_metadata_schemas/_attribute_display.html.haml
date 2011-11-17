@@ -1,0 +1,3 @@
+#attr_list
+  - @data_object_attributes.each do |attr|
+    %p.attribute_label.draggable{"data-id" => attr.id } #{attr.name} #{"(" << attr.label << ")" unless attr.label.blank?} - #{AppConfig.attribute_types[attr.attribute_type]}

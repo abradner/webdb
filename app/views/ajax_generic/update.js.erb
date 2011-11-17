@@ -1,0 +1,6 @@
+<% if @redirect_path %>
+  // redirect
+  window.location = '<%= @redirect_path %>';
+<% else %>
+    <%= render :partial => "update" %>
+<% end %>

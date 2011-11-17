@@ -1,0 +1,2 @@
+<%  partial = @errors ?  "shared/process_modal_errors" : 'file_metadata_schemas/edit' %>
+<%= render :partial => partial, :locals => {:obj => @file_type} %>

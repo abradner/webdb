@@ -1,0 +1,7 @@
+%h3 Metadata Fields
+- if @file_type.file_metadata_schemas.blank?
+  None defined.
+- else
+  - @file_type.file_metadata_schemas.each do |fms|
+    %p.light=link_to fms.label, edit_system_file_type_file_metadata_schema_path(@system, @file_type, fms), :remote => true, :class => field_css_class(fms.field_type)
+
