@@ -1,8 +1,13 @@
-#file_preview
-  #header
-    = @csv[:header].join("<>")
-
-  #data
+%table#file_preview
+  %thead
+    %tr#header
+      -@csv[:header].each do |cell|
+        %th.truncate
+          = cell
+  %tfoot
+  %tbody
     - @csv[:data].each do |row|
-      .row
-        = row.join("<>")
+      %tr
+        - row.each do |cell|
+          %td.truncate
+            = cell

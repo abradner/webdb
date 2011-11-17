@@ -5,6 +5,7 @@
  *= require jquery-ui
  *= require list-builder
  *= require jqModal
+ *= require fixed-header-table
  *= require ui.slider.extras
 
  *= require_self

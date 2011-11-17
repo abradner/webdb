@@ -18,14 +18,14 @@
     - else
       No files were detected in the system.
 .field.line
-  %label
-    = "File Preview : "
-    - if @raw_file
-      = "#{@raw_file} with #{@delimiter} as delimiter"
-    - else
-      = "None selected"
-  = render :partial => "file_preview", :locals => {:csv => @csv}
+  - if @raw_file
+    %label
+      = "File Preview : #{@raw_file} with #{@delimiter} as delimiter"
+    = render :partial => "file_preview", :locals => {:csv => @csv}
 
+  - else
+    %label
+      = "File Preview : None selected"
 
   .lastUnit
 
