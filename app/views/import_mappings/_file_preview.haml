@@ -1,0 +1,8 @@
+#file_preview
+  #header
+    = @csv[:header].join("<>")
+
+  #data
+    - @csv[:data].each do |row|
+      .row
+        = row.join("<>")

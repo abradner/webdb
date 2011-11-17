@@ -44,7 +44,12 @@ end
     resources :data_objects do
       resources :data_object_relationships
       resources :data_object_attributes
-      resources :import_mappings
+      resources :import_mappings do
+        member do
+          get :preview
+          post :preview
+        end
+      end
       resources :data_object_security_settings
       member do
         #get :edit_security

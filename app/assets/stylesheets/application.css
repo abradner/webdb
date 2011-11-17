@@ -9,7 +9,7 @@
 
  *= require_self
  *= require master
-
+ *= require buttons
  *= require webdb
  *= require overrides
 */

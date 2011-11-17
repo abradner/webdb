@@ -1,0 +1,35 @@
+=render :partial => 'shared/modal_form', :locals => {:obj => @import_mapping, :modal_title => ("Preview This Import Mapping (" + @import_mapping.name + ")")}
+.field.line
+  %label Settings
+  .lastUnit
+    - if @raw_files
+      = form_for @import_mapping, :url => preview_system_data_object_import_mapping_path(@system, @data_object, @import_mapping),:method => :post, :remote => true do |f|
+        = label_tag(:raw_file, "File To Preview")
+        -#= select_tag(:raw_file_id, @raw_files.collect{ |rf | [ rf.stored_file_identifier, rf.id]})
+        = select_tag(:raw_file, options_for_select(@raw_files))
+        %div
+          = label_tag(:delimiter, "Delimiter")
+          = select_tag(:delimiter, options_for_select(@delimiters))
+        %div
+          = label_tag(:header, "First Row Contains Field Names?")
+          = check_box_tag(:header)
+        %div
+          = f.submit "Preview File"
+    - else
+      No files were detected in the system.
+.field.line
+  %label
+    = "File Preview : "
+    - if @raw_file
+      = "#{@raw_file} with #{@delimiter} as delimiter"
+    - else
+      = "None selected"
+  = render :partial => "file_preview", :locals => {:csv => @csv}
+
+
+  .lastUnit
+
+#bottom_actions_container
+  .field.line
+    .field.actions
+      = button_link_to "Back", system_data_object_import_mappings_path(@system, @data_object), :remote => true

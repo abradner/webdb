@@ -2,13 +2,12 @@
 
 .field.line
   - if @import_mappings.present?
-    %label Select a file mapping to modify
+    Select a file mapping to modify
     - @import_mappings.each do |im|
       %div
-        = im.name
-        = im.file_type.name
+        = link_to "#{im.name} (#{im.file_type.name})", preview_system_data_object_import_mapping_path(@system, @data_object, im), :remote => true
   - else
-    %label No file mappings exist for this data object
+    No file mappings exist for this data object
 
 .field.line
   .field.actions
