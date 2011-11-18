@@ -17,6 +17,7 @@
           = f.submit "Preview File"
     - else
       No files were detected in the system.
+      
 - if @raw_file
   .field.line
     %label
@@ -25,7 +26,7 @@
 
   #attr_list
     - @data_object_attributes.each do |attr|
-      %p.attribute_label.draggable{"data-id" => attr.id } #{attr.name}
+      %p.attribute_label.draggable{"data_id" => attr.id } #{attr.name}
 - else
   .field.line
     %label
@@ -33,13 +34,17 @@
 
   .lastUnit
 
-#bottom_actions_container
-  .field.line
-    .field.actions
-      = button_link_to "Back", system_data_object_import_mappings_path(@system, @data_object), :remote => true
+= form_for [@system, @data_object, @import_mapping], :remote => true, :html => {:id => "mapping_form"} do |f|
+  #hidden_values
+  #bottom_actions_container
+    .field.line
+      .field.actions
+        = button_link_to "Back", system_data_object_import_mappings_path(@system, @data_object), :remote => true
+        = f.submit "Save Mappings"
 
 :javascript
   jQuery(function() {
+
     $('.draggable').draggable({
         revert:true,
         helper:'clone',
@@ -50,10 +55,7 @@
         activeClass: 'dropActive',
         accept: function(d) {
 
-          if ($(this).html() == "") {
-            $(this).html("unassigned");
-          }
-          if($(this).html() == "unassigned" ){
+          if($(this).html() == "" ){
             return true;
           }
         },
@@ -67,19 +69,30 @@
               $data = {};
 
           $(this).html($drag);
-          
-          $('p', this).removeClass('draggable');
-          $('p', this).removeClass('ui-draggable');
           $(this).css('backgroundColor', "#BBBBBB");
           $(this).css('color', "black");
+          $('#hidden_values').empty();
+          $('.draggable', '#file_preview').each(function(index) {
+            if ($(this).css('display') != "none"){
 
+              $('<input>').attr({
+                  id : $(this).parent().attr('id'),
+                  name : $(this).parent().attr('id'),
+                  type : "hidden",
+                  value : $(this).attr('data_id')
+              }).appendTo('#hidden_values');
+            }
+
+          });
         },
+
         over: function(event, ui) {
           var bg_color = $(this).css('backgroundColor');
           var color = $(this).css('color');
-          $(this).css('backgroundColor', "black");
+          $(this).css('backgroundColor', "lime");
           $(this).css('color', "#BBBBBB");
         },
+        
         out: function(event, ui) {
           var bg_color = $(this).css('backgroundColor');
           var color = $(this).css('color');

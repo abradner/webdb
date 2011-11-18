@@ -8,7 +8,7 @@
             = cell
       %tr
         -@csv[:header].each do |cell|
-          %th.truncate.column unassigned
+          %th.truncate.column{:id => "column_#{@csv[:header].index(cell)}"}
 
 
     %tbody
