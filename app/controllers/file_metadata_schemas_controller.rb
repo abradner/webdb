@@ -14,6 +14,7 @@ class FileMetadataSchemasController < AjaxGenericController
 
   def create
     @errors = true unless @file_type.file_metadata_schemas.create(params[:file_metadata_schema])
+    @file_metadata_schema = FileMetadataSchema.new unless @errors
   end
 
 
