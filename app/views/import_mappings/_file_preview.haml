@@ -1,13 +1,19 @@
-%table#file_preview
-  %thead
-    %tr#header
-      -@csv[:header].each do |cell|
-        %th.truncate
-          = cell
-  %tfoot
-  %tbody
-    - @csv[:data].each do |row|
+
+#file_preview
+  %table
+    %thead
       %tr
-        - row.each do |cell|
-          %td.truncate
+        -@csv[:header].each do |cell|
+          %th.truncate
             = cell
+      %tr
+        -@csv[:header].each do |cell|
+          %th.truncate.column unassigned
+
+
+    %tbody
+      - @csv[:data].each do |row|
+        %tr
+          - row.each do |cell|
+            %td.truncate
+              = cell

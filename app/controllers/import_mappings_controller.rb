@@ -24,7 +24,6 @@ class ImportMappingsController < AjaxDataObjectController
 
     end
 
-
     @import_mappings = @data_object.import_mappings
     @file_types = @system.file_types
   end
@@ -38,12 +37,13 @@ class ImportMappingsController < AjaxDataObjectController
   end
 
   def preview
-    require 'faster_csv'
     #@raw_files = @import_mapping.file_type.raw_files
     @raw_files = ["contract", "customer_order_total", "GeoIPCountryWhois", "students", "transaction"]
     @delimiters = [["Comma", ","],["Tab", "\t"], ["Semicolon", ";"],  ["Space", "\s"], ["Pipe", "|"]]
+    @data_object_attributes = @data_object.data_object_attributes
 
     params[:header].present? ? @header = true : @header = false
+
     @raw_file = params[:raw_file]
     @delimiter = params[:delimiter]
     @csv = {:header => [], :data => []}
@@ -63,7 +63,6 @@ class ImportMappingsController < AjaxDataObjectController
         # FasterCSV returns arrays if headers => false, and FasterCSV:Rows if true
         if @header
           if csv.header_row?
-            puts "blah"
             @csv[:header] = csv.fields
           else
             @csv[:data] << csv.fields
@@ -81,13 +80,6 @@ class ImportMappingsController < AjaxDataObjectController
 
       end
     end
-
-    puts @csv[:header]
-    puts
-    puts
-    puts
-    puts
-    puts @csv[:data]
 
   end
 

@@ -12,18 +12,22 @@
           = select_tag(:delimiter, options_for_select(@delimiters))
         %div
           = label_tag(:header, "First Row Contains Field Names?")
-          = check_box_tag(:header)
+          = check_box_tag(:header, 1, true)
         %div
           = f.submit "Preview File"
     - else
       No files were detected in the system.
-.field.line
-  - if @raw_file
+- if @raw_file
+  .field.line
     %label
       = "File Preview : #{@raw_file} with #{@delimiter} as delimiter"
     = render :partial => "file_preview", :locals => {:csv => @csv}
 
-  - else
+  #attr_list
+    - @data_object_attributes.each do |attr|
+      %p.attribute_label.draggable{"data-id" => attr.id } #{attr.name}
+- else
+  .field.line
     %label
       = "File Preview : None selected"
 
@@ -33,3 +37,56 @@
   .field.line
     .field.actions
       = button_link_to "Back", system_data_object_import_mappings_path(@system, @data_object), :remote => true
+
+:javascript
+  jQuery(function() {
+    $('.draggable').draggable({
+        revert:true,
+        helper:'clone',
+        opacity: 0.5
+    });
+
+    $('.column').droppable({
+        activeClass: 'dropActive',
+        accept: function(d) {
+
+          if ($(this).html() == "") {
+            $(this).html("unassigned");
+          }
+          if($(this).html() == "unassigned" ){
+            return true;
+          }
+        },
+
+        drop: function(event,ui){
+
+          event.stopPropagation();
+          ui.helper.hide();
+          var $drag = $(ui.draggable),
+              $drop = $(this),
+              $data = {};
+
+          $(this).html($drag);
+          
+          $('p', this).removeClass('draggable');
+          $('p', this).removeClass('ui-draggable');
+          $(this).css('backgroundColor', "#BBBBBB");
+          $(this).css('color', "black");
+
+        },
+        over: function(event, ui) {
+          var bg_color = $(this).css('backgroundColor');
+          var color = $(this).css('color');
+          $(this).css('backgroundColor', "black");
+          $(this).css('color', "#BBBBBB");
+        },
+        out: function(event, ui) {
+          var bg_color = $(this).css('backgroundColor');
+          var color = $(this).css('color');
+          $(this).css('backgroundColor', "#BBBBBB");
+          $(this).css('color', "black");
+        }
+    });
+
+  });
+

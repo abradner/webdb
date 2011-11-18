@@ -8,7 +8,6 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require jqModal
-//= require jquery.fixedheadertable
 //= require selectToUISlider.jQuery
 //= require nested_form/jquery
 //= require jquery.remotipart
