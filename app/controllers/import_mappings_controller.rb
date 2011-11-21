@@ -39,29 +39,32 @@ class ImportMappingsController < AjaxDataObjectController
   def preview
     #@raw_files = @import_mapping.file_type.raw_files
     @raw_files = ["contract", "customer_order_total", "GeoIPCountryWhois", "students", "transaction"]
-    @delimiters = [["Comma", ","],["Tab", "\t"], ["Semicolon", ";"],  ["Space", "\s"], ["Pipe", "|"]]
+    @delimiters = [["Comma", ","], ["Tab", "\t"], ["Semicolon", ";"], ["Space", "\s"], ["Pipe", "|"]]
     @data_object_attributes = @data_object.data_object_attributes
 
-    params[:header].present? ? @header = true : @header = false
+    if params[:preview]
+      params[:preview][:includes_header].eql?("1") ? @includes_header = true : @includes_header = false
 
-    @raw_file = params[:raw_file]
-    @delimiter = params[:delimiter]
-    @csv = {:header => [], :data => []}
+      @raw_file = params[:preview].delete(:raw_file)
+      @delimiter = params[:preview][:delimiter]
+
+      @csv = {:header => [], :data => []}
+    end
 
     if @raw_file
 
       # read first 10 lines
-      @header ? limit = 11 : limit = 10
+      @includes_header ? limit = 11 : limit = 10
       index = 0
 
-      FasterCSV.foreach("vendor/sample_data/#{@raw_file}.csv", {:col_sep => @delimiter, :headers => @header, :return_headers => true}) do |csv|
+      FasterCSV.foreach("vendor/sample_data/#{@raw_file}.csv", {:col_sep => @delimiter, :headers => @includes_header, :return_headers => true}) do |csv|
 
         if index > limit
           break
         end
 
         # FasterCSV returns arrays if headers => false, and FasterCSV:Rows if true
-        if @header
+        if @includes_header
           if csv.header_row?
             @csv[:header] = csv.fields
           else

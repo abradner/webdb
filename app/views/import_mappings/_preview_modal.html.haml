@@ -6,13 +6,13 @@
       = form_for @import_mapping, :url => preview_system_data_object_import_mapping_path(@system, @data_object, @import_mapping),:method => :post, :remote => true do |f|
         = label_tag(:raw_file, "File To Preview")
         -#= select_tag(:raw_file_id, @raw_files.collect{ |rf | [ rf.stored_file_identifier, rf.id]})
-        = select_tag(:raw_file, options_for_select(@raw_files))
+        = select(:preview, :raw_file, options_for_select(@raw_files))
         %div
           = label_tag(:delimiter, "Delimiter")
-          = select_tag(:delimiter, options_for_select(@delimiters))
+          = select(:preview, :delimiter, options_for_select(@delimiters))
         %div
-          = label_tag(:header, "First Row Contains Field Names?")
-          = check_box_tag(:header, 1, true)
+          = label_tag(:includes_header, "First Row Contains Field Names?")
+          = check_box(:preview, :includes_header)
         %div
           = f.submit "Preview File"
     - else
@@ -21,10 +21,13 @@
 - if @raw_file
   .field.line
     %label
-      = "File Preview : #{@raw_file} with #{@delimiter} as delimiter"
+      = "File Preview : #{@raw_file} with #{@delimiter} as the delimiter"
     = render :partial => "file_preview", :locals => {:csv => @csv}
 
   #attr_list
+    .field.line
+
+    %label Please drag the attributes below and place them under the appropriate headers
     - @data_object_attributes.each do |attr|
       %p.attribute_label.draggable{"data_id" => attr.id } #{attr.name}
 - else
@@ -35,7 +38,10 @@
   .lastUnit
 
 = form_for [@system, @data_object, @import_mapping], :remote => true, :html => {:id => "mapping_form"} do |f|
+  = f.hidden_field(:includes_header, :value => @includes_header) if @includes_header.present?
+  = f.hidden_field(:delimiter, :value => @delimiter) if @delimiter.present?
   #hidden_values
+
   #bottom_actions_container
     .field.line
       .field.actions
@@ -69,7 +75,7 @@
               $data = {};
 
           $(this).html($drag);
-          $(this).css('backgroundColor', "#BBBBBB");
+          $(this).css('backgroundColor', "#DDDDDD");
           $(this).css('color', "black");
           $('#hidden_values').empty();
           $('.draggable', '#file_preview').each(function(index) {
@@ -77,7 +83,7 @@
 
               $('<input>').attr({
                   id : $(this).parent().attr('id'),
-                  name : $(this).parent().attr('id'),
+                  name : 'import_mapping[mappings][' + $(this).parent().attr('id') + ']',
                   type : "hidden",
                   value : $(this).attr('data_id')
               }).appendTo('#hidden_values');
@@ -90,13 +96,13 @@
           var bg_color = $(this).css('backgroundColor');
           var color = $(this).css('color');
           $(this).css('backgroundColor', "lime");
-          $(this).css('color', "#BBBBBB");
+          $(this).css('color', "#DDDDDD");
         },
         
         out: function(event, ui) {
           var bg_color = $(this).css('backgroundColor');
           var color = $(this).css('color');
-          $(this).css('backgroundColor', "#BBBBBB");
+          $(this).css('backgroundColor', "#DDDDDD");
           $(this).css('color', "black");
         }
     });
