@@ -1,0 +1,132 @@
+
+/* LAYOUT - INNER LEFT
+/////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+#container_left_navigation
+  margin: 0 0 0 0
+  padding: 0 0 0 15px
+  left: 0px
+  width: 250px
+  top: 128px
+  bottom: 57px
+  overflow-y: hidden
+  display: block
+  font-size: 0.875em
+  border-right: 1px solid #BDBDBD /*this is just for #right to reference it's overflow point from*/
+  position: absolute
+  z-index: 2 /*layer it above the #faux column*/
+  float: left
+  clear: both
+
+* html #container_left_navigation
+  margin-right: -3px   /*kill IE6 3px jog*/
+
+
+
+
+/* LAYOUT - RIGHT
+/////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+#container_right_content
+  margin: 0 auto
+  padding: 20px 20px 60px 0
+  min-width: 940px
+  position: absolute
+  left: 280px
+  overflow-x: hidden
+  //background: url('/assets/infinite2060columns.png')
+
+#container_page_header
+  margin: 0 80px 18px 0
+  padding: 0 20px 0 0
+  display: block
+
+#container_page_header span
+  height: 36px
+  font: normal normal normal 0.875em / 18px Helvetica, Arial, sans-serif
+
+#container_page_title
+  margin: 0 450px 0 0
+  height: 100%
+  float: left
+  color: #de6d26
+  white-space: normal
+  display: -moz-inline-stack
+  display: inline-block
+  zoom: 1
+  *display: inline
+  vertical-align: top  /* Cross-browser Inline-block */
+
+#container_page_details
+  margin: 0 40px 0 -440px
+  width: 400px
+  height: 40px
+  float: right
+  display: -moz-inline-stack
+  display: inline-block
+  zoom: 1
+  *display: inline
+  vertical-align: top  /* Cross-browser Inline-block */
+
+#container_page_content
+  margin: 0 80px 18px 0
+  padding: 0 20px 0 0
+  display: block
+
+
+#container_page_buttons
+  margin: 2px 0 0 0
+
+
+
+/////////// MISC
+
+
+#container_userlogin h3, #container_usersignup h3, #container_useredit h3
+  margin: 0 0 36px 0
+
+#container_userlogin label, #container_usersignup_forms label, #container_useredit_forms label
+  margin: 0
+  padding: 0 20px 0 0
+  width: 140px
+  font: normal normal normal 1.1em / 36px helvetica, arial, sans-serif
+  color: #000
+  text-align: left
+  display: -moz-inline-stack
+  display: inline-block
+  zoom: 1
+  *display: inline
+  vertical-align: top
+  /* Cross-browser Inline-block */
+
+#container_usersignup_forms input, #container_useredit_forms input
+  margin: 0
+  padding: 0 7px
+  width: 444px
+  height: 32px
+  font: normal normal normal 1em / 32px helvetica, arial, sans-serif
+  display: -moz-inline-stack
+  display: inline-block
+  zoom: 1
+  *display: inline
+  vertical-align: top
+  /* Cross-browser Inline-block */
+
+#container_userlogin input
+  margin: 0
+  padding: 0 7px
+  width: 444px
+  height: 32px
+  font: normal normal normal 1.3em / 32px helvetica, arial, sans-serif
+  display: -moz-inline-stack
+  display: inline-block
+  zoom: 1
+  *display: inline
+  vertical-align: top
+  /* Cross-browser Inline-block */
+
+#container_useredit_forms input[type=checkbox]
+  width: 18px
+  line-height: 36px
+  text-align: left
+  border: 0px solid

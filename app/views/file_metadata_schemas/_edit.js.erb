@@ -1,6 +1,5 @@
 $('.basic_field').removeAttr('disabled');
 <%= render :partial => "shared/process_modal_errors", :locals => {:obj => @file_metadata_schema} if @errors %>
 <% unless @errors %>
-    $('#modal_right_container').html('<%= escape_javascript(render :partial => 'shared/right_file_metadata') %>');
-    $('#form_innards').html('<%= escape_javascript(render :partial => 'file_metadata_schemas/form_innards') %>' );
+    $('#modal_content_container').html('<%= escape_javascript(render :partial => 'file_metadata_schemas/form_innards') %>' );
 <% end %>

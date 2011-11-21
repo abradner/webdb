@@ -1,0 +1,57 @@
+// LEFT - LIST ICONS - ARROWS
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+
+a#arrow
+  margin: 0
+  padding: 0 0 0 15px
+  text-decoration: none
+  cursor: pointer
+
+.collapsible a
+  &.expanded
+    background: image-url('ICON_VECTOR_9_ARROW_ISO_DOWN_808080.png') no-repeat 0 center
+    &:active
+      background: image-url('ICON_VECTOR_9_ARROW_ISO_DOWN_000000.png') no-repeat 0 center
+  &.collapsed
+    background: image-url('ICON_VECTOR_9_ARROW_ISO_RIGHT_808080.png') no-repeat 0 center
+    &:active
+      background: image-url('ICON_VECTOR_9_ARROW_ISO_RIGHT_000000.png') no-repeat 0 center
+
+span
+  &.system_empty, &.experiment_empty
+    margin: 0
+    padding: 0 0 0 19px
+  &.sample_empty
+    margin: 0
+    padding: 0 0 0 18px
+
+// LEFT - LIST ICONS - TYPE
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+
+a
+  &.system_owner, &.system_collaborator, &.system_member
+    ///* Project Level
+    padding: 0 0 0 25px
+    background: image-url('ICON_VECTOR_12_FOLDER_000000.png') center left no-repeat
+  &.system_data_object
+    ///* Experiment Level
+    padding: 0 0 0 25px
+    background: image-url('ICON_VECTOR_12_EXP_000000.png') center left no-repeat
+  &.system_ftype
+    ///* Material Level
+    padding: 0 0 0 25px
+    background: image-url('ICON_VECTOR_12_DOCSTACK_000000.png') center left no-repeat
+  &.system_file
+    ///* Data Level
+    padding: 0 0 0 25px
+    background: image-url('ICON_VECTOR_12_DOC_000000.png') center left no-repeat
+
+// LEFT - LIST ICONS - OWNERSHIP
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+
+span
+  &.system_owner, &.system_collaborator
+    background: image-url('writable.png') center left no-repeat
+  &.system_member
+    background: image-url('viewable.png') center left no-repeat
+

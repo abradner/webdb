@@ -9,6 +9,7 @@
         - if user_signed_in?
           - if can? :admin, User
             %li= link_to 'WebDB Management', management_overview_path
+          %li= link_to 'Overview', root_path
           %li= link_to 'Preferences', edit_user_registration_path
           %li= link_to 'Logout ' + current_user.full_name, destroy_user_session_path
         - else
