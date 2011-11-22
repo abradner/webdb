@@ -6,15 +6,12 @@ class RawFile
   include Tenacity
 
 
-  mount_uploader :stored_file, RawStorageUploader
-  embeds_one :file_metadata
-
-  #linking back to the ActiveRecord fields
-#  t_belongs_to :system
   t_belongs_to :user
-  t_belongs_to :file_type
+  belongs_to :file_type
+  embeds_one :file_metadata
+  mount_uploader :stored_file, RawStorageUploader
 
-  validates_presence_of :user_id, :file_type_id
+  validates_presence_of :user_id
 
   before_save :update_asset_attributes
 

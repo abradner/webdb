@@ -9,13 +9,14 @@
  *= require ios-checkboxes
 
  *= require_self
+
+ *= require buttons
  *= require master
 
  *= require layout_containers
  *= require layout_left_nav
  *= require layout_right_content
 
- *= require buttons
  *= require extra_icons
 
  *= require modal_styles

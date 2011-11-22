@@ -1,0 +1,6 @@
+=render :partial => 'shared/modal_form', :locals => {:obj => @raw_file, :modal_title => "Add To Raw Storage"}
+#modal_content_container
+  #form_metadata
+    = render :partial => 'raw_files/form_metadata'
+  #form_upload
+    = render :partial => 'raw_files/form_upload'

@@ -67,8 +67,12 @@ end
       get :list_members
       get :list_administrators
       get :list_collaborators
+
       get :edit_members
       put :update_members
+
+      get :select_raw_file_type
+      put :select_raw_file_type
     end
   end
 

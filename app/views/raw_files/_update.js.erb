@@ -1,0 +1,5 @@
+$('.basic_field').removeAttr('disabled');
+<%= render :partial => "shared/process_modal_errors", :locals => {:obj => @raw_file} if @errors %>
+<% unless @errors %>
+    $('#modal_content_container').html('<%= escape_javascript(render :partial => 'form') %>' );
+<% end %>

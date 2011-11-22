@@ -1,7 +1,9 @@
 class SystemsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :systems_and_memberships #, :only => [:show, :index, :list_administrators, :list_collaborators, :list_members]
+  before_filter :systems_and_memberships, :except => [:select_raw_file_type]
   load_and_authorize_resource :system
+  respond_to :js, :only => [:select_raw_file_type]
+
 
   def index
     redirect_to pages_home_path
@@ -11,6 +13,12 @@ class SystemsController < ApplicationController
   end
 
   def edit_members
+  end
+
+  def select_raw_file_type
+    if (ft = params[:file_type_id]).present?
+      redirect_to new_system_file_type_raw_file_path(@system, ft)
+    end
   end
 
   def update_members

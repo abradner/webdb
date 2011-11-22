@@ -8,14 +8,14 @@
           .lastUnit
             = f.text_field :label, :class => "small_text basic_field", :placeholder => "Display Label (max 255 chars)"
         .field.line
-          %label= required_field("Attribute Parameters")
+          %label= required_field("Field Parameters")
           .lastUnit
-            = "Attribute Type: "
+            = "Field Type: "
             = f.select :field_type, options_for_select(AppConfig.metadata_types.invert)
           #parameters_field.lastUnit
             -#= f.text_field :length, :class => "small_text basic_field", :placeholder => "Length or Decimal Places"
         .field.line
-          %label= required_field("Attribute Options:")
+          %label= required_field("Field Options:")
           .lastUnit
             = f.label :required, "Required?"
             = f.check_box :required, :default => false

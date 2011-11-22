@@ -1,9 +1,7 @@
-class RawStorageContainersController < ApplicationController
-  before_filter :authenticate_user!
+class RawFilesController < AjaxGenericController
 
-  load_and_authorize_resource :system
-  load_and_authorize_resource :file_type, :through => :system
-  #load_and_authorize_resource :raw_storage_container, :through => :file_type
+  load_and_authorize_resource :file_type
+  #load_and_authorize_resource :raw_file, :through => :file_type #TODO
 
 
   def create

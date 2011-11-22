@@ -1,0 +1,28 @@
+=render :partial => 'shared/modal_form', :locals => {:obj => @system, :modal_title => "Add To Raw Storage"}
+#modal_content_container
+  =form_for @system, :remote => true, :url => select_raw_file_type_system_path do |f|
+    .lightbox
+      .field.line
+        = label_tag :file_type_id, "Select File Type:"
+        .lastUnit
+          = select_tag :file_type_id, options_from_collection_for_select(@system.file_types, :id, :name), {:include_blank => true}
+      .field.line
+        .field.actions
+        = f.submit 'Next', :id => "next_button", :class => "blue", :disabled => 'disabled'
+
+
+:javascript
+    $('#next_button').click(function() {
+        $(this).addClass('ac_loading');
+        //$(this).attr('disabled', 'disabled');
+    });
+
+    $('#file_type_id').change(function() {
+        if ($(this).val() == "") {
+            $('#next_button', '#modal_content_container').attr('disabled', 'disabled');
+        } else {
+            $('#next_button', '#modal_content_container').removeAttr('disabled');
+
+        }
+
+    });
