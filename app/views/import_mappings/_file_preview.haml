@@ -12,7 +12,7 @@
           %th.truncate.column{:id => "column_#{id}"}<
             - if @mappings and @mappings["column_#{id}"]
               - attr = @assigned_attrs.find(@mappings["column_#{id}"])
-              %p.attribute_label.draggable{"data_id" => attr.id } #{attr.name}
+              %p.attribute_label.draggable{"data_id" => attr.id, :class => ["icon_field", field_css_class(attr.attribute_type)] } #{attr.name}
 
     %tbody
       - @csv[:data].each do |row|
