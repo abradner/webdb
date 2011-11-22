@@ -39,25 +39,37 @@ class ImportMappingsController < AjaxDataObjectController
   def preview
     #@raw_files = @import_mapping.file_type.raw_files
     @raw_files = ["contract", "customer_order_total", "GeoIPCountryWhois", "students", "transaction"]
-    @delimiters = [["Comma", ","], ["Tab", "\t"], ["Semicolon", ";"], ["Space", "\s"], ["Pipe", "|"]]
     @data_object_attributes = @data_object.data_object_attributes
 
-    if params[:preview]
-      params[:preview][:includes_header].eql?("1") ? @includes_header = true : @includes_header = false
+    # if previewing
+    if params[:import_mapping]
+      params[:includes_header].eql?("1") ? @includes_header = true : @includes_header = false
+      @raw_file = params[:import_mapping][:raw_file]
+      @delimiter = params[:import_mapping][:delimiter]
 
-      @raw_file = params[:preview].delete(:raw_file)
-      @delimiter = params[:preview][:delimiter]
+    # returning to a predefined import mapping
+    elsif @import_mapping.raw_file.present? and params[:import_mapping].blank?
 
-      @csv = {:header => [], :data => []}
+      @includes_header = @import_mapping.includes_header
+      @raw_file = @import_mapping.raw_file
+      @delimiter = @import_mapping.delimiter
+      @mappings = @import_mapping.mappings
+      assigned_ids = @mappings.values.map(&:to_i) if @mappings.present?
+      assigned_ids ||= []
+      @assigned_attrs = @data_object_attributes.where(:id => assigned_ids)
+      @data_object_attributes = @data_object_attributes - @assigned_attrs
+
     end
 
     if @raw_file
+      @csv = {:header => [], :data => []}
 
       # read first 10 lines
       @includes_header ? limit = 11 : limit = 10
       index = 0
-
-      FasterCSV.foreach("vendor/sample_data/#{@raw_file}.csv", {:col_sep => @delimiter, :headers => @includes_header, :return_headers => true}) do |csv|
+      #raw_file = @import_mapping.file_type.raw_files.find(@raw_file)
+      file_name = "vendor/sample_data/#{@raw_file}.csv"
+      FasterCSV.foreach(file_name, {:col_sep => @delimiter, :headers => @includes_header, :return_headers => true}) do |csv|
 
         if index > limit
           break
