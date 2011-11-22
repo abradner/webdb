@@ -1,0 +1,129 @@
+// LEFT //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//*/
+
+
+
+
+
+
+/* Owned system
+/* Collaboration system
+// Viewable Project *
+//
+///* LEFT - STRUCTURE
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+
+#system_nav a
+  font-weight: normal
+
+#system_list
+  font: normal normal normal 1em / 36px Helvetica, Arial, sans-serif
+  color: #000
+  a
+    overflow: hidden
+    text-overflow: ellipsis
+
+///* Master list style
+
+li
+  &#system_item
+    &.closed, &.open
+      width: 260px
+      overflow: hidden
+      text-overflow: ellipsis
+  .system_experiment
+    width: 120px
+    overflow: hidden
+    text-overflow: ellipsis
+
+#system_list
+  a:hover
+    text-decoration: none
+  li#system_item
+    margin: 0
+
+///* Master list hover style
+
+///* Expanded list style
+
+#system_item
+  margin: 0
+  padding: 0
+
+///* Area containing each list
+
+li#system_item
+  ///* Area containing each list, controlls headings.
+  margin: 0
+  padding: 0
+  font: normal normal normal 1em / 36px Helvetica, Arial, sans-serif
+  color: #000
+
+#system_dobj
+  margin: 0 0 0 25px
+  position: relative
+
+///* Area containing the expanded list
+
+#system_ftype
+  margin: 9px 0 0 25px
+  position: relative
+
+#system_file
+  margin: 0 0 0 46px
+  position: relative
+
+#system_dobj li, #system_ftype li
+  margin: 0
+  font: normal normal normal 1em / 18px Helvetica, Arial, sans-serif
+  color: #000
+
+///* Inner lists
+
+span
+  &.system_owner, &.system_member, &.system_collaborator
+    margin: 9px 0 0 0
+    padding: 9px
+    right: 0
+    position: absolute
+
+///* Collapsible list styles
+
+.collapsible
+  margin: 0
+  padding: 0
+  font-weight: normal
+  list-style: none
+  line-height: 18px
+  display: block
+  ul
+    margin: 0
+    padding: 0
+    list-style: none
+    overflow: hidden
+    text-overflow: ellipsis
+    white-space: nowrap
+
+#system_nav .collapsible a.current
+  font-weight: bold
+
+///* Styles for current position in list
+
+li#system_item.open
+  margin: 0 0 18px 0
+
+#system_item.closed ul, #system_ftype.closed ul
+  display: none
+
+#system_sample_empty
+  margin: 0 0 0 30px
+  position: relative
+
+// LEFT - PROJECT ACTIONS
+///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+
+#system_actions
+  margin: 18px 0 0 20px

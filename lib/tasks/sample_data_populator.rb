@@ -8,6 +8,21 @@ def populate_data
 end
 
 def create_test_users
+
+  #require 'faster_csv'
+  #
+  # h = Hash.new(0)
+  # FasterCSV.read(AppConfig.sample_users_file)[1..-1].each { |row| h[row[0]] += 1 }
+  #
+  # user_set = ENV["RAILS_ENV"] || "development"
+  # config[user_set]['users'].each do |hash|
+  #   next if hash['role'].nil?
+  #
+  #   role = hash.delete('role')
+  #   create_user(hash)
+  #   set_role(hash['login'], role)
+  # end
+
   create_user(:email => "shuqian@intersect.org.au", :first_name => "Shuqian", :last_name => "Hon")
   create_user(:email => "alexb@intersect.org.au", :first_name => "Alex", :last_name => "Bradner")
   create_user(:email => "marc@intersect.org.au", :first_name => "Marc", :last_name => "Ziani De Ferranti")

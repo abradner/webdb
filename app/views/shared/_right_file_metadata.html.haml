@@ -1,7 +1,27 @@
 %h3 Metadata Fields
+%p.bold Automatically Generated
+%p
+  %ul
+    %li.icon_field.field_static File Name
+    %li.icon_field.field_static File Size
+    %li.icon_field.field_static Date Modified
+    %li.icon_field.field_static Owner
+    %li.icon_field.field_static Revision
+%p.bold Custom
 - if @file_type.file_metadata_schemas.blank?
   None defined.
 - else
-  - @file_type.file_metadata_schemas.each do |fms|
-    %p.light=link_to fms.label, edit_system_file_type_file_metadata_schema_path(@system, @file_type, fms), :remote => true, :class => field_css_class(fms.field_type)
+  - @file_type.file_metadata_schemas.sort_by(&:label).each do |fms|
+    -extra_class = ""
+    - extra_class = "selected_element" if @file_metadata_schema.present? && fms.eql?(@file_metadata_schema)
+    %p.truncate{:id => fms.id}=link_to fms.label, edit_system_file_type_file_metadata_schema_path(@system, @file_type, fms), :remote => true, :class => [field_css_class(fms.field_type), extra_class]
+
+
+-#:javascript
+-#  jQuery(function() {
+-#    $("a.icon_field").click(function(){
+-#      $(this).animate({  "left": "50", "opacity": 1 }, 500 );
+-#      });
+-#  });
+-#
 

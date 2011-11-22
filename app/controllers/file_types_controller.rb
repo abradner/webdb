@@ -1,9 +1,11 @@
 class FileTypesController < AjaxGenericController
 
-  load_and_authorize_resource :file_type
+  load_and_authorize_resource :file_type, :except => [:new, :create]
 
   def new
     @storage_locations = @system.storage_locations
+    @file_type = FileType.new(:system => @system)
+    authorize! :manage, @file_type
   end
 
   #def show; end
@@ -17,7 +19,9 @@ class FileTypesController < AjaxGenericController
 
 
   def create
+    @file_type = FileType.new(params[:file_type])
     @file_type.system = @system
+    authorize! :manage, @file_type
     prepare_next_step(@file_type.save)
   end
 

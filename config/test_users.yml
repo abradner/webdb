@@ -1,0 +1,144 @@
+development: &dev
+  users:
+    -
+      email: sean@intersect.org.au
+      first_name: Sean
+      last_name: McCarthy
+      password: Pass.123
+      role: Superuser
+    -
+      email: veronica@intersect.org.au
+      first_name: Veronica
+      last_name: Luke
+      password: Pass.123
+      role: Superuser
+    -
+      email: raul@intersect.org.au
+      first_name: Raul
+      last_name: Carrizo
+      password: Pass.123
+      role: Researcher
+    -
+      email: georgina@intersect.org.au
+      first_name: Georgina
+      last_name: Edwards
+      password: Pass.123
+      role: Researcher
+    -
+      email: marc@intersect.org.au
+      first_name: Marc
+      last_name: Ziani de Ferranti
+      password: Pass.123
+      role: Superuser
+    -
+      email: alexb@intersect.org.au
+      first_name: Alex
+      last_name: Bradner
+      password: Pass.123
+      role: Researcher
+    -
+      email: sq@intersect.org.au
+      first_name: Shuqian
+      last_name: Hon
+      password: Pass.123
+      role: Moderator
+    -
+      email: kali@intersect.org.au
+      first_name: Kali
+      last_name: Waterford
+      password: Pass.123
+      role: Superuser
+    -
+      email: normal1@intersect.org.au
+      first_name: Normal
+      last_name: User1
+      password: Pass.123
+      role: Researcher
+    -
+      email: normal2@intersect.org.au
+      first_name: Normal
+      last_name: User2
+      password: Pass.123
+      role: Researcher
+    -
+      email: normal3@intersect.org.au
+      first_name: Normal
+      last_name: User3
+      password: Pass.123
+      role: Researcher
+    -
+      email: normal4@intersect.org.au
+      first_name: Normal
+      last_name: User4
+      password: Pass.123
+      role: Researcher
+    -
+      email: normal5@intersect.org.au
+      first_name: Normal
+      last_name: User5
+      password: Pass.123
+      role: Researcher
+    -
+      email: normal6@intersect.org.au
+      first_name: Normal
+      last_name: User6
+      password: Pass.123
+      role: Researcher
+    -
+      email: normal7@intersect.org.au
+      first_name: Normal
+      last_name: User7
+      password: Pass.123
+      role: Researcher
+    -
+      email: normal8@intersect.org.au
+      first_name: Normal
+      last_name: User8
+      password: Pass.123
+      role: Researcher
+    -
+      email: normal9@intersect.org.au
+      first_name: Normal
+      last_name: User9
+      password: Pass.123
+      role: Researcher
+    -
+      email: normal10@intersect.org.au
+      first_name: Normal
+      last_name: User10
+      password: Pass.123
+      role: Researcher
+    -
+      email: not@this.address
+      first_name: Bad
+      last_name: Email
+      password: Pass.123
+      role: Researcher
+    -
+      first_name: Kali
+      last_name: Waterford
+      email: kali@intersect.org.au
+      password: Pass.123
+    -
+      first_name: Register
+      last_name: Me1
+      email: registerme1@intersect.org.au
+      password: Pass.123
+    -
+      first_name: Register
+      last_name: Me2
+      email: registerme2@intersect.org.au
+      password: Pass.123
+    -
+      first_name: Register
+      last_name: Me3
+      email: sean.mccarthy@intersect.org.au
+      password: Pass.123
+test:
+  <<: *dev
+qa:
+  <<: *dev
+staging:
+  <<: *dev
+production:
+  <<: *dev

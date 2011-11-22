@@ -1,117 +1,204 @@
-set :stages, %w(qa staging production)
-set :default_stage, "qa"
-require 'capistrano/ext/multistage'
+# Capistrano Config file for a University of Sydney branded Ruby on Rails application.
 
+# Please do a find and replace - find "CHANGEAPPNAME" replace with your new
+# app name, which should be the same as your subversion repository name.
+
+# we now use monit
+#require 'mongrel_cluster/recipes'
+
+# see Advanced Rails Recipes 52 & 53
+# depends on ruby gem capistrano-ext
+set :scm, "git"
+set :stages, %w(development uat support_development support_uat showcase production)
+set :default_stage, 'development'
+
+# set :default_environment, {
+#   'PATH' => "/opt/ruby-enterprise-1.8.7-2010.02/bin:$PATH",
+#   'http_proxy' => "http://www-cache.usyd.edu.au:8080"
+# }
+
+require 'capistrano/ext/multistage'
 require 'bundler/capistrano'
+# require 'net/ssh/proxy/http'
+
+set(:rails_env) { "#{stage}" }
 
 set :application, 'webdb'
-set :repository, Proc.new { `svn info | grep URL | sed 's/URL: //'`.chomp }
+#set :repository, "ssh://roses@agile-svn.ucc.usyd.edu.au/var/git/#{application}.git"
+set :repository, "git://github.com/abradner/webdb.git"
 
-set :scm, :subversion
+set :user, 'roses'
+set :use_sudo, true
 
-# Deploy using copy since the servers can't see our SVN server
-set :deploy_via, :copy
-set :copy_exclude, [".svn/*"]
+set :http_proxy, "http://www-cache.usyd.edu.au:8080"
 
-set :user, "devel"
-user_home = "/home/#{user}"
-set :deploy_to, "#{user_home}/#{application}"
-
+# In order for sudo to work, we now need this:
 default_run_options[:pty] = true
 
-namespace :custom do
-  task :dir_perms do
-    run "[[ -d #{deploy_to} ]] || #{try_sudo} mkdir #{deploy_to}"
-    run "#{try_sudo} chown -R devel.devel #{deploy_to}"
-    run "#{try_sudo} chmod 0711 #{user_home}"
-  end
+set :deploy_to, "/var/www/apps/#{application}"
+# set :deploy_via, :export # Not actually sure if 'export' can be used with git
+#set :deploy_via, :remote_cache # Not required, but makes deployments faster.
+set :deploy_via, :export
+
+# the proc {} allows lazy evaluation of the stage variable
+#set(:mongrel_conf) { "#{deploy_to}/current/config/mongrel_cluster_#{stage}.yml" }
+
+# stops the error we get calling 'app' command which doesn't exist, see:
+set :runner, nil
+
+# Bundler flags can be explicitly set here.  Default is below
+# set :bundle_gemfile,      "Gemfile"
+# set :bundle_dir,          fetch(:shared_path)+"/bundle"
+# set :bundle_flags,       "--deployment --quiet"
+# set :bundle_without,      [:development, :test]
+
+task :development do
+  set :ruby_path, "/usr/local/bin"
+  set :rake, "export PATH=#{ruby_path}:$PATH; bundle exec rake"
+  set :bundle_cmd, "export PATH=#{ruby_path}:$PATH; export http_proxy=#{http_proxy}; bundle" # Default is "bundle"
+  role :app, "agile-sdlc-dev-06.ucc.usyd.edu.au"
+  role :web, "agile-sdlc-dev-06.ucc.usyd.edu.au"
+  role :db,  "agile-sdlc-dev-06.ucc.usyd.edu.au", :primary => true
+  set :stage, :development
+  set :branch, "development"
+  set :bundle_without, [:test]
 end
 
-after 'deploy:setup', "custom:dir_perms"
+task :uat do
+  set :ruby_path, "/opt/ruby-enterprise-1.8.7-2010.02/bin"
+  set :rake, "export PATH=#{ruby_path}:$PATH; bundle exec rake"
+  set :bundle_cmd, "export PATH=#{ruby_path}:$PATH; export http_proxy=#{http_proxy}; bundle" # Default is "bundle"
+  role :web, "agile-sdlc-uat-06.ucc.usyd.edu.au"
+  role :app, "agile-sdlc-uat-06.ucc.usyd.edu.au"
+  role :db,  "agile-sdlc-uat-06.ucc.usyd.edu.au", :primary => true
+  set :stage, :uat
+  set :branch, "uat"
+  set :bundle_flags, ""
+  set :bundle_without, [:test]
+end
+
+task :support_development do 
+  set :ruby_path, "/usr/local/bin"
+  set :rake, "export PATH=#{ruby_path}:$PATH; bundle exec rake"
+  set :bundle_cmd, "export PATH=#{ruby_path}:$PATH; export http_proxy=#{http_proxy}; bundle" # Default is "bundle"
+  set :domain, 'agile-sdlc-dev-06.ucc.usyd.edu.au'
+  role :web, domain
+  role :app, domain
+  role :db, domain, :primary => true
+  set :stage, :support_development
+  set :branch, :bugfix
+  set :deploy_to, "/var/www/apps/#{application}_support"
+  set :bundle_flags, ""
+  set :bundle_without, [:test]
+end
+
+task :support_uat do 
+  set :domain, 'agile-sdlc-uat-06.ucc.usyd.edu.au'
+  role :web, domain
+  role :app, domain
+  role :db, domain, :primary => true
+  set :stage, :support_uat
+  set :branch, :bugfix
+  set :deploy_to, "/var/www/apps/#{application}_support"
+  set :bundle_flags, ""
+  set :bundle_without, [:test]
+end
+
+task :showcase do 
+  set :domain, 'agile-uat.ucc.usyd.edu.au'
+  role :web, domain
+  role :app, domain
+  role :db,  domain, :primary => true
+  set :stage, :showcase
+  set :branch, :production
+  set :bundle_flags, ""
+  set :bundle_without, [:test]
+end
+
+task :production do
+  set :ruby_path, "/usr/local/bin"
+  set :rake, "export PATH=#{ruby_path}:$PATH; bundle exec rake"
+  set :bundle_cmd, "export PATH=#{ruby_path}:$PATH; export http_proxy=#{http_proxy}; bundle" # Default is "bundle"
+  set :domain, 'agile-frb-pro-1.ucc.usyd.edu.au'
+  role :web, domain
+  role :app, domain
+  role :db, domain, :primary => true
+  set :stage, :production
+  set :branch, :production
+  set :deploy_to, "/var/www/apps/#{application}"
+  set :bundle_flags, ""
+  set :bundle_without, [:test]
+end
 
 namespace :deploy do
-
-  # Passenger specifics: restart by touching the restart.txt file
-  task :start, :roles => :app, :except => {:no_release => true} do
-    restart
+  desc "DO NOT RUN in production!!! Will create permissions and map roles to permissions for SUPERADMIN and ADMIN"
+  task :aclgen do
+    rake = fetch(:rake, 'rake')
+    run "cd #{current_release}; #{rake} aclgen:create"
   end
-  task :stop do
-    ;
+    
+  desc "Starts delayed job"  
+  task :start_delayed_job do
+    run "cd #{current_release}; RAILS_ENV=#{rails_env} script/delayed_job start"
   end
-  task :restart, :roles => :app, :except => {:no_release => true} do
-    run "touch #{File.join(current_path, 'tmp', 'restart.txt')}"
+    
+  desc "Stops delayed job"
+  task :stop_delayed_job do 
+    run "cd #{current_release}; RAILS_ENV=#{rails_env} script/delayed_job stop"
   end
-
-  # Remote bundle install
-  task :rebundle do
-    run "cd #{current_path} && bundle install"
-    restart
+    
+  desc "Restarts delayed job"
+  task :restart_delayed_job do
+    run "cd #{current_release}; RAILS_ENV=#{rails_env} script/delayed_job restart"
   end
-
-  task :bundle_update do
-    run "cd #{current_path} && bundle update"
-    restart
-  end
-
-  # Load the schema
-  desc "Load the schema into the database (WARNING: destructive!)"
-  task :schema_load, :roles => :db do
-    run("cd #{current_path} && rake db:schema:load", :env => {'RAILS_ENV' => "#{stage}"})
+  
+  desc "(Test only) Load fixtures into database"
+  task :fixtures do
+    rake = fetch(:rake, 'rake')
+    run "cd #{current_release}; #{rake} RAILS_ENV=staging spec:db:fixtures:load"
   end
 
-  # Run the sample data populator
-  desc "Run the test data populator script to load test data into the db (WARNING: destructive!)"
-  task :populate, :roles => :db do
-    run("cd #{current_path} && rake db:populate", :env => {'RAILS_ENV' => "#{stage}"})
+ desc "DO NOT RUN in production!!! Populate tables from Database Migrations / Fixtures"
+  task :populate do
+    rake = fetch(:rake, 'rake')
+    run "cd #{current_release}; #{rake} RAILS_ENV=#{stage} db:populate"
+  end
+  desc "DO NOT RUN in production!!! This will delete live data! Run only in test environment."
+  task :reset do
+    rake = fetch(:rake, 'rake')
+    run "cd #{current_release}; #{rake} RAILS_ENV=#{stage} db:migrate:reset"
+  end
+  
+  desc "TO BE RUN DURING INITIAL DEPLOY ONLY!!!! Populates initial data."
+  task :seed do
+    rake = fetch(:rake, 'rake')
+    run "cd #{current_release}; #{rake} RAILS_ENV=#{stage} db:seed"
   end
 
-  # Seed the db
-  desc "Run the seeds script to load seed data into the db (WARNING: destructive!)"
-  task :seed, :roles => :db do
-    run("cd #{current_path} && rake db:seed", :env => {'RAILS_ENV' => "#{stage}"})
+  desc "Grants execute permissions on ruby scripts."
+  task :update_permissions do
+    run "cd #{current_release}; chmod -R ug+x script" # uncomment for backgroundrb; chmod a+x config/backgroundrb_*.sh"
+  end
+  
+  desc "restart passenger"
+  task :restart, :roles => :app, :except => { :no_release => true } do
+    rake = fetch(:rake, 'rake')
+    run "touch /var/www/apps/#{application}/current/tmp/restart.txt"
   end
 
-  # Set the revision
-  desc "Set SVN revision on the server so that we can see it in the deployed application"
-  task :set_svn_revision, :roles => :app do
-    put("#{real_revision}", "#{release_path}/app/views/layouts/_revision.rhtml")
+  desc "start - not used"
+  task :start, :roles => :app do
   end
 
-  desc "Full redepoyment, it runs deploy:update, deploy:refresh_db, and deploy:copy_to_passenger"
-  task :full_redeploy do
-    update
-    refresh_db
-    copy_to_passenger
+  desc "stop - not used"
+  task :stop, :roles => :app do
   end
-
-  # Helper task which re-creates the database
-  task :refresh_db, :roles => :db do
-    schema_load
-    seed
-    populate
-  end
-
 end
 
-after 'deploy:update_code' do
-  generate_database_yml
-  deploy.set_svn_revision
+desc "Tails the log on the remote server"
+task :tail_log, :roles => :app do
+  stream "tail -f #{shared_path}/log/#{stage}.log"
 end
 
-desc "After updating code we need to populate a new database.yml"
-task :generate_database_yml, :roles => :app do
-  require "yaml"
-  set :production_database_password, proc { Capistrano::CLI.password_prompt("Database password: ") }
-
-  buffer = YAML::load_file('config/database.yml')
-  # get rid of unneeded configurations
-  buffer.delete('test')
-  buffer.delete('development')
-  buffer.delete('cucumber')
-  buffer.delete('spec')
-
-  # Populate production password
-  buffer['production']['password'] = production_database_password
-
-  put YAML::dump(buffer), "#{release_path}/config/database.yml", :mode => 0664
-end
+# Install after hooks
+after "deploy:update_code", "deploy:update_permissions"
