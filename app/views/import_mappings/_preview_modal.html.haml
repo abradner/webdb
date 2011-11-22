@@ -26,13 +26,15 @@
       = @includes_header ? "with": "without"
       = " headers"
     = render :partial => "file_preview", :locals => {:csv => @csv}
+  .field.line
 
+  #bin
   #attr_list
     .field.line
 
     %label Please drag the attributes below and place them under the appropriate headers
-    - @data_object_attributes.each do |attr|
-      %p.attribute_label.draggable{"data_id" => attr.id } #{attr.name}
+    - @unassigned_attrs.each do |attr|
+      %p.attribute_label.draggable{"data_id" => attr.id, :class => ["icon_field", field_css_class(attr.attribute_type)] } #{attr.name}
 - else
   .field.line
     %label
@@ -46,21 +48,83 @@
   = f.hidden_field(:raw_file, :value => @raw_file) if @raw_file.present?
   #hidden_values
     = f.hidden_field(:mappings, :value => []) if params[:import_mapping].present?
+  .field.line
+    %label Choose which fields to validate uniqueness on (Ctrl + click to select multiple fields)
+    .line
+      = f.collection_select(:unique_fields, @data_object_attributes, :id, :name, {}, {:multiple =>true})
+  .field.line
+    %label Choose what to do should there be a conflict of values
+    .line
+      = f.select(:conflict_action, options_for_select(ImportMapping::ACTIONS))
 
   #bottom_actions_container
     .field.line
       .field.actions
         = button_link_to "Back", system_data_object_import_mappings_path(@system, @data_object), :remote => true
-        = f.submit "Save Mappings"
+        = f.submit "Save Mappings" if @raw_file
 
 :javascript
   jQuery(function() {
+
+    function updateHiddenValues(){
+      $('#hidden_values').empty();
+      $('.draggable', '#file_preview').each(function(index) {
+        if ($(this).css('display') != "none"){
+
+          $('<input>').attr({
+              id : $(this).parent().attr('id'),
+              name : 'import_mapping[mappings][' + $(this).parent().attr('id') + ']',
+              type : "hidden",
+              value : $(this).attr('data_id')
+          }).appendTo('#hidden_values');
+        }
+
+      });
+    }
 
     $('.draggable').draggable({
         revert:true,
         helper:'clone',
         opacity: 0.5
     });
+
+    $('#bin').droppable({
+        activeClass: 'dropActive',
+
+        accept: function(d) {
+          if(d.parent().attr('id') != "attr_list"){
+            return true;
+          }
+        },
+
+        drop: function(event,ui){
+
+          event.stopPropagation();
+          ui.helper.hide();
+          var $drag = $(ui.draggable),
+              $drop = $(this),
+              $data = {};
+          $(this).css('backgroundColor', "#D7D5D3");
+          $(this).html('');
+
+          $('#attr_list').append($drag);
+          updateHiddenValues();
+        },
+
+        activate: function(event, ui) {
+          $(this).css('backgroundColor', "pink");
+          $(this).html('Drop here to remove attribute mapping');
+        },
+        
+        deactivate: function(event, ui) {
+          $(this).css('backgroundColor', "#D7D5D3");
+          $(this).html('');
+
+        }
+
+    });
+
+
 
     $('.column').droppable({
         activeClass: 'dropActive',
@@ -81,31 +145,15 @@
           $(this).html($drag);
           $(this).css('backgroundColor', "#DDDDDD");
           $(this).css('color', "black");
-          $('#hidden_values').empty();
-          $('.draggable', '#file_preview').each(function(index) {
-            if ($(this).css('display') != "none"){
-
-              $('<input>').attr({
-                  id : $(this).parent().attr('id'),
-                  name : 'import_mapping[mappings][' + $(this).parent().attr('id') + ']',
-                  type : "hidden",
-                  value : $(this).attr('data_id')
-              }).appendTo('#hidden_values');
-            }
-
-          });
+          updateHiddenValues();
         },
 
         over: function(event, ui) {
-          var bg_color = $(this).css('backgroundColor');
-          var color = $(this).css('color');
           $(this).css('backgroundColor', "lime");
           $(this).css('color', "#DDDDDD");
         },
         
         out: function(event, ui) {
-          var bg_color = $(this).css('backgroundColor');
-          var color = $(this).css('color');
           $(this).css('backgroundColor', "#DDDDDD");
           $(this).css('color', "black");
         }

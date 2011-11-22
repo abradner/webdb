@@ -40,7 +40,8 @@ class ImportMappingsController < AjaxDataObjectController
     #@raw_files = @import_mapping.file_type.raw_files
     @raw_files = ["contract", "customer_order_total", "GeoIPCountryWhois", "students", "transaction"]
     @data_object_attributes = @data_object.data_object_attributes
-
+    @unassigned_attrs = @data_object_attributes
+    
     # if previewing
     if params[:import_mapping]
       params[:includes_header].eql?("1") ? @includes_header = true : @includes_header = false
@@ -57,7 +58,7 @@ class ImportMappingsController < AjaxDataObjectController
       assigned_ids = @mappings.values.map(&:to_i) if @mappings.present?
       assigned_ids ||= []
       @assigned_attrs = @data_object_attributes.where(:id => assigned_ids)
-      @data_object_attributes = @data_object_attributes - @assigned_attrs
+      @unassigned_attrs = @data_object_attributes - @assigned_attrs
 
     end
 
