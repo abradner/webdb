@@ -11,5 +11,8 @@
             %h3 Systems you can access:
             - @collaborations.each do |s|
               = render :partial => "shared/list_systems", :locals => {:system => s, :system_admin => false}
+          - if @memberships.blank?
+            No Systems Available
+
       .dragger_container
         .dragger

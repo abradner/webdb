@@ -22,3 +22,6 @@
           %h3.light Details
         .information
           %p=s.description
+  - if @memberships.blank?
+    %h3 No Systems Available
+      Contact your WebDB Administrator to gain access to the resources you require.
