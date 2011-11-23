@@ -1,0 +1,166 @@
+// LAYOUT ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////
+
+// LAYOUT - HEADER
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#header
+  margin: 0
+  padding: 0
+  height: 88px
+  position: relative
+  background: image-url("header-bg.png") top left repeat-x
+  color: #666
+  .container
+    margin: 0 auto
+    padding: 0 20px
+    min-width: 940px
+    min-height: 100%
+  .logo
+    margin: 10px 0 0 0
+    padding: 10px
+    height: 48px
+    width: 280px
+    background: #333
+    color: #EFEFEF
+    float: left
+  .menu
+    margin: 49px 0 0 0
+    padding: 0
+    float: right
+    li
+      margin: 0 0 0 20px
+      display: -moz-inline-stack
+      display: inline-block
+      zoom: 1
+      *display: inline
+      vertical-align: top
+      // Cross-browser Inline-block
+    a
+      margin: 0
+      padding: 10px
+      display: -moz-inline-stack
+      display: inline-block
+      zoom: 1
+      *display: inline
+      vertical-align: top
+      // Cross-browser Inline-block
+      text-shadow: #EEE 0px 1px 0px
+      color: #666
+      font-weight: normal
+      text-shadow: #EEE 0px 1px 0px
+      &:hover
+        color: #333
+        text-decoration: none
+        cursor: pointer
+    li.active
+      background: #F7F7F7
+      border-top: 1px solid #C6C6C6
+      border-left: 1px solid #C6C6C6
+      border-right: 1px solid #C6C6C6
+      border-radius: 3px 3px 0 0
+      -moz-border-radius: 3px 3px 0 0
+      -webkit-border-radius: 3px 3px 0 0
+
+// LAYOUT - CONTENT
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#content_wrapper
+  min-height: 100%
+  height: auto !important
+  height: 100%
+  margin: 0 auto -37px
+
+// wrapper to hold content + header. Required to make sticky footer work.
+
+#content
+  margin: 0 auto
+  padding: 20px 20px 60px 20px
+  min-width: 940px
+  max-width: 1100px
+
+//=== Float Containment and Bug Fixes (Do Not Alter These!) ===
+
+body:before
+  //Opera min-height 100% Fix (Kohoutec)
+  content: ""
+  height: 100%
+  float: left
+  width: 0
+  margin-top: -32767px
+  //eliminate need for inner non clearing element (Erik.J)
+
+#page:after, #inner:after
+  // #inner:after for Float Containment
+  clear: both
+  content: ""
+  display: block
+  height: 1%
+  //fix IE8 min-height:100% bug (Erik.J)
+  font-size: 0
+
+// LAYOUT - LOGIN
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.loginbox_container
+  margin: 20px auto
+  width: 460px
+  label
+    margin: 0
+    padding: 0 20px 0 0
+    min-width: 140px
+    font: normal normal bold 1em / 36px helvetica, arial, sans-serif
+    display: -moz-inline-stack
+    display: inline-block
+    zoom: 1
+    *display: inline
+    vertical-align: top
+    // Cross-browser Inline-block
+  input
+    width: 438px
+
+// LAYOUT - FOOTER
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#footer
+  margin: 0 auto
+  padding: 10px 0 0 0
+  min-width: 600px
+  height: 26px
+  bottom: 0
+  left: 0
+  right: 0
+  border-top: 1px solid #DFDFDF
+  background: #FFF
+  font-size: 0.875em
+  color: #666666
+  text-align: center
+  clear: both
+  .logo
+    margin: 0 10px 0 0
+    height: 14px
+    width: 14px
+    display: -moz-inline-stack
+    display: inline-block
+    zoom: 1
+    *display: inline
+    vertical-align: bottom
+    // Cross-browser Inline-block
+    background: image-url("intersect_logo.png") bottom
+
+// LAYOUT - 404
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.input_group
+  margin: 0 0 20px 0
+
+// LAYOUT - 404
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.dialog
+  margin: 36px auto 0 auto
+  width: 800px
+  text-align: center

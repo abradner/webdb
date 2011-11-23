@@ -1,0 +1,258 @@
+@charset "UTF-8"
+
+
+// BASE STYLES ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////
+
+html
+  height: 100%
+  width: 100%
+  font: normal normal normal 100% / 1.25em Helvetica, Arial, sans-serif
+  color: #333
+  vertical-align: baseline
+
+body
+  height: 100%
+  width: 100%
+  font: normal normal normal 100% / 1.25em Helvetica, Arial, sans-serif
+  color: #333
+  vertical-align: baseline
+  background: #F7F7F7
+
+h1, h2, h3, h4, h5, h6
+  font: normal normal normal 1em / 1em Helvetica, Arial, sans-serif
+
+// Base heading styles
+
+h1
+  font: normal normal bold 2em / 40px Helvetica, Arial, sans-serif
+  color: #333
+
+h2
+  font: normal normal bold 1.5em / 30px Helvetica, Arial, sans-serif
+  color: #333
+
+h3
+  font: normal normal bold 1.25em / 30px Helvetica, Arial, sans-serif
+  color: #333
+
+p, span
+
+// Paragraph style. Use for text, or for a libe break. </br> is for pebs, and you're not a pleb right?
+// Use as a default container for text that requires a Class or ID
+
+a
+  font: normal normal bold 1em Helvetica, Arial, sans-serif
+  color: #000
+  text-decoration: none
+  cursor: pointer
+  &:visited
+    font: normal normal bold 1em Helvetica, Arial, sans-serif
+    color: #000
+    text-decoration: none
+    cursor: pointer
+  &:hover
+    text-decoration: underline
+
+// Basic link feedback for user
+
+ul, li
+
+label
+  font: normal normal normal 1em / 1em Helvetica, Arial, sans-serif
+  color: #333
+  white-space: nowrap
+  cursor: pointer
+
+input, textarea
+  padding: 0 10px
+  height: 30px
+  border: 1px solid #D9D9D9
+  resize: none
+  font: normal normal normal 1em / 1em Helvetica, Arial, sans-serif
+  color: #666
+
+input:hover, textarea:hover
+  border-color: #B9B9B9
+
+input:focus, textarea:focus
+  outline: none
+  border-color: #3079ED
+
+// BASE STYLES - ALERTS / ERRORS
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Base notification container for users. -- Currently looking into a JS popdown notification
+
+#notice
+  margin: 20px
+  padding: 0 30px
+  height: 34px
+  width: auto
+  clear: both
+  font: normal normal normal 1em / 36px Helvetica, Arial, sans-serif
+  color: #F00
+  text-align: center
+  background: #F3F8FC
+  border: #B2D1FF solid 1px
+
+#alert
+  padding: 18px 20px 18px 40px
+  margin: 10px 20px
+  font-size: 0.9em
+  color: #F00
+  background: #ffcccc image-url("exclamation.png") no-repeat 10px center
+  border: red solid 1px
+
+// BASE STYLES - STRUCTURE MODULES
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Apply these class modules to elements. Any more than 3 is overkill and you should probably have a specific container.
+
+.floatleft
+  float: left
+
+// Float an element to the left
+
+.floatright
+  float: right
+
+// Float an element to the right
+
+.row
+  margin: 0 0 18px 0
+
+// Basic row / horizontal container
+
+.fields
+  margin: 0 0 18px 0
+  display: -moz-inline-stack
+  display: inline-block
+  zoom: 1
+  *display: inline
+  vertical-align: top
+  // Cross-browser Inline-block
+
+// BASE STYLES - TEXT MODULES
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Apply these to specific font containers. Any more than 2 is overkill and a specific style / container should be used
+
+.details
+  font: normal normal normal 0.75em / 18px Helvetica, Arial, sans-serif
+  color: #666
+
+.bold
+  font-weight: bold
+
+.textalignleft
+  text-align: left
+
+// Align text to the left
+
+.textalignright
+  text-align: right
+
+// Align text to the right
+
+.textaligncenter
+  text-align: center
+
+// Align text to the center
+
+.truncate
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+
+.required
+  color: #E25358
+
+
+
+// ADMIN /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////
+
+// ADMIN - 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+#project_description, #sample_description, #experiment_description, #ands_publishable_collection_description
+  min-height: 100px
+  line-height: 20px
+
+
+.metadata
+  color: #000
+
+.note
+  font-size: 0.7em
+
+
+#project_document
+  border: 0px solid
+
+// NOTIFICATIONS /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////
+
+.jbar
+  height: 50px
+  width: 100%
+  background-color: #fff
+  position: fixed
+  filter: progid:DXImageTransform.Microsoft.Alpha(opacity=95)
+  opacity: 0.95
+  -moz-opacity: 0.95
+  text-align: center
+  left: 0px
+  z-index: 9999999
+  margin: 0px
+  padding: 0px
+
+.jbar-top
+  top: 0px
+  border-top: 2px solid #fff
+  border-bottom: 1px solid #ebebeb
+
+.jbar-bottom
+  bottom: 0px
+  border-bottom: 2px solid #fff
+  border-top: 1px solid #ebebeb
+  color: #777
+
+.jbar-content
+  line-height: 46px
+  font-size: 18px
+  font-family: 'Lucida Grande',sans-serif
+
+a.jbar-cross
+  position: absolute
+  width: 31px
+  height: 31px
+  background: transparent image-url("cross.png") no-repeat top left
+  cursor: pointer
+  right: 10px
+  &:hover
+    background-image: image-url("cross_hover.png")
+
+.jbar-top a.jbar-cross
+  top: 8px
+
+.jbar-bottom a.jbar-cross
+  bottom: 8px
+
+// UNKNOWN / MISC
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.debug_dump
+  padding-top: 32px

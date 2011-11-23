@@ -30,5 +30,8 @@ Webdb::Application.configure do
   config.assets.compress = false
 
   # Expands the lines which load the assets
-  config.assets.debug = false
+  config.assets.debug = true
+
+  # Silence Assets DOESN'T WORK YET IN 3.1.1
+  #config.assets.logger = nil
 end

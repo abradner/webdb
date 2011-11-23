@@ -10,9 +10,11 @@
 
  *= require_self
 
+ *= require resets
  *= require buttons
- *= require master
+ *= require base
 
+ *= require layout_base
  *= require layout_containers
  *= require layout_left_nav
  *= require layout_right_content

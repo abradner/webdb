@@ -1,8 +1,211 @@
+// BUTTONS ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+
+input[button], button
+  // Default button style
+  padding: 5px 10px
+  margin: 0
+  height: 30px
+  font: normal normal normal 14px / 20px Helvetica, Arial, sans-serif
+  text-decoration: none
+  display: -moz-inline-stack
+  display: inline-block
+  zoom: 1
+  *display: inline
+  vertical-align: top
+  // Cross-browser Inline-block
+  background-color: #FFFFFF
+  border: 1px solid #E0E0E0
+  border-radius: 3px
+  -moz-border-radius: 3px
+  -webkit-border-radius: 3px
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#ededed))
+  // Chrome,Safari4+
+  background-image: -webkit-linear-gradient(top, #f7f7f7, #ededed)
+  // Chrome10+,Safari5.1+
+  background-image: -moz-linear-gradient(top, #f7f7f7, #ededed)
+  // FF3.6+
+  background-image: -ms-linear-gradient(top, #f7f7f7, #ededed)
+  // IE10+
+  background-image: -o-linear-gradient(top, #f7f7f7, #ededed)
+  // Opera11.10+
+  background-image: linear-gradient(top, #f7f7f7, #ededed)
+  // W3C
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F7F7F7', endColorstr='#EDEDED', GradientType=0)
+  // IE6-9
+  cursor: pointer
+
+input[button]:hover, button:hover
+  // Default Button hover style
+  background-color: #357ae8
+  border: 1px solid #C1C1C1
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#e5e5e5), to(#ededed))
+  background-image: -webkit-linear-gradient(top, #e5e5e5, #ededed)
+  background-image: -moz-linear-gradient(top, #f7f7f7, #e5e5e5)
+  background-image: -ms-linear-gradient(top, #f7f7f7, #e5e5e5)
+  background-image: -o-linear-gradient(top, #f7f7f7, #e5e5e5)
+  background-image: linear-gradient(top, #f7f7f7, #e5e5e5)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#F7F7F7', endColorstr = '#E5E5E5', GradientType=0)
+
+input[button]:active, button:active, .button:active
+  box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.1)
+  -moz-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.1)
+  -webkit-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.1)
+
+input[disabled], input[disabled]:hover
+  // Disabled Button Style
+  padding: 5px 10px
+  margin: 0
+  font: normal normal normal 14px/18px Helvetica, Arial, sans-serif
+  text-decoration: none
+  color: #CCC
+  display: -moz-inline-stack
+  display: inline-block
+  zoom: 1
+  *display: inline
+  vertical-align: top
+  // Cross-browser Inline-block
+  background-color: #FFFFFF
+  border: 1px solid #E0E0E0
+  border-radius: 3px
+  -moz-border-radius: 3px
+  -webkit-border-radius: 3px
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#ededed))
+  // Chrome,Safari4+
+  background-image: -webkit-linear-gradient(top, #f7f7f7, #ededed)
+  // Chrome10+,Safari5.1+
+  background-image: -moz-linear-gradient(top, #f7f7f7, #ededed)
+  // FF3.6+
+  background-image: -ms-linear-gradient(top, #f7f7f7, #ededed)
+  // IE10+
+  background-image: -o-linear-gradient(top, #f7f7f7, #ededed)
+  // Opera11.10+
+  background-image: linear-gradient(top, #f7f7f7, #ededed)
+  // W3C
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F7F7F7', endColorstr='#EDEDED', GradientType=0)
+  // IE6-9
+  cursor: default
+  &:hover
+    // Disabled Button Style
+    padding: 5px 10px
+    margin: 0
+    font: normal normal normal 14px / 18px Helvetica, Arial, sans-serif
+    text-decoration: none
+    color: #CCC
+    display: -moz-inline-stack
+    display: inline-block
+    zoom: 1
+    *display: inline
+    vertical-align: top
+    // Cross-browser Inline-block
+    background-color: #FFFFFF
+    border: 1px solid #E0E0E0
+    border-radius: 3px
+    -moz-border-radius: 3px
+    -webkit-border-radius: 3px
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#ededed))
+    // Chrome,Safari4+
+    background-image: -webkit-linear-gradient(top, #f7f7f7, #ededed)
+    // Chrome10+,Safari5.1+
+    background-image: -moz-linear-gradient(top, #f7f7f7, #ededed)
+    // FF3.6+
+    background-image: -ms-linear-gradient(top, #f7f7f7, #ededed)
+    // IE10+
+    background-image: -o-linear-gradient(top, #f7f7f7, #ededed)
+    // Opera11.10+
+    background-image: linear-gradient(top, #f7f7f7, #ededed)
+    // W3C
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F7F7F7', endColorstr='#EDEDED', GradientType=0)
+    // IE6-9
+    cursor: default
+  &:active
+    box-shadow: none
+    -moz-box-shadow: none
+    -webkit-box-shadow: none
+
+// Disabled Button Style
+
+// BUTTONS - BASE
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+.button
+  // Default Button Style - Gray
+  padding: 5px 10px
+  margin: 0 10px 0 0
+  height: 18px
+  display: -moz-inline-stack
+  display: inline-block
+  zoom: 1
+  *display: inline
+  vertical-align: top
+  // Cross-browser Inline-block
+  font: normal normal normal 14px / 18px Helvetica, Arial, sans-serif
+  text-decoration: none
+  border: 1px solid #E0E0E0
+  border-radius: 2px
+  -moz-border-radius: 2px
+  -webkit-border-radius: 2px
+  background-color: #FFFFFF
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#ededed))
+  background-image: -webkit-linear-gradient(top, #f7f7f7, #ededed)
+  background-image: -moz-linear-gradient(top, #f7f7f7, #ededed)
+  background-image: -ms-linear-gradient(top, #f7f7f7, #ededed)
+  background-image: -o-linear-gradient(top, #f7f7f7, #ededed)
+  background-image: linear-gradient(top, #f7f7f7, #ededed)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#F7F7F7', EndColorStr = '#EDEDED')
+  cursor: pointer
+  &:hover
+    text-decoration: none
+    background-color: #357ae8
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#e5e5e5), to(#ededed))
+    background-image: -webkit-linear-gradient(top, #e5e5e5, #ededed)
+    background-image: -moz-linear-gradient(top, #f7f7f7, #e5e5e5)
+    background-image: -ms-linear-gradient(top, #f7f7f7, #e5e5e5)
+    background-image: -o-linear-gradient(top, #f7f7f7, #e5e5e5)
+    background-image: linear-gradient(top, #f7f7f7, #e5e5e5)
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#F7F7F7', EndColorStr = '#E5E5E5')
+    border: 1px solid #C1C1C1
+  &:active
+    box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.1)
+    -moz-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.1)
+    -webkit-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.1)
+
+// BUTTONS - GENERAL ICONS
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+.add img
+  // Add button icon
+  padding: 0 0 0 20px
+  background: image-url("ICON_VECTOR_12_PLUS_000000.png") no-repeat left center
+  line-height: 18px
+
+.edit img
+  // Edit button icon
+  padding: 0 0 0 20px
+  background: image-url("ICON_VECTOR_12_EDIT_000000.png") no-repeat left center
+  line-height: 18px
+
+.down img
+  // Down button icon
+  padding: 0 0 0 20px
+  background: image-url("ICON_VECTOR_12_ARROW_STALK_DOWN_000000.png") no-repeat left center
+  line-height: 18px
+
+.delete img
+  // Delete button icon
+  padding: 0 0 0 20px
+  background: image-url("ICON_VECTOR_12_DEL_000000.png") no-repeat left center
+  line-height: 18px
+
+
 // BUTTONS - BLUE / RED / GREEN COLOURS
-///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 input.blue, button.blue, .blue
-  /* Blue Button style */
+  // Blue Button style 
   padding: 5px 10px
   min-width: 140px
   border: 1px solid #3079ed
@@ -17,7 +220,7 @@ input.blue, button.blue, .blue
   zoom: 1
   *display: inline
   vertical-align: top
-  /* Cross-browser Inline-block */
+  // Cross-browser Inline-block 
   font-size: 1em
   color: #FFF
   background-color: #FFFFFF
@@ -66,7 +269,7 @@ button.blue:active, .blue:active
   -webkit-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.3)
 
 .green
-  /* Green Button style */
+  // Green Button style 
   padding: 5px 10px
   height: 18px
   border: 1px solid #5BC666
@@ -78,7 +281,7 @@ button.blue:active, .blue:active
   zoom: 1
   *display: inline
   vertical-align: top
-  /* Cross-browser Inline-block */
+  // Cross-browser Inline-block 
   font: normal normal bold 14px / 18px Helvetica, Arial, sans-serif
   color: #000
   text-decoration: none
@@ -108,7 +311,7 @@ button.blue:active, .blue:active
     -webkit-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.3)
 
 .red, input.red
-  /* Red Button style */
+  // Red Button style 
   padding: 5px 10px
   height: 18px
   border: 1px solid #E25358
@@ -120,7 +323,7 @@ button.blue:active, .blue:active
   zoom: 1
   *display: inline
   vertical-align: top
-  /* Cross-browser Inline-block */
+  // Cross-browser Inline-block 
   font: normal normal bold 14px / 18px Helvetica, Arial, sans-serif
   color: #000
   text-decoration: none
@@ -154,103 +357,103 @@ button.blue:active, .blue:active
 
 
 // BUTTONS - GENERAL ICONS
-///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 .add span
-  //* Add button icon
+  /// Add button icon
   padding: 0 0 0 20px
   background: asset-url('ICON_VECTOR_12_PLUS_000000.png', image) no-repeat left center
   line-height: 18px
 
 .attribute span
-  //* Add button icon
+  /// Add button icon
   padding: 0 0 0 20px
   background: asset-url('ICON_VECTOR_12_EXP_000000.png', image) no-repeat left center
   line-height: 18px
 
 .edit span
-  //* Edit button icon
+  /// Edit button icon
   padding: 0 0 0 20px
   background: asset-url('ICON_VECTOR_12_EDIT_000000.png', image) no-repeat left center
   line-height: 18px
 
 .down span
-  //* Down button icon
+  /// Down button icon
   padding: 0 0 0 20px
   background: asset-url('ICON_VECTOR_12_ARROW_STALK_DOWN_000000.png', image) no-repeat left center
   line-height: 18px
 
 .delete span
-  //* Delete button icon
+  /// Delete button icon
   padding: 0 0 0 20px
   background: asset-url('ICON_VECTOR_12_DEL_000000.png', image) no-repeat left center
   line-height: 18px
 
 // BUTTONS - PROJECT / EXPERIMENT / SAMPLE / DATASET
-///*///////////////////////////////////////////////////////////////////////////////////////////////*/
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 .data_object span
-  //* Experiment button icon
+  /// Experiment button icon
   padding: 0 0 0 25px
   background: asset-url('ICON_VECTOR_12_EXP_000000.png', image) no-repeat left center
   line-height: 18px
 
 .delete span
-  //* Experiment button icon
+  /// Experiment button icon
   padding: 0 0 0 25px
   background: asset-url('ICON_VECTOR_12_DEL_000000.png', image) no-repeat left center
   line-height: 18px
 
 .edit span
-  //* Experiment button icon
+  /// Experiment button icon
   padding: 0 0 0 25px
   background: asset-url('ICON_VECTOR_12_EDIT_000000.png', image) no-repeat left center
   line-height: 18px
 
 .dobj_link span
-  //* Add button icon
+  /// Add button icon
   padding: 0 0 0 20px
   background: asset-url('ICON_VECTOR_12_NEWDOC_000000.png', image) no-repeat left center
   line-height: 18px
 
 .manage_system span
-  //* Experiment button icon
+  /// Experiment button icon
   padding: 0 0 0 25px
   background: asset-url('ICON_VECTOR_12_EXP_000000.png', image) no-repeat left center
   line-height: 18px
 
 .file_type span
-  //* Sample button icon
+  /// Sample button icon
   padding: 0 0 0 25px
   background: asset-url('ICON_VECTOR_12_FOLDER_000000.png', image) no-repeat left center
   line-height: 18px
 
 .file span
-  //* Sample button icon
+  /// Sample button icon
   padding: 0 0 0 25px
   background: asset-url('ICON_VECTOR_12_DOC_000000.png', image) no-repeat left center
   line-height: 18px
 
 .upload span
-  //* Sample button icon
+  /// Sample button icon
   padding: 0 0 0 25px
   background: asset-url('icon_16_upload.png', image) no-repeat left center
   line-height: 18px
 
 .attribute_label
-  //* Sample button icon
+  /// Sample button icon
   padding: 0 0 0 25px
   background: asset-url('ICON_VECTOR_12_DOCSTACK_000000.png', image) no-repeat left center
   line-height: 18px
 
 .security span
-  //* Dataset button icon
+  /// Dataset button icon
   padding: 0 0 0 25px
   background: asset-url('ICON_VECTOR_12_LOCK_000.png', image) no-repeat left center
   line-height: 18px
 
 .remove_button
-  //* Remove button icon
+  /// Remove button icon
   margin: 0
   padding: 15px 20px 0px 0
   background: asset-url('ICON_VECTOR_12_DEL_000000.png', image) no-repeat right center
@@ -269,7 +472,6 @@ button.blue:active, .blue:active
 .button.ac_loading
   padding: 5px 10px
   margin: 0 10px 0 0
-  height: 18px
   filter: none
   background: image-url('indicator.gif') no-repeat center center
   border: 1px solid #E0E0E0
@@ -286,7 +488,6 @@ button.blue:active, .blue:active
 .blue.ac_loading
   padding: 5px 10px
   min-width: 140px
-  height: 29px
   filter: none
   background: image-url('indicator.gif') no-repeat center center
   border: 1px solid #E0E0E0
@@ -294,7 +495,6 @@ button.blue:active, .blue:active
   &:hover
     padding: 5px 10px
     min-width: 140px
-    height: 29px
     filter: none
   background: image-url('indicator.gif') no-repeat center center
     border: 1px solid #E0E0E0
@@ -303,7 +503,6 @@ button.blue:active, .blue:active
 input.blue.ac_loading
   padding: 5px 10px
   min-width: 140px
-  height: 29px
   filter: none
   background: image-url('indicator.gif') no-repeat center center
   border: 1px solid #E0E0E0
@@ -321,7 +520,7 @@ input.blue.ac_loading
   zoom: 1
   *display: inline
   vertical-align: top
-  /* Cross-browser Inline-block
+  // Cross-browser Inline-block
 
 .loading
   height: 16px
@@ -334,4 +533,4 @@ input.blue.ac_loading
   zoom: 1
   *display: inline
   vertical-align: top
-  /* Cross-browser Inline-block
+  // Cross-browser Inline-block

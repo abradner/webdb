@@ -23,3 +23,78 @@ a.selected_element
   color: #369
   font-weight: bold
 
+
+// LIGHTBOX //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////
+
+.jqmWindow
+  border-radius: 3px
+  -moz-border-radius: 3px
+  -webkit-border-radius: 3px
+
+// Border radius for LB body
+
+.lightbox
+  background: #FFF
+  height: auto
+  textarea
+    width: 648px
+  input.text, textarea.text
+    padding: 5px
+    height: 19px
+    width: 648px
+    font: normal normal normal 0.875em / 18px Helvetica, Arial, sans-serif
+    display: -moz-inline-stack
+    display: inline-block
+    zoom: 1
+    *display: inline
+    vertical-align: bottom
+    // Cross-browser Inline-block
+
+.lightbox
+  label
+    color: #000
+    font-weight: bold
+    display: -moz-inline-stack
+    display: inline-block
+    zoom: 1
+    *display: inline
+    vertical-align: top
+    // Cross-browser Inline-block
+  .member_picker label
+    padding-top: 2px
+    width: auto
+  div.field
+    margin: 18px 0 0 0
+    .darkgray
+      text-align: center
+  .member_find_col
+    width: 30%
+    float: left
+  .member_buttons_col
+    position: relative
+    width: 15%
+    margin-left: 50%
+  .members_list_col
+    position: relative
+    width: 30%
+    margin-left: 70%
+  #member_chosen
+    padding: 2px
+  ul#member_list
+    margin: 0
+    font: normal normal normal 0.875em / 18px Helvetica, Arial, sans-serif
+    list-style: none
+  #project_submit
+    margin: 10px 0 0 0
+  .actions
+    text-align: right
+
+
+.lightbox input.text.keyword
+  padding: 5px
+  height: 19px
+  width: 628px
