@@ -28,7 +28,7 @@
 
   .field.line
     .field.actions
-      = button_link_to "Back", edit_system_file_type_path(@system, @file_type), :remote => true
+      = button_link_to "Back", edit_system_file_type_path(@system, @file_type), :remote => true, :class => "back_button"
       -#= button_link_to "Close", "", :remote => true, :class => "jqmClose"
       = button_link_to "Close", system_file_types_path(@system)#, :remote => true, :class => "jqmClose"
       -#= link_to "Save and Define Metadata", "#", :remote => true, :class => "blue basic_field", :id => "save_button"

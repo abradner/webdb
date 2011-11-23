@@ -5,24 +5,13 @@
       .field.line
         = label_tag :file_type_id, "Select File Type:"
         .lastUnit
-          = select_tag :file_type_id, options_from_collection_for_select(@system.file_types, :id, :name), {:include_blank => true}
-      .field.line
-        .field.actions
-        = f.submit 'Next', :id => "next_button", :class => "blue", :disabled => 'disabled'
+          - selected_element = @file_type.id unless @file_type.blank?
+          = select_tag :file_type_id, options_from_collection_for_select(@system.file_types, :id, :name, selected_element), {:include_blank => true, :onChange => "$(this).parent().submit()"}
 
+      #storage_preview
+        = render :partial => 'file_type_preview'
 
 :javascript
-    $('#next_button').click(function() {
-        $(this).addClass('ac_loading');
-        //$(this).attr('disabled', 'disabled');
-    });
-
     $('#file_type_id').change(function() {
-        if ($(this).val() == "") {
-            $('#next_button', '#modal_content_container').attr('disabled', 'disabled');
-        } else {
-            $('#next_button', '#modal_content_container').removeAttr('disabled');
-
-        }
-
+        $('#loading').addClass('loading');
     });

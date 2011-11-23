@@ -1,4 +1,4 @@
 $('#wizard').jqmHide();
-$('#wizard').html('<%= escape_javascript(render :partial => 'file_metadata_schemas/form' ) %>');
+$('#wizard').html('<%= escape_javascript(render :partial => 'raw_files/form' ) %>');
 $('#wizard').jqmShow();
 $('[id^=show_][id$=_wizard]').removeClass('ac_loading');

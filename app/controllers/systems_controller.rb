@@ -17,7 +17,8 @@ class SystemsController < ApplicationController
 
   def select_raw_file_type
     if (ft = params[:file_type_id]).present?
-      redirect_to new_system_file_type_raw_file_path(@system, ft)
+      @file_type = FileType.find(ft)
+      #redirect_to new_system_file_type_raw_file_path(@system, ft)
     end
   end
 

@@ -1,0 +1,35 @@
+-if @file_type.present?
+  #modal_left_container
+    %h3 Preview:
+    .field.line
+      %label Expected Content:
+      .lastUnit
+        = @file_type.content
+    .field.line
+      %label Storage Location:
+      .lastUnit
+        #{@file_type.storage_location.name} (#{t(@file_type.storage_location.storage_type)})
+    .field.line
+      %label Valid File Extensions:
+      .lastUnit
+        = @file_type.extensions.present? ? @file_type.extensions : "Any"
+
+  - if @file_type.file_metadata_schemas.present?
+    #modal_right_container
+      %h3 Metadata:
+      - req = false
+      - @file_type.file_metadata_schemas.sort_by(&:label).each do |fms|
+        %p.truncate{:class => field_css_class(fms.field_type)}
+          -req=true if fms.required
+          %span{:class => (fms.required ? "normal required" : "")}= fms.label
+      -if req
+        %p.right.required (required fields in red)
+
+#loading
+
+.field.line
+  .field.actions
+    = button_link_to "Cancel", "", :remote => true, :class => "jqmClose"
+    -if @file_type.present?
+      = link_to "Next", system_file_type_raw_files_path(@system, @file_type), :remote => true, :class => "blue basic_field", :id => "next_button"
+      -#= link_to "Next", "", :remote => true, :class => "blue basic_field",  :disabled => 'disabled'

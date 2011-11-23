@@ -30,6 +30,12 @@ $(function() {
         $(this).addClass('ac_loading');
     });
 
+    $('#next_button').live('click', function() {
+        $(this).addClass('ac_loading');
+        $(this).attr('disabled', 'disabled');
+    });
+
+
     $('#back_button').live('click', function() {
         $(this).addClass('ac_loading');
     });

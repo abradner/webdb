@@ -1,4 +1,5 @@
+var base_system_url = '/systems/<%= @system.id %>';
 $('#wizard').jqmHide();
 $('#wizard').html('<%= escape_javascript(render :partial => 'raw_file_type_popup' ) %>');
 $('#wizard').jqmShow();
-$('[id^=show_][id$=_wizard]').removeClass('ac_loading');
+$('.ac_loading').removeClass('ac_loading');

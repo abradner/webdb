@@ -4,3 +4,5 @@
 en:
   developer_footer: "Developed by Intersect Australia Ltd"
   app_name: "WebDB"
+  db: "Database"
+  fs: "File System"

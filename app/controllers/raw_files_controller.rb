@@ -1,8 +1,11 @@
 class RawFilesController < AjaxGenericController
 
   load_and_authorize_resource :file_type
-  #load_and_authorize_resource :raw_file, :through => :file_type #TODO
+  load_resource :raw_file
 
+  def index
+    @raw_file = RawFile.new
+  end
 
   def create
     @raw_file = RawFile.new(params[:raw_file])
