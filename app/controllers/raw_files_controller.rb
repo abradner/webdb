@@ -10,7 +10,7 @@ class RawFilesController < AjaxGenericController
   def create
     @raw_file = RawFile.new(params[:raw_file])
     @raw_file.user = current_user
-    @raw_file.file_type = @file_type
+    #@raw_file.file_type = @file_type
 
 
     if @raw_file.save
