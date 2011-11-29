@@ -4,7 +4,7 @@ class RawFilesController < AjaxGenericController
   load_resource :raw_file
 
   def index
-    @raw_file = RawFile.new
+    @raw_file = RawFile.new(:file_type_id => @file_type.id)
   end
 
   def create

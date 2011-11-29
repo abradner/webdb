@@ -3,4 +3,8 @@
   #form_metadata
     = render :partial => 'raw_files/form_metadata'
   #form_upload
-    = render :partial => 'raw_files/form_upload'
+    %h3 Upload
+    = form_for [@system, @file_type, @raw_file], :html => {:multipart => true} do |f|
+      = f.file_field :stored_file
+      = f.submit "Upload File", :class => "blue basic_field"
+    -#= render :partial => 'raw_files/form_upload'

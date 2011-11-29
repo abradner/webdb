@@ -1,6 +1,5 @@
-require 'carrierwave/mongoid'
-
 class RawFile
+  include CarrierWave::Mongoid
   include Mongoid::Document
   include Mongoid::Timestamps
   include Tenacity
@@ -9,27 +8,28 @@ class RawFile
   t_belongs_to :user
   belongs_to :file_type
   embeds_one :file_metadata
-  mount_uploader :stored_file, RawStorageUploader
 
   validates_presence_of :user_id
+  mount_uploader :raw_file, RawStorageUploader
+  after_initialize :configure_upload
 
-  before_save :update_asset_attributes
 
   private
 
-  def update_asset_attributes
-    #if raw_file.present? && raw_file_changed?
-    #
-    #  if self.file_metadata.blank? #TODO this is really hacky
-    #    @meta = FileMetadata.new(:filename => raw_file.file.filename, :size => raw_file.file.size)
-    #    @meta.raw_storage_container = self
-    #    self.file_metadata = @meta
-    #  else
-    #    self.file_metadata.filename = raw_file.file.filename
-    #    self.file_metadata.size = raw_file.file.size
-    #  end
-    #  self.file_metadata.save!
-    #end
+  def build_store_dir
+    "#{self.class.to_s.underscore}/"
+  end
+
+  def configure_upload
+    if file_type.use_grid?
+      CarrierWave::Uploader::Base.storage= :grid_fs
+      raw_file.set_store_dir build_store_dir
+    end
+
+    if file_type.use_fs?
+      CarrierWave::Uploader::Base.storage= :file
+      raw_file.set_store_dir build_store_dir
+    end
   end
 
 end

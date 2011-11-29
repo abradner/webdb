@@ -1,4 +1,0 @@
-.hidden.uploader
-  = form_for [@system, file_type, RawFile.new], :html => {:multipart => true} do |f|
-    = f.file_field :stored_file
-    = f.submit "Upload File", :class => "blue basic_field"

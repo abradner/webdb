@@ -4,10 +4,10 @@
 #https://github.com/jnicklas/carrierwave/wiki/How-to%3A-Make-a-fast-lookup-able-storage-directory-structure
 
 class RawStorageUploader < CarrierWave::Uploader::Base
-  include CarrierWave::MiniMagick
 
-  def self.set_storage
-    answer ? storage(:grid_fs) : storage(:file)
+  # Choose what kind of storage to use for ALL THE UPLOADERS:
+  def global_set_storage(storage)
+      self.class.storage = storage.is_a?(Symbol) ? eval(storage_engines[storage]) : storage
   end
 
   def set_store_dir(path = nil)
@@ -18,7 +18,19 @@ class RawStorageUploader < CarrierWave::Uploader::Base
   def store_dir
     @store_dir
   end
+
+  def get_storage
+    storage
+  end
 end
+
+  #storage :hybrid
+
+  #include CarrierWave::MiniMagick
+
+  #def self.set_storage(answer)
+  #  answer ? storage(:grid_fs) : storage(:file)
+  #end
 
   # Include RMagick or ImageScience support:
   # include CarrierWave::RMagick

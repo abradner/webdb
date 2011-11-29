@@ -25,9 +25,12 @@ class FileType
   #updated_by
 
 
-  def self.use_grid_fs?
-    return true if self.storage.storage_type.eql? AppConfig.file_locations.database
-    false
+  def use_grid?
+    storage_location.storage_type.eql? AppConfig.file_locations.database
+  end
+
+  def use_fs?
+    storage_location.storage_type.eql? AppConfig.file_locations.filesystem
   end
 
   def self.storage_location
