@@ -65,6 +65,7 @@ gem 'capistrano'
 
 gem 'fastercsv'
 
+gem 'delayed_job'
 
 gem 'haml'
 gem "haml-rails"

@@ -40,4 +40,12 @@ class DataObject < ActiveRecord::Base
     DataObject.find(ids)
   end
 
+  def import(import_mapping, raw_file)
+
+    
+
+  end
+
+  handle_asynchronously :import
+
 end

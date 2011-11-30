@@ -12,13 +12,6 @@ class DataObjectsController < ApplicationController
   def new; end
   def edit; end
 
-    #case params[:step]
-    #  when 1
-    #  when 2
-    #  else
-    #end
-
-
   def edit_file_types_old
     @unselected_file_types = @system.file_types - @data_object.file_types
   end
@@ -38,6 +31,26 @@ class DataObjectsController < ApplicationController
       @data_object.update_attribute(is_active, true)
     end
   end
+
+  def import
+    @import_mappings = @data_object.import_mappings.select { |im| im.mappings.present? }
+  end
+
+  # updates list of available file types to import based on mapping
+  def mapping_selected
+
+    @import_mapping = ImportMapping.find(params[:data_object][:import_mappings])
+    #@raw_files = @import_mapping.file_type.raw_files
+    @raw_files = ImportMapping::RAW_FILES
+  end
+
+  # does the actual import
+  def import_selected
+    @import_mapping = ImportMapping.find(params[:import_mapping])
+    @raw_file = RawFile.find(params[:raw_file])
+    @data_object.import(@import_mapping, @raw_file)
+  end
+
 
   def destroy
     if @data_object.destroy

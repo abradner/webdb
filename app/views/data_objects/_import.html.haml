@@ -1,0 +1,11 @@
+=render :partial => 'shared/modal_form', :locals => {:obj => @data_object, :modal_title => ("Import Into This Data Object (" + @data_object.name + ")")}
+.field.line
+  = form_for @data_object, :url => mapping_selected_system_data_object_path(@system, @data_object),:method => :post, :remote => true do |f|
+    %div
+      = f.label(:import_mappings, "Select an import mapping")
+      = f.collection_select(:import_mappings, @import_mappings, :id, :display_name)
+    .field.line
+    %div
+      = f.submit "Show valid files"
+
+#valid_raw_files

@@ -60,6 +60,9 @@ end
         #put :update_file_types
         #put :update_attributes
         get :manage
+        get :import
+        post :import_selected
+        post :mapping_selected
       end
     end
     resources :security_groups

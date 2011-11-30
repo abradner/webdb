@@ -5,10 +5,10 @@
 
   #container_page_buttons.right
     -if can? :admin, User
-      =button_link_to "Import", "#", :class => "green add"
+      =button_link_to "Import", import_system_data_object_path(@system, @data_object), :class => "green add", :remote => true
       =button_link_to "Manage", manage_system_data_object_path(@system, @data_object), :class => "edit", :remote => true
       =button_link_to "Delete", system_data_object_path, :method => "delete",
-                            :confirm =>"Are you sure you want to delete this Data Object and all related data?",
+                            :confirm => "Are you sure you want to delete this Data Object and all related data?",
                             :id => 'data_object_delete_link', :class => 'red delete'
 
   #container_page_details.right.flushright.details

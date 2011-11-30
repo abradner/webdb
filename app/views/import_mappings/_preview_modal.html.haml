@@ -49,9 +49,16 @@
   #hidden_values
     = f.hidden_field(:mappings, :value => []) if params[:import_mapping].present?
   .field.line
-    %label Choose which fields to validate uniqueness on (Ctrl + click to select multiple fields)
+    %label The following fields will identify the record
     .line
-      = f.collection_select(:unique_fields, @data_object_attributes, :id, :name, {}, {:multiple =>true})
+      - @id_attrs.each do |attr|
+        = hidden_field_tag "import_mapping[unique_fields][]", attr.id
+        = attr.name
+  .field.line
+    %label Choose additional fields to validate uniqueness on (ctrl + click to select multiple fields)
+    .line
+      = f.collection_select(:unique_fields, @non_id_attrs, :id, :name, {}, {:multiple => true})
+
   .field.line
     %label Choose what to do should there be a conflict of values
     .line

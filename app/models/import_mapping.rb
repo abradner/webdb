@@ -9,6 +9,7 @@ class ImportMapping
   OVERRIDE = "Override"
   APPEND = "Append"
   DELETE = "Delete"
+  RAW_FILES = ["contract", "customer_order_total", "GeoIPCountryWhois", "students", "transaction"] # temporary
 
   ACTIONS = [APPEND, OVERRIDE, DELETE]
 
@@ -23,5 +24,9 @@ class ImportMapping
 
   validates_uniqueness_of :name, :case_sensitive => false, :scope => [:data_object_id, :file_type_id], :message => "has been taken in this data object"
   validates_presence_of :data_object_id, :file_type_id, :name
+
+  def display_name
+    "#{self.name} (#{self.file_type.name})"
+  end
 
 end

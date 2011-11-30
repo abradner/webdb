@@ -1,0 +1,15 @@
+.field.line
+%h3 Valid files for #{@import_mapping.display_name}
+.field.line
+  = form_for @data_object, :url => import_selected_system_data_object_path(@system, @data_object),:method => :post, :remote => true do |f|
+    %div
+      = label_tag("raw_file", "Select a file to import")
+      = select_tag("raw_file", options_for_select(@raw_files))
+      -#= select_tag("raw_files", options_from_collection_for_select(@raw_files, :id, :stored_file_identifier))
+    %div
+      = hidden_field_tag("import_mapping", @import_mapping.id)
+    .field.line
+    #bottom_actions_container
+      .field.line
+        .field.actions
+          = f.submit "Import Raw File"

@@ -38,9 +38,11 @@ class ImportMappingsController < AjaxDataObjectController
 
   def preview
     #@raw_files = @import_mapping.file_type.raw_files
-    @raw_files = ["contract", "customer_order_total", "GeoIPCountryWhois", "students", "transaction"]
+    @raw_files = ImportMapping::RAW_FILES
     @data_object_attributes = @data_object.data_object_attributes
     @unassigned_attrs = @data_object_attributes
+    @id_attrs = @data_object.data_object_attributes.where(:is_id => true)
+    @non_id_attrs = @data_object_attributes - @id_attrs
     
     # if previewing
     if params[:import_mapping]
