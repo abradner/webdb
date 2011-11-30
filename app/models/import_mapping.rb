@@ -3,7 +3,7 @@ class ImportMapping
   include Tenacity
   belongs_to :file_type
   #belongs_to :raw_file
-  t_belongs_to :data_object
+  belongs_to :data_object
 
   DELIMITERS = [["Comma", ","], ["Colon", ":"], ["Pipe", "|"], ["Semicolon", ";"], ["Space", "\\s"], ["Tab", "\\t"]]
   OVERRIDE = "Override"

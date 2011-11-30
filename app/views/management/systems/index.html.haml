@@ -1,3 +1,32 @@
-Systems management page placeholder
+%h2 System Management
 %ul
-  %li= link_to 'New', new_management_system_path
+  %li= button_link_to 'Add System', new_management_system_path, :class => "add"
+-#=button_link_to "Delete", management_system_path, :method => "delete",
+-#                      :confirm =>"Are you sure you want to delete this system and all related data?",
+-#                      :id => 'system_delete_link', :class => 'red delete'
+
+%table
+  %tr
+    %th
+      %h3 Name
+    %th
+      %h3 Description
+    %th
+      %h3 Information
+    %th
+      %h3 Actions
+  - @systems.each do |s|
+    %tr
+      %td= s.name
+      %td= s.description
+      %td.light
+        %p Objects: #{s.data_objects.count}
+        %p Files: #{s.files}
+        %p Users: #{s.memberships.count}
+      %td
+        = button_link_to "View", s, :remote => true
+        = button_link_to "Edit", edit_management_system_path(s), :remote => true, :class => 'edit'
+        = button_link_to "Deactivate", deactivate_management_system_path(s),
+                            :confirm =>"This will deactivate the system. It will still be accessible, however it will be read only.",
+                            :id => 'deactivate_system_link', :class => 'red delete'
+

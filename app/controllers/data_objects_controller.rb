@@ -5,18 +5,20 @@ class DataObjectsController < ApplicationController
   before_filter :systems_and_memberships, :only => [:index, :show]
 
   load_and_authorize_resource :system
-  load_and_authorize_resource :data_object, :through => :system
+  load_and_authorize_resource :data_object
 
   def index; end
   def show; end
   def new; end
   def edit; end
+  def configure; end
 
   def edit_file_types_old
     @unselected_file_types = @system.file_types - @data_object.file_types
   end
 
   def create
+    @data_object.system = @system
     @errors = true unless @data_object.save
     prepare_attributes_for_wizard! unless @errors
   end

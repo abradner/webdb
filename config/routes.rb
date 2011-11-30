@@ -6,7 +6,11 @@ end
 
   namespace :management do
     resources :systems do
-      post :create, :on => :member
+      member do
+        get :deactivate
+        get :activate
+        post :create
+      end
     end
     resources :storage_locations
     resources :colour_schemes
@@ -43,7 +47,7 @@ end
       resources :file_metadata_schemas
     end
     resources :data_objects do
-      resources :data_object_relationships
+      #resources :data_object_relationships
       resources :data_object_attributes
       resources :import_mappings do
         member do
@@ -59,13 +63,14 @@ end
         #put :update_security
         #put :update_file_types
         #put :update_attributes
-        get :manage
+        get :configure
         get :import
         post :import_selected
         post :mapping_selected
       end
     end
     resources :security_groups
+
     member do
       get :list_members
       get :list_administrators
@@ -77,7 +82,10 @@ end
       get :select_raw_file_type
       put :select_raw_file_type
 
-      get :manage
+      get :deactivate
+      get :activate
+
+      get :configure
     end
   end
 

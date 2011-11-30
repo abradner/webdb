@@ -1,4 +1,4 @@
-=render :partial => 'shared/modal_form', :locals => {:obj => @data_object, :modal_title => ("Manage This Data Object (" + @data_object.name + ")")}
+=render :partial => 'shared/modal_form', :locals => {:obj => @data_object, :modal_title => ("Configure This Data Object (" + @data_object.name + ")")}
 %div &nbsp;
 .field.line
   %label Settings
@@ -10,4 +10,7 @@
   %label Tools
   .lastUnit
     =button_link_to "File Import Mappings", system_data_object_import_mappings_path(@system, @data_object), :remote => true, :class => "file_type"
-    =button_link_to "External Links", system_data_object_data_object_relationships_path(@system, @data_object), :class => "dobj_link"
+    -#=button_link_to "External Links", system_data_object_data_object_relationships_path(@system, @data_object), :class => "dobj_link"
+    =button_link_to "Delete", system_data_object_path, :method => "delete",
+                          :confirm =>"Are you sure you want to delete this Data Object and all related data?",
+                          :id => 'data_object_delete_link', :class => 'red delete'

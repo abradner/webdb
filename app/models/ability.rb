@@ -55,6 +55,7 @@ class Ability
       can :approve, User
       can :reject, User
       can :manage, System
+      can :configure, System
 
       can :create, System
       can :update, System
@@ -65,7 +66,7 @@ class Ability
       #can :manage, FileContentType
     end
 
-    can :list, User
+    can :list, User #TODO security
 
     system_administrations = user.system_administration_ids
     system_memberships = user.system_membership_ids
@@ -73,6 +74,7 @@ class Ability
     # System privileges
     can :read, System, :id => system_memberships
     can :update, System, :id => system_administrations
+    can :configure, System, :id => system_administrations
     #can :edit_member, System, :id => system_administrations
     can :edit_permissions, System, :id => system_administrations
     can :edit_file_types_old, System, :id => system_administrations
@@ -83,12 +85,6 @@ class Ability
     can :list_administrators, System, :id => system_administrations
     can :list_collaborators, System, :id => system_administrations
 
-    #TODO leaving a system
-    #can :leave, System do |system|
-    #  system.can_remove?(user)
-    #end
-
-
     #Security Group privileges
     can :manage, SecurityGroup, :system_id => system_administrations
 
@@ -98,15 +94,15 @@ class Ability
 
 
     # Data Object privileges
+    can :manage, DataObject, :system_id => system_administrations
     can :create, DataObject, :system_id => system_administrations
     can :update, DataObject, :system_id => system_administrations
-    can :manage, DataObject, :system_id => system_administrations
 
     can :show, DataObject, :system_id => system_memberships
-    #can :read, DataObject, :system_id => system_administrations
+    can :write, DataObject, :system_id => system_administrations
 
     #Data Object Relationship privileges
-    can :manage, DataObjectRelationship, :system_id => system_administrations ##TODO admin security groups (both objects )& administrators
+    #can :manage, DataObjectRelationship, :system_id => system_administrations ##TODO admin security groups (both objects )& administrators
 
     #Data Object Security privileges
     can :edit_security, DataObject, :system_id => system_administrations #TODO admin security groups & administrators

@@ -18,7 +18,7 @@
     .field.line
       = f.label :colour_scheme_id, "Colour Scheme:"
       .lastUnit
-        = @system.colour_scheme.name
+        = @system.colour_scheme.name unless @system.colour_scheme.blank?
     #member_picker
       .field.line
         %label{:for => "member"} System Users:

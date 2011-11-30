@@ -6,19 +6,16 @@ class UsersController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
 
-  layout 'overview'
+  layout 'management'
+  #layout 'overview', :except => [:admin]
 
   before_filter :systems_and_memberships #, :only => [:show, :index, :list_administrators, :list_collaborators, :list_members]
 
+  def show; end
+  def admin; end
+
   def index
     @users = User.deactivated_or_approved
-  end
-
-  def show
-  end
-
-  def admin
-
   end
 
   def list

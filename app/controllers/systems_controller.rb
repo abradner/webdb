@@ -11,7 +11,7 @@ class SystemsController < ApplicationController
 
   def show;end
   def edit_members; end
-  def manage;  end
+  def configure;  end
 
   def select_raw_file_type
     if (ft = params[:file_type_id]).present?
@@ -23,7 +23,7 @@ class SystemsController < ApplicationController
   def update_members
     #TODO remove admins from the list of user ids
     if @system.update_attribute(:collaborator_ids, params[:member_ids])
-      redirect_to management_systems_path, :notice => "The users of this system were updated."
+      redirect_to @system, :notice => "The users of this system were updated."
     else
       render :edit_members
     end

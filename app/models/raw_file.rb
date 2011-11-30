@@ -11,25 +11,49 @@ class RawFile
 
   validates_presence_of :user_id
   mount_uploader :raw_file, RawStorageUploader
-  after_initialize :configure_upload
+
+  before_save :configure_upload!
+
+  field :historic_versions, :type => Array
+  field :version_counter, :type => Integer
 
 
   private
 
   def build_store_dir
-    "#{self.class.to_s.underscore}/"
+    File.join file_type.storage_location, id
   end
 
-  def configure_upload
-    if file_type.use_grid?
-      CarrierWave::Uploader::Base.storage= :grid_fs
-      raw_file.set_store_dir build_store_dir
+  def configure_upload!
+
+    #Configure CarrierWave
+    if file_type.use_grid?; CarrierWave::Uploader::Base.storage= :grid_fs
+    elsif file_type.use_fs?; CarrierWave::Uploader::Base.storage= :file
+    else; self.errors.add(:file_type, :invalid)
     end
 
-    if file_type.use_fs?
-      CarrierWave::Uploader::Base.storage= :file
-      raw_file.set_store_dir build_store_dir
-    end
+
+    handle_versions!
+
+    raw_file.set_store_dir build_store_dir
+
+
+
+  end
+
+  def handle_versions!
+
+    return unless raw_file.changed?
+    return unless file_type.versioning?
+    self.version_counter+=1
+    return if version_counter.eql? 1
+
+
+
+    
+
+
+    #TODO
   end
 
 end

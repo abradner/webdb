@@ -21,6 +21,10 @@
           .lastUnit
             = f.text_field :extensions, :class => "text narrow basic_field", :placeholder => "Comma separated list of valid file extensions, eg: csv,txt,out"
         .field.line
+          = f.label :versioning, 'Maintain version history?'
+          .lastUnit
+            = f.check_box :versioning
+        .field.line
           = f.label :extensions, 'Define Metadata Schema?'
           #metadata_checkbox_container.lastUnit
             = check_box_tag 'metadata', 1, true, :id => 'metadata_checkbox'

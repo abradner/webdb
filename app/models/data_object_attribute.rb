@@ -1,5 +1,17 @@
-class DataObjectAttribute < ActiveRecord::Base
-#TODO - convert this model and its associated logic to mongo, similar to metadata
+class DataObjectAttribute
+  include Mongoid::Document
+  include Mongoid::Timestamps
+
+  field :name,            :type => String
+  field :label,           :type => String
+  field :attribute_type,  :type => String
+  field :options,         :type => String
+  field :length,          :type => Integer
+  field :column,          :type => Integer
+  field :required,        :type => Boolean,       :default => false
+  field :is_id,           :type => Boolean,       :default => false
+  field :editable,        :type => Boolean,       :default => true
+  field :visible,         :type => Boolean,       :default => false
 
   #updated_by
   belongs_to :data_object
@@ -9,4 +21,7 @@ class DataObjectAttribute < ActiveRecord::Base
   validates_length_of :name, :maximum => 45
   validates_length_of :label, :maximum => 255
 
+  #scope :visible, where(true) #TODO build visible field
+
 end
+

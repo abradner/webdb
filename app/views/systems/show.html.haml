@@ -5,11 +5,8 @@
 
   #container_page_buttons.right
     =button_link_to "Add Files", select_raw_file_type_system_path(@system), :remote => true, :class => "green add"
-    -if can? :update, System
-      =button_link_to "Manage", manage_system_path(@system), :class => "edit", :remote => true
-      =button_link_to "Delete", management_system_path, :method => "delete",
-                            :confirm =>"Are you sure you want to delete this system and all related data?",
-                            :id => 'system_delete_link', :class => 'red delete'
+    -if can? :configure, @system
+      =button_link_to "Configure", configure_system_path(@system), :class => "edit", :remote => true
 
   #container_page_details.right.flushright.details
     .entry
@@ -69,7 +66,10 @@
     -#-#toggle_hidden.button Upload #TODO
     -#.button Upload (Disabled)
     .row.information
+      - unless @system.file_types.present?
+        No File Types configured.
       - @system.file_types.sort_by(&:storage_location).each do |ft|
         %p.bold [#{ft.storage_location.name}]::#{ft.name}
         %p.light #{ft.raw_files.count} files, XXX MB
         %p &nbsp;
+

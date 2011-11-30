@@ -11,6 +11,7 @@ class FileType
   field :name, :type => String
   field :content, :type => String
   field :extensions, :type => String #change to array
+  field :versioning, :type => Boolean
 
   t_belongs_to :system
   t_belongs_to :storage_location
@@ -24,6 +25,8 @@ class FileType
 
   #updated_by
 
+  before_save :clean_up_versioning
+
 
   def use_grid?
     storage_location.storage_type.eql? AppConfig.file_locations.database
@@ -33,9 +36,13 @@ class FileType
     storage_location.storage_type.eql? AppConfig.file_locations.filesystem
   end
 
-  def self.storage_location
+  def storage_path
     #TODO does not check that everything is well formed. This is a big issue!
-    File.join(AppConfig.raw_storage_root_path, self.storage.location, self.system.name, self.name)
+    if storage_location.storage_type.eql? AppConfig.file_locations.filesystem
+      File.join(AppConfig.raw_storage_root_path, storage_location.location, system.id, id)
+    else
+      File.join(storage_location.location, system.id, id)
+    end
   end
 
   def data_objects
@@ -45,6 +52,12 @@ class FileType
       dobjs.insert(dobj) unless dobjs.include?(dobj)
     end
     dobjs
+  end
+
+  private
+
+  def clean_up_versioning
+    #TODO remove old versions of files from raw_files in this type
   end
 
 end

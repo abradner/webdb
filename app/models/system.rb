@@ -2,7 +2,7 @@ class System < ActiveRecord::Base
   include Tenacity
 #  has_many :storage_types
   belongs_to :colour_scheme
-  has_many :data_objects, :dependent => :destroy
+  t_has_many :data_objects, :dependent => :destroy
   has_many :security_groups, :dependent => :destroy
   has_many :storage_locations, :dependent => :destroy
   t_has_many :file_types #dependent=>destroyed on removal of storage_location
@@ -52,12 +52,17 @@ class System < ActiveRecord::Base
   end
 
   def files
-    raw_storage_container_id
+    count = 0
+    file_types.each do |ft|
+      count += ft.raw_files.count
+    end
+    count
   end
 
   def file(object_id)
 
   end
+
  # scope :partial_systems, joins(:users).
 
 

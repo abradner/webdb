@@ -4,61 +4,39 @@
       %span=@data_object.name
 
   #container_page_buttons.right
-    -if can? :manage, @data_object
+    -if can? :write, @data_object
       =button_link_to "Import", import_system_data_object_path(@system, @data_object), :class => "green add", :remote => true
-      =button_link_to "Manage", manage_system_data_object_path(@system, @data_object), :class => "edit", :remote => true
-      =button_link_to "Delete", system_data_object_path, :method => "delete",
-                            :confirm => "Are you sure you want to delete this Data Object and all related data?",
-                            :id => 'data_object_delete_link', :class => 'red delete'
+    -if can? :manage, @data_object
+      =button_link_to "Configure", configure_system_data_object_path(@system, @data_object), :class => "edit", :remote => true
 
   #container_page_details.right.flushright.details
     .entry
       %p
-        Info 1:
+        Records:
         =0
 
     .entry
       %p
-        Info 2:
+        Authors:
         =0
 
--# TODO: WORST CODE EVER!
+%h2 Details
 #container_page_content.wrapper
-  .unit.block_left_col
-    %h3 External Data Relationships
+  .system_left_col
+    .left.line
+      %h3 Description:
     .row.information
-      %span.bold Linked Data Objects:
-      %ul
-        - @data_object.relatives.each do |rel|
-          %li=link_to rel.name, system_data_object_path(@system, rel)
-      %span.bold Data Objects Linking to this:
-      %ul
-        - @data_object.inverse_relatives.each do |irel|
-          %li=link_to irel.name, system_data_object_path(@system, irel)
-
-  .unit.block_left_col
-    %h3 Security:
+      %p=@data_object.description
+  .system_right_col
+    .left.line
+      %h3 Summary:
     .row.information
-      - if @data_object.security_groups.blank?
-        .bold
-          No Security Groups Defined
-      - @data_object.security_groups.each do |sg|
-        %p=sg.name
-  .unit.block_left_col
-    %h3 R
-    .row.information
-      - @data_object.data_object_security_groups.each do |sg|
-        %p=sg.read? ? "Y" :"N"
-  .unit.block_left_col
-    %h3 W
-    .row.information
-      - @data_object.data_object_security_groups.each do |sg|
-        %p=sg.write? ? "Y" :"N"
-  .unit.block_left_col
-    %h3 A
-    .row.information
-      - @data_object.data_object_security_groups.each do |sg|
-        %p=sg.admin? ? "Y" :"N"
+      %p Files Imported
+      %p.light (blah)
+      %p Records
+      %p.light (blah)
+      %p Authors
+      %p.light (blah)
 
   .lastUnit.block_right_col
     .left.line
@@ -84,9 +62,79 @@
   %span
     %table{:width => "100%"}
       %tr
-        - @data_object.display_columns.times do |n|
-          %td{:align => "center", :width => "#{100 / @data_object.display_columns}%", "data-id" => n }
-            - if cols[n+1].present?
-              %h3= cols[n+1].name
-            - else
-              %h3 Empty Column!
+        - if @data_object.data_object_attributes.blank?
+          %h3 Empty
+          %p.bold Data Object Attributes need to be configured
+        - else
+          - @data_object.data_object_attributes.visible.each do |attr|
+            -#%td{:align => "center", :width => "#{100 / @data_object.attributes.count}%", "data-id" => n }
+            %th
+              %h3= attr.name
+
+-# COLUMN DISPLAY CODE
+-#---------------------
+-#-#TODO Move this
+-#- cols = Array.new
+-#- @data_object.data_object_attributes.each do |attr|
+-#  - if attr.column.present?
+-#    -cols[attr.column] = attr
+-#
+-##container_page_content.wrapper
+-#  %h2 Content
+-#  %span
+-#    %table{:width => "100%"}
+-#      %tr
+-#        - @data_object.display_columns.times do |n|
+-#          %td{:align => "center", :width => "#{100 / @data_object.display_columns}%", "data-id" => n }
+-#            - if cols[n+1].present?
+-#              %h3= cols[n+1].name
+-#            - else
+-#              %h3 Empty Column!
+
+-# END COLUMNS
+-#---------------------
+
+
+-# RELATIONSHIPS AND SECURITY GROUPS CODE
+-#---------------------
+
+-# TODO: WORST CODE EVER!
+-##container_page_content.wrapper
+-#  .unit.block_left_col
+-#    %h3 External Data Relationships
+-#    .row.information
+-#      %span.bold Linked Data Objects:
+-#      %ul
+-#        - @data_object.relatives.each do |rel|
+-#          %li=link_to rel.name, system_data_object_path(@system, rel)
+-#      %span.bold Data Objects Linking to this:
+-#      %ul
+-#        - @data_object.inverse_relatives.each do |irel|
+-#          %li=link_to irel.name, system_data_object_path(@system, irel)
+-#
+-#  .unit.block_left_col
+-#    %h3 Security:
+-#    .row.information
+-#      - if @data_object.security_groups.blank?
+-#        .bold
+-#          No Security Groups Defined
+-#      - @data_object.security_groups.each do |sg|
+-#        %p=sg.name
+-#  .unit.block_left_col
+-#    %h3 R
+-#    .row.information
+-#      - @data_object.data_object_security_groups.each do |sg|
+-#        %p=sg.read? ? "Y" :"N"
+-#  .unit.block_left_col
+-#    %h3 W
+-#    .row.information
+-#      - @data_object.data_object_security_groups.each do |sg|
+-#        %p=sg.write? ? "Y" :"N"
+-#  .unit.block_left_col
+-#    %h3 A
+-#    .row.information
+-#      - @data_object.data_object_security_groups.each do |sg|
+-#        %p=sg.admin? ? "Y" :"N"
+
+-# END RELATIONS/SECURITY
+-#---------------------
