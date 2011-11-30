@@ -4,11 +4,12 @@
       %span=@system.name
 
   #container_page_buttons.right
-    -if can? :admin, User
-      =button_link_to "Edit", edit_management_system_path(@system)
+    =button_link_to "Add Files", select_raw_file_type_system_path(@system), :remote => true, :class => "green add"
+    -if can? :update, System
+      =button_link_to "Manage", manage_system_path(@system), :class => "edit", :remote => true
       =button_link_to "Delete", management_system_path, :method => "delete",
                             :confirm =>"Are you sure you want to delete this system and all related data?",
-                            :id => 'system_delete_link', :class => 'red'
+                            :id => 'system_delete_link', :class => 'red delete'
 
   #container_page_details.right.flushright.details
     .entry
@@ -25,14 +26,9 @@
         =@system.memberships.count || 0
 
 
-#container_page_actions.wrapper
-  .unit
-    -if can? :update, System
-      =button_link_to "Add Data Object", new_system_data_object_path(@system), :remote => true, :class => "add"
-      =button_link_to "Add To Raw Storage", select_raw_file_type_system_path(@system), :remote => true, :class => "upload"
-      =button_link_to "Manage Security Groups", system_security_groups_path(@system), :class => "security"
-      =button_link_to "Manage Filetypes", system_file_types_path(@system), :class => "file_type"
-      =button_link_to "Manage System Members", edit_members_system_path(@system), :class => "duck"
+-##container_page_actions.wrapper
+-#  .unit
+-#    -if can? :update, System
 
 %h2 Details
 #container_page_content.wrapper
@@ -40,7 +36,7 @@
     .left.line
       %h3 System Information:
     .information
-      %span.bold System Description:
+      %span.bold System Description:``
       %p=@system.description
 
   .system_right_col
@@ -76,8 +72,4 @@
       - @system.file_types.sort_by(&:storage_location).each do |ft|
         %p.bold [#{ft.storage_location.name}]::#{ft.name}
         %p.light #{ft.raw_files.count} files, XXX MB
-        -#= render :partial => "upload_file", :locals => {:file_type => ft}
-        -#%p.light= "Empty" unless ft.raw_files.present?
-        -#- ft.raw_files.each do |rsc|
-        -#  %p.light=rsc.stored_file_identifier
         %p &nbsp;

@@ -9,11 +9,9 @@ class SystemsController < ApplicationController
     redirect_to pages_home_path
   end
 
-  def show
-  end
-
-  def edit_members
-  end
+  def show;end
+  def edit_members; end
+  def manage;  end
 
   def select_raw_file_type
     if (ft = params[:file_type_id]).present?

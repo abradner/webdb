@@ -1,7 +1,14 @@
-= form_for [@system, @file_type, @raw_file], :remote => true do |f|
-  .field.line
-    .field.actions
-      = button_link_to "Back", edit_system_file_type_path(@system, @file_type), :remote => true
-      -#= button_link_to "Close", "", :remote => true, :class => "jqmClose"
-      = button_link_to "Close", system_file_types_path(@system)#, :remote => true, :class => "jqmClose"
-      -#= link_to "Save and Define Metadata", "#", :remote => true, :class => "blue basic_field", :id => "save_button"
+-#= form_for [@system, @file_type, @raw_file], :remote => true do |f|
+
+-#= render :partial => "upload_file", :locals => {:file_type => ft}
+-#%p.light= "Empty" unless ft.raw_files.present?
+-#- ft.raw_files.each do |rsc|
+-#  %p.light=rsc.stored_file_identifier
+
+
+  -#.field.line
+  -#  .field.actions
+  -#    = button_link_to "Back", edit_system_file_type_path(@system, @file_type), :remote => true
+  -#    -#= button_link_to "Close", "", :remote => true, :class => "jqmClose"
+  -#    = button_link_to "Close", system_file_types_path(@system)#, :remote => true, :class => "jqmClose"
+  -#    -#= link_to "Save and Define Metadata", "#", :remote => true, :class => "blue basic_field", :id => "save_button"

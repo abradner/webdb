@@ -76,6 +76,8 @@ end
 
       get :select_raw_file_type
       put :select_raw_file_type
+
+      get :manage
     end
   end
 

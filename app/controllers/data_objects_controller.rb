@@ -61,9 +61,6 @@ class DataObjectsController < ApplicationController
 
   end
 
-  def manage
-
-  end
 
   private
   def prepare_attributes_for_wizard!
