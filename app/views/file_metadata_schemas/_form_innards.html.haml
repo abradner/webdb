@@ -21,7 +21,7 @@
             = f.check_box :required, :default => false
         .field.line
           .field.actions
-            = f.submit "Add", :class => "blue basic_field", :id => "save_button"
+            = f.submit :class => "blue basic_field", :id => "save_button"
 
     #modal_right_container
       = render :partial => 'shared/right_file_metadata'

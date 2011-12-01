@@ -94,12 +94,18 @@ class Ability
 
 
     # Data Object privileges
+    can_manage_data_object = user.can_manage_data_objects
+    can_read_data_object = user.can_read_data_objects
     can :manage, DataObject, :system_id => system_administrations
     can :create, DataObject, :system_id => system_administrations
-    can :update, DataObject, :system_id => system_administrations
+    can :update, DataObject, :system_id => can_manage_data_object
 
     can :show, DataObject, :system_id => system_memberships
-    can :write, DataObject, :system_id => system_administrations
+    can :write, DataObject, :system_id => can_manage_data_object
+
+    can :manage, DataObjectAttribute, :data_object_id => can_manage_data_object
+    can :read, DataObjectAttribute, :data_object_id => can_read_data_object
+
 
     #Data Object Relationship privileges
     #can :manage, DataObjectRelationship, :system_id => system_administrations ##TODO admin security groups (both objects )& administrators

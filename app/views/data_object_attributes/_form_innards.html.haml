@@ -1,31 +1,58 @@
-%h3 Add New Attribute
 = form_for [@system, @data_object, @data_object_attribute], :remote => true do |f|
-  .field.line
-    %label= required_field("Attribute Information:")
-    .lastUnit
-      = f.text_field :name, :class => "small_text basic_field", :placeholder => "Attribute Name (max 45 chars)"
-    .lastUnit
-      = f.text_field :label, :class => "small_text basic_field", :placeholder => "Display Label (max 255 chars)"
-  .field.line
-    %label= required_field("Attribute Parameters")
-    .lastUnit
-      = "Attribute Type: "
-      = f.select :attribute_type, options_for_select(AppConfig.attribute_types.invert)
-    .lastUnit
-      = f.text_field :length, :class => "small_text basic_field", :placeholder => "Length or Decimal Places"
-  .field.line
-    %label= required_field("Attribute Options:")
-    .lastUnit
-      = f.label :editable, "Editable?"
-      = f.check_box :editable, :default => true
-    .lastUnit
-      = f.label :is_id, "Is an ID?"
-      = f.check_box :is_id, :default => false
-    .lastUnit
-      = f.label :required, "Required?"
-      = f.check_box :required, :default => false
+
+  #form_innards
+    #modal_left_container
+      %h3{:style => "margin:0 12px 10px 0"} Properties
+      #ft_details_container{:style => ["margin:0px 12px 0px 0px"]}
+        .field.line
+          %label= required_field("Display Label:")
+          .lastUnit
+            = f.text_field :label, :class => "small_text basic_field", :placeholder => "Max 255 chars, what you see"
+        .field.line
+          %label= required_field("Internal Name:")
+          .lastUnit
+            = f.text_field :name, :class => "small_text basic_field", :placeholder => "Max 45 chars, used for data export only."
+        .field.line
+          %label= required_field("Attribute Type")
+          .lastUnit
+            = f.select :attribute_type, options_for_select(AppConfig.attribute_types.invert)
+        .field.line
+          .lastUnit
+            = f.text_field :length, :class => "small_text basic_field", :placeholder => "Length or Decimal Places"
+        .field.line
+          %label= required_field("Attribute Options:")
+          .lastUnit
+            = f.label :editable, "Editable?"
+            = f.check_box :editable
+          .lastUnit
+            = f.label :is_id, "Is an ID?"
+            = f.check_box :is_id
+          .lastUnit
+            = f.label :required, "Required?"
+            = f.check_box :required
+          .lastUnit
+            = f.label :visible, "Visible?"
+            = f.check_box :visible
+        .field.line
+          .field.actions
+            = button_link_to "Clear", system_data_object_data_object_attributes_path(@system, @data_object), :remote => true, :class => "delete"
+            = f.submit :class => "blue basic_field", :id => "save_button"
+
+    #modal_right_container
+      = render :partial => 'right_attribute_list'
+
   .field.line
     .field.actions
-      #cancel_attribute_button.button
-        %span Cancel
-      = f.submit "Save Attribute", :class => "blue basic_field"
+      -#= button_link_to "Back", edit_system_file_type_path(@system, @file_type), :remote => true, :class => "back_button"
+      -#= button_link_to "Close", "", :remote => true, :class => "jqmClose"
+      = button_link_to "Close and reload Data Object", system_data_object_path(@system, @data_object)#, :remote => true, :class => "jqmClose"
+      -#= link_to "Save and Define Metadata", "#", :remote => true, :class => "blue basic_field", :id => "save_button"
+
+
+
+  -#
+  -#.field.line
+  -#  .field.actions
+  -#    #cancel_attribute_button.button
+  -#      %span Cancel
+  -#    = f.submit "Save Attribute", :class => "blue basic_field", :id => "add_button"

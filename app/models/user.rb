@@ -182,6 +182,21 @@ class User < ActiveRecord::Base
     self.role.name.eql?("manager")
   end
 
+  #Permissions Methods
+
+  def can_read_data_objects
+    can_access_data_objects(system_memberships.collect(&:id))
+  end
+
+  def can_manage_data_objects
+    can_access_data_objects(system_administrations.collect(&:id))
+  end
+
+  def can_access_data_objects(systems)
+    DataObject.any_in(:system_id => systems).only(:_id).collect(&:_id)
+  end
+
+
   private
 
   def initialize_status

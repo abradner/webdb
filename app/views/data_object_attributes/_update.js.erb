@@ -1,11 +1,11 @@
+$('.basic_field').removeAttr('disabled');
 <%= render :partial => "shared/process_modal_errors", :locals => {:obj => @data_object_attribute} if @errors %>
-$('#attribute_display_container').html('<%= escape_javascript(render :partial => 'data_object_attributes/attribute_display' ) %>');
+$('#modal_content_container').html('<%= escape_javascript(render :partial => 'form_innards') %>' );
 <% unless @errors %>
-    $("#add_attribute_button").slideToggle();
-    $("#bottom_actions_container").slideToggle();
-    $("#new_attribute_container").slideToggle();
+//    $("#add_attribute_button").slideToggle();
+//    $("#bottom_actions_container").slideToggle();
+//    $("#new_attribute_container").slideToggle();
     $("#form_errors_container").slideUp();
-    $('.basic_field').removeAttr('disabled');
 
     //#TODO Make this into a function that can be called rather than sending the whole js back
     $('.draggable').draggable({

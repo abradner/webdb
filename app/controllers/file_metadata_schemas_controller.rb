@@ -21,7 +21,7 @@ class FileMetadataSchemasController < AjaxGenericController
   def update
     @errors = true unless @file_type.file_metadata_schemas.create(params[:file_metadata_schema])
     @errors = true unless @file_type.file_metadata_schemas.find(params[:id]).destroy
-    @file_metadata_schema = FileMetadataSchema.new
+    @file_metadata_schema = FileMetadataSchema.new #TODO do we need unless @errors?
 
   end
 

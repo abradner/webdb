@@ -1,0 +1,26 @@
+%h3 Configured Attributes
+%p.light Click to edit, drag to sort
+%p.bold Automatic Attributes
+%p
+  %ul
+    %li.icon_field.field_static Generated Unique ID
+%p.bold Custom Attributes
+- if @data_object_attributes.blank?
+  None defined.
+- else
+  - @data_object_attributes.sort_by(&:sort_order).each do |attr|
+    -extra_class = ""
+    - extra_class = "selected_element" if @data_object_attribute.present? && attr.eql?(@data_object_attribute)
+    %p.truncate{:id => attr.id}
+      =link_to attr.label, edit_system_data_object_data_object_attribute_path(@system, @data_object, attr), :remote => true, :class => [field_css_class(attr.attribute_type), extra_class]
+      = "*" if attr.required
+  %p.light.right * Required Fields
+
+-#:javascript
+-#  jQuery(function() {
+-#    $("a.icon_field").click(function(){
+-#      $(this).animate({  "left": "50", "opacity": 1 }, 500 );
+-#      });
+-#  });
+-#
+
