@@ -24,8 +24,8 @@
         %p Files: #{s.files}
         %p Users: #{s.memberships.count}
       %td
-        = button_link_to "View", s, :remote => true
-        = button_link_to "Edit", edit_management_system_path(s), :remote => true, :class => 'edit'
+        = button_link_to "View", s
+        = button_link_to "Edit", edit_management_system_path(s), :class => 'edit'#, :remote => true
         = button_link_to "Deactivate", deactivate_management_system_path(s),
                             :confirm =>"This will deactivate the system. It will still be accessible, however it will be read only.",
                             :id => 'deactivate_system_link', :class => 'red delete'
