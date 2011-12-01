@@ -38,17 +38,6 @@
       %p Authors
       %p.light (blah)
 
-  .lastUnit.block_right_col
-    .left.line
-      %h3 System Information:
-    .information
-      %span.bold Summary:
-      %p=@data_object.short_description
-    - if @data_object.description.present?
-      .information
-        %span.bold Full Description:
-        %p=@data_object.description
-
 -#TODO Move this
 - cols = Array.new
 - @data_object.data_object_attributes.each do |attr|
@@ -66,7 +55,7 @@
           %h3 Empty
           %p.bold Data Object Attributes need to be configured
         - else
-          - @data_object.data_object_attributes.visible.each do |attr|
+          - @data_object.data_object_attributes.visible_fields.each do |attr|
             -#%td{:align => "center", :width => "#{100 / @data_object.attributes.count}%", "data-id" => n }
             %th
               %h3= attr.name

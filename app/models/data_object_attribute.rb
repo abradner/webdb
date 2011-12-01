@@ -21,7 +21,7 @@ class DataObjectAttribute
   validates_length_of :name, :maximum => 45
   validates_length_of :label, :maximum => 255
 
-  #scope :visible, where(true) #TODO build visible field
+  scope :visible_fields, where(:visible.eql? true) #TODO build visible field
 
 end
 
