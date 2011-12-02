@@ -29,6 +29,7 @@ class ImportMappingsController < AjaxDataObjectController
   end
 
   def update
+
     @errors = true unless @import_mapping.update_attributes(params[:import_mapping])
     @import_mapping = ImportMapping.new unless @errors
 
@@ -40,27 +41,34 @@ class ImportMappingsController < AjaxDataObjectController
     #@raw_files = @import_mapping.file_type.raw_files
     @raw_files = ImportMapping::RAW_FILES
     @data_object_attributes = @data_object.data_object_attributes
+
+    @assigned_attrs = {}
     @unassigned_attrs = @data_object_attributes
     @id_attrs = @data_object.data_object_attributes.where(:is_id => true)
     @non_id_attrs = @data_object_attributes - @id_attrs
-    
+
     # if previewing
     if params[:import_mapping]
       params[:includes_header].eql?("1") ? @includes_header = true : @includes_header = false
       @raw_file = params[:import_mapping][:raw_file]
       @delimiter = params[:import_mapping][:delimiter]
 
-    # returning to a predefined import mapping
+      # returning to a predefined import mapping
     elsif @import_mapping.raw_file.present? and params[:import_mapping].blank?
 
       @includes_header = @import_mapping.includes_header
       @raw_file = @import_mapping.raw_file
       @delimiter = @import_mapping.delimiter
-      @mappings = @import_mapping.mappings
-      assigned_ids = @mappings.values.map(&:to_i) if @mappings.present?
+      mappings = @import_mapping.mappings.invert
+      assigned_ids = mappings.keys if mappings.present?
       assigned_ids ||= []
-      @assigned_attrs = @data_object_attributes.where(:id => assigned_ids)
-      @unassigned_attrs = @data_object_attributes - @assigned_attrs
+      values = @data_object_attributes.any_in(:_id => assigned_ids)
+
+      values.each do |value|
+        @assigned_attrs[mappings["#{value.id}"]] = value
+      end
+      
+      @unassigned_attrs = @data_object_attributes - values
 
     end
 
@@ -70,9 +78,19 @@ class ImportMappingsController < AjaxDataObjectController
       # read first 10 lines
       @includes_header ? limit = 11 : limit = 10
       index = 0
+
+      case @delimiter
+        when "\\t"
+          converted_delimiter = "\t"
+        when "\\s"
+          converted_delimiter = "\s"
+        else
+          converted_delimiter = @delimiter
+      end
+
       #raw_file = @import_mapping.file_type.raw_files.find(@raw_file)
       file_name = "vendor/sample_data/#{@raw_file}.csv"
-      FasterCSV.foreach(file_name, {:col_sep => @delimiter, :headers => @includes_header, :return_headers => true}) do |csv|
+      FasterCSV.foreach(file_name, {:col_sep => converted_delimiter, :headers => @includes_header, :return_headers => true}) do |csv|
 
         if index > limit
           break
@@ -82,6 +100,18 @@ class ImportMappingsController < AjaxDataObjectController
         if @includes_header
           if csv.header_row?
             @csv[:header] = csv.fields
+
+            if params[:import_mapping]
+
+              @data_object_attributes.each do |doa|
+                if csv.fields.include?(doa.name)
+                  @assigned_attrs["column_#{csv.fields.index(doa.name)}"] = doa
+                end
+              end
+              @unassigned_attrs = @data_object_attributes - @assigned_attrs.values
+
+            end
+
           else
             @csv[:data] << csv.fields
           end
@@ -93,6 +123,7 @@ class ImportMappingsController < AjaxDataObjectController
           @csv[:data] << csv
 
         end
+
 
         index += 1
 

@@ -34,7 +34,7 @@
 
     %label Please drag the attributes below and place them under the appropriate headers
     - @unassigned_attrs.each do |attr|
-      %p.attribute_label.draggable{"data_id" => attr.id, :class => ["icon_field", field_css_class(attr.attribute_type)] } #{attr.name}
+      %p.draggable{"data_id" => attr.id, :class => ["icon_field", field_css_class(attr.attribute_type)] } #{attr.label}
 - else
   .field.line
     %label
@@ -42,40 +42,52 @@
 
   .lastUnit
 
-= form_for [@system, @data_object, @import_mapping], :remote => true, :html => {:id => "mapping_form"} do |f|
-  = f.hidden_field(:includes_header, :value => @includes_header) if @includes_header.present?
-  = f.hidden_field(:delimiter, :value => @delimiter) if @delimiter.present?
-  = f.hidden_field(:raw_file, :value => @raw_file) if @raw_file.present?
-  #hidden_values
-    = f.hidden_field(:mappings, :value => []) if params[:import_mapping].present?
-  .field.line
-    %label The following fields will identify the record
-    .line
-      - @id_attrs.each do |attr|
-        = hidden_field_tag "import_mapping[unique_fields][]", attr.id
-        = attr.name
-  .field.line
-    %label Choose additional fields to validate uniqueness on (ctrl + click to select multiple fields)
-    .line
-      = f.collection_select(:unique_fields, @non_id_attrs, :id, :name, {}, {:multiple => true})
-
-  .field.line
-    %label Choose what to do should there be a conflict of values
-    .line
-      = f.select(:conflict_action, options_for_select(ImportMapping::ACTIONS))
-
-  #bottom_actions_container
+- if @raw_file
+  = form_for [@system, @data_object, @import_mapping], :remote => true, :html => {:id => "mapping_form"} do |f|
+    = f.hidden_field(:includes_header, :value => @includes_header) if @includes_header.present?
+    = f.hidden_field(:delimiter, :value => @delimiter) if @delimiter.present?
+    = f.hidden_field(:raw_file, :value => @raw_file) if @raw_file.present?
+    #hidden_values
+      = f.hidden_field(:mappings, :value => []) if params[:import_mapping].present?
     .field.line
-      .field.actions
-        = button_link_to "Back", system_data_object_import_mappings_path(@system, @data_object), :remote => true
-        = f.submit "Save Mappings" if @raw_file
+      %label The following fields will identify the record and must be mapped
+      .line#required_attrs
+        - @id_attrs.each do |attr|
+          = hidden_field_tag "import_mapping[unique_fields][]", attr.id
+          %p #{attr.name}
+    .field.line
+      %label Choose additional fields to validate uniqueness on (ctrl + click to select multiple fields)
+      .line
+        = f.collection_select(:unique_fields, @non_id_attrs, :id, :name, {}, {:multiple => true})
+
+    .field.line
+      %label Choose what to do should there be a conflict of values
+      .line
+        = f.select(:conflict_action, options_for_select(ImportMapping::ACTIONS))
+
+    #bottom_actions_container
+      .field.line
+        .field.actions
+          = button_link_to "Back", system_data_object_import_mappings_path(@system, @data_object), :remote => true
+          = f.submit "Save Mappings"
+- else
+  #bottom_actions_container
+  .field.line
+    .field.actions
+      = button_link_to "Back", system_data_object_import_mappings_path(@system, @data_object), :remote => true
+
 
 :javascript
   jQuery(function() {
 
+    $(document).ready(function(){
+      updateHiddenValues();
+    });
+
     function updateHiddenValues(){
       $('#hidden_values').empty();
       $('.draggable', '#file_preview').each(function(index) {
+        //
         if ($(this).css('display') != "none"){
 
           $('<input>').attr({

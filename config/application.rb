@@ -19,6 +19,7 @@ module Webdb
       g.view_specs false
       g.routing_specs false
       g.request_specs false
+      g.orm :active_record
     end
 
     # Settings in config/environments/* take precedence over those specified here.

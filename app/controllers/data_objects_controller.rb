@@ -5,19 +5,32 @@ class DataObjectsController < ApplicationController
   before_filter :systems_and_memberships, :only => [:index, :show]
 
   load_and_authorize_resource :system
-  load_and_authorize_resource :data_object
+  load_and_authorize_resource :data_object, :except => [:new, :create]
 
-  def index; end
-  def show; end
-  def new; end
-  def edit; end
-  def configure; end
+  def index;
+  end
+
+  def show;
+  end
+
+  def new
+    @data_object = DataObject.new(:system => @system)
+    authorize! :new, @data_object
+  end
+
+  def edit;
+  end
+
+  def configure;
+  end
 
   def edit_file_types_old
     @unselected_file_types = @system.file_types - @data_object.file_types
   end
 
   def create
+    @data_object = DataObject.new(params[:data_object].merge({:system => @system}))
+    authorize! :new, @data_object
     @data_object.system = @system
     @errors = true unless @data_object.save
     prepare_attributes_for_wizard! unless @errors
@@ -50,7 +63,8 @@ class DataObjectsController < ApplicationController
   def import_selected
     @import_mapping = ImportMapping.find(params[:import_mapping])
     @raw_file = RawFile.find(params[:raw_file])
-    @data_object.import(@import_mapping, @raw_file)
+    import_job = ImportJob.create(:system => @system, :data_object => @data_object, :import_mapping => @import_mapping, :raw_file => @raw_file)
+    import_job.import
   end
 
 

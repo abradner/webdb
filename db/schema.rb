@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111130050536) do
+ActiveRecord::Schema.define(:version => 20111130062238) do
 
   create_table "colour_schemes", :force => true do |t|
     t.string   "name"
@@ -91,6 +91,16 @@ ActiveRecord::Schema.define(:version => 20111130050536) do
     t.string   "name"
     t.integer  "storage_location_id"
     t.integer  "system_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "import_jobs", :force => true do |t|
+    t.integer  "import_mapping_id"
+    t.integer  "data_object_id"
+    t.integer  "raw_file_id"
+    t.integer  "created_by_user"
+    t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
