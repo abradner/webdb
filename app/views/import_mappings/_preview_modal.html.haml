@@ -6,7 +6,7 @@
       = form_for @import_mapping, :url => preview_system_data_object_import_mapping_path(@system, @data_object, @import_mapping),:method => :post, :remote => true do |f|
         %div
           = f.label(:raw_file, "File To Preview")
-          -#= select_tag(:raw_file_id, @raw_files.collect{ |rf | [ rf.stored_file_identifier, rf.id]})
+          -#TODO= select_tag(:raw_file_id, @raw_files.collect{ |rf | [ rf.stored_file_identifier, rf.id]})
           = f.select(:raw_file, options_for_select(@raw_files, @raw_file))
         %div
           = f.label :delimiter, "Delimiter"
@@ -47,7 +47,10 @@
     = f.hidden_field(:includes_header, :value => @includes_header) if @includes_header.present?
     = f.hidden_field(:delimiter, :value => @delimiter) if @delimiter.present?
     = f.hidden_field(:raw_file, :value => @raw_file) if @raw_file.present?
+    = f.hidden_field(:num_of_columns, :value => @num_of_columns) if @num_of_columns.present?
+
     #hidden_values
+      -# gets updated by javascript during auto mapping of fields
       = f.hidden_field(:mappings, :value => []) if params[:import_mapping].present?
     .field.line
       %label The following fields will identify the record and must be mapped

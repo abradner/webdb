@@ -29,6 +29,6 @@ class DataObjectAttribute
   validates_uniqueness_of :sort_order, :scope => :data_object_id, :message => "Conflicting Sort Order. This shouldn't happen, raise a support ticket"
 
   scope :visible_fields, where(:visible.eql? true) #TODO build visible field
-
+  scope :required, where(:required => true)
 end
 

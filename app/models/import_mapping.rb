@@ -2,10 +2,10 @@ class ImportMapping
   include Mongoid::Document
   include Tenacity
   belongs_to :file_type
-  #belongs_to :raw_file
+  #TODO belongs_to :raw_file
   belongs_to :data_object
 
-  before_update :check_ids_mapped
+  validate :all_unique_fields_mapped
 
 
   DELIMITERS = [["Comma", ","], ["Colon", ":"], ["Pipe", "|"], ["Semicolon", ";"], ["Space", "\\s"], ["Tab", "\\t"]]
@@ -21,9 +21,10 @@ class ImportMapping
   field :name, :type => String
   field :includes_header, :type => Boolean, :default => false
   field :delimiter, :type => String
-  field :raw_file, :type => String # to be replaced
+  field :raw_file, :type => String # TODO to be replaced
   field :unique_fields, :type => Array
   field :conflict_action, :type => String
+  field :num_of_columns, :type => Integer
 
   validates_uniqueness_of :name, :case_sensitive => false, :scope => [:data_object_id, :file_type_id], :message => "has been taken in this data object"
   validates_presence_of :data_object_id, :file_type_id, :name
@@ -33,15 +34,14 @@ class ImportMapping
     "#{self.name} (#{self.file_type.name})"
   end
 
-  def check_ids_mapped
-    id_attrs = self.data_object.data_object_attributes.where(:is_id => true).collect(&:id)
-    mapped_attrs = self.mappings.values
-    puts mapped_attrs
-    puts mapped_attrs.class
-    puts id_attrs
-    puts id_attrs.class
-    unless id_attrs & mapped_attrs == id_attrs
-      self.errors.add(:base, "All ID attributes must be mapped.")
+  def all_unique_fields_mapped
+    if self.mappings.present?
+      mapped_attrs = self.mappings.values
+      mapped_unique_attrs = unique_fields & mapped_attrs
+      unless mapped_unique_attrs == unique_fields
+        self.errors.add(:base, "All ID and additional unique attributes must be mapped.")
+      end
+
     end
   end
 

@@ -16,6 +16,7 @@ class RawFile
 
   field :historic_versions, :type => Array
   field :version_counter, :type => Integer
+  field :imported, :type => Boolean
 
 
   private

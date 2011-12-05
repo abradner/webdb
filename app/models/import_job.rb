@@ -1,14 +1,26 @@
 class ImportJob
   include Mongoid::Document
-  belongs_to :system
+  include Tenacity
   belongs_to :data_object
   belongs_to :import_mapping
-  belongs_to :raw_file
-  belongs_to :created_by_user, :class_name => 'User'
+  #TODO belongs_to :raw_file
+  t_belongs_to :user
+
+  field :raw_file, :type => String
+  field :valid, :type => Boolean
 
   def import
 
-    import_mapping.mappings
+
+
+  end
+
+  handle_asynchronously :import
+
+  def validate_file
+    notify_user_of_import_validation_started(self)
+    @mappings = import_mapping.mappings
+    results = []
 
 
     case import_mapping.delimiter
@@ -20,31 +32,25 @@ class ImportJob
         converted_delimiter = import_mapping.delimiter
     end
 
+    
+
     FasterCSV.foreach(file_name, {:col_sep => converted_delimiter, :headers => import_mapping.includes_header, :return_headers => false}) do |csv|
 
-      # FasterCSV returns arrays if headers => false, and FasterCSV:Rows if true
-      if @includes_header
-        if csv.header_row?
-          @csv[:header] = csv.fields
-        else
-          @csv[:data] << csv.fields
-        end
-      else
-
-        if index == 0
-          @csv[:header] = (1..csv.size).to_a
-        end
-        @csv[:data] << csv
-
+      #if the number of fields is not the same as recorded during import mapping definition, file is invalid
+      if csv.fields.count != import_mapping.num_of_columns
+        results << "The file is invalid for importing as it does not have #{import_mapping.num_of_columns} columns."
+        break
       end
 
-      index += 1
+      
+      
 
     end
+    
+    notify_user_of_import_validation_ended(self, results)
 
   end
 
-  handle_asynchronously :import
-
+  handle_asynchronously :validate_file
 
 end

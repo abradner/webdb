@@ -31,14 +31,14 @@ class ImportMappingsController < AjaxDataObjectController
   def update
 
     @errors = true unless @import_mapping.update_attributes(params[:import_mapping])
+    flash.now[:notice] = "Import mapping updated successfully." unless @errors
     @import_mapping = ImportMapping.new unless @errors
-
     @import_mappings = @data_object.import_mappings
     @file_types = @system.file_types
   end
 
   def preview
-    #@raw_files = @import_mapping.file_type.raw_files
+    #TODO @raw_files = @import_mapping.file_type.raw_files
     @raw_files = ImportMapping::RAW_FILES
     @data_object_attributes = @data_object.data_object_attributes
 
@@ -88,7 +88,7 @@ class ImportMappingsController < AjaxDataObjectController
           converted_delimiter = @delimiter
       end
 
-      #raw_file = @import_mapping.file_type.raw_files.find(@raw_file)
+      #TODO raw_file = @import_mapping.file_type.raw_files.find(@raw_file)
       file_name = "vendor/sample_data/#{@raw_file}.csv"
       FasterCSV.foreach(file_name, {:col_sep => converted_delimiter, :headers => @includes_header, :return_headers => true}) do |csv|
 
@@ -96,10 +96,12 @@ class ImportMappingsController < AjaxDataObjectController
           break
         end
 
+
         # FasterCSV returns arrays if headers => false, and FasterCSV:Rows if true
         if @includes_header
           if csv.header_row?
             @csv[:header] = csv.fields
+            @num_of_columns = csv.fields.count
 
             if params[:import_mapping]
 
@@ -119,6 +121,8 @@ class ImportMappingsController < AjaxDataObjectController
 
           if index == 0
             @csv[:header] = (1..csv.size).to_a
+            @num_of_columns = csv.fields.count
+
           end
           @csv[:data] << csv
 

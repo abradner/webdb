@@ -5,11 +5,19 @@
     %div
       = label_tag("raw_file", "Select a file to import")
       = select_tag("raw_file", options_for_select(@raw_files))
-      -#= select_tag("raw_files", options_from_collection_for_select(@raw_files, :id, :stored_file_identifier))
+      -#= TODO select_tag("raw_files", options_from_collection_for_select(@raw_files, :id, :stored_file_identifier))
     %div
       = hidden_field_tag("import_mapping", @import_mapping.id)
-    .field.line
+    .field
+    .line
+      Please note:
+    .line
+      The file will undergo validations first before you are allowed to import the data.
+    .line
+      The duration will depend on the amount of data you are importing.
+    .line
+      You will also receive an email when you can progress further with the import.
     #bottom_actions_container
       .field.line
         .field.actions
-          = f.submit "Import Raw File"
+          = f.submit "Create Import Job"

@@ -62,9 +62,12 @@ class DataObjectsController < ApplicationController
   # does the actual import
   def import_selected
     @import_mapping = ImportMapping.find(params[:import_mapping])
-    @raw_file = RawFile.find(params[:raw_file])
-    import_job = ImportJob.create(:system => @system, :data_object => @data_object, :import_mapping => @import_mapping, :raw_file => @raw_file)
-    import_job.import
+    #TODO @raw_file = RawFile.find(params[:raw_file])
+    @raw_file = params[:raw_file]
+    import_job = ImportJob.create(:created_by_user => current_user,:data_object => @data_object, :import_mapping => @import_mapping, :raw_file => @raw_file)
+    import_job.validate_file
+    flash[:notice] = "The import job was created successfully and is undergoing validations."
+    @redirect_path = system_data_object_url(@system, @data_object)
   end
 
 
