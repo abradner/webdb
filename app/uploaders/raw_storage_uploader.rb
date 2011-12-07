@@ -11,7 +11,7 @@ class RawStorageUploader < CarrierWave::Uploader::Base
   end
 
   def set_store_dir(path = nil)
-    Rails.logger.debug "WARNING: no store_dir set for upload!" if path.blank? && Rails.env.production?
+    Rails.logger.debug "WARNING: no store_dir set for upload!" if path.blank?
     @store_dir = path || "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
@@ -22,6 +22,16 @@ class RawStorageUploader < CarrierWave::Uploader::Base
   def get_storage
     storage
   end
+
+  def set_extension_white_list(extensions)
+     @extensions = extensions
+  end
+
+  def extension_white_list
+      #Is freaking stupid and is called too early to use model relationships. Using validations instead
+      @extensions
+  end
+
 end
 
   #storage :hybrid
@@ -68,9 +78,6 @@ end
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
-  # def extension_white_list
-  #   %w(jpg jpeg gif png)
-  # end
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.

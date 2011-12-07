@@ -14,8 +14,7 @@
     .field.line
       = f.label :storage_type, required_field('Storage Type:')
       .lastUnit
-        = f.hidden_field :storage_type, :value => "fs"
-        %p This is locked to 'fs' in this prototype.
+        = f.select :storage_type, options_for_select(AppConfig.file_locations)
     .field.line
       = f.label :location, required_field('Location:')
       .lastUnit

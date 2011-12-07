@@ -1,25 +1,19 @@
-#class FileType < ActiveRecord::Base #TODO convert to mongo
 class FileType
   include Mongoid::Document
   include Mongoid::Timestamps
   include Tenacity
-  #belongs_to :system
-  #belongs_to :storage_location
-  #t_has_many :import_mappings
-  #t_has_many :raw_files
 
   field :name, :type => String
   field :content, :type => String
-  field :extensions, :type => String #change to array
+  field :extensions, :type => Array #TODO change to array
   field :versioning, :type => Boolean
 
   t_belongs_to :system
-  t_belongs_to :storage_location
+  belongs_to :storage_location
   has_many :import_mappings
   has_many :raw_files
   embeds_many :file_metadata_schemas
 
-  #Metadata Schema
 
   #TODO security
 
@@ -27,6 +21,18 @@ class FileType
 
   before_save :clean_up_versioning
 
+  def extension_list
+    extensions.blank? ? "" : extensions.join(",")
+  end
+
+  def self.parse_extension_list(str)
+    list = str.split(",")
+    list.each do |ext|
+      ext.slice!(0) if ext.start_with?(".")
+    end
+    list.compact!
+    list
+  end
 
   def use_grid?
     storage_location.storage_type.eql? AppConfig.file_locations.database
@@ -39,9 +45,9 @@ class FileType
   def storage_path
     #TODO does not check that everything is well formed. This is a big issue!
     if storage_location.storage_type.eql? AppConfig.file_locations.filesystem
-      File.join(AppConfig.raw_storage_root_path, storage_location.location, system.id, id)
+      File.join(AppConfig.raw_storage_root_path, storage_location.location, "system_" << system.id.to_s, "file_type_" << id.to_s)
     else
-      File.join(storage_location.location, system.id, id)
+      File.join(storage_location.location, "system_" << system.id.to_s, "file_type_" << id.to_s)
     end
   end
 

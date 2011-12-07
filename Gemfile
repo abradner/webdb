@@ -81,7 +81,7 @@ gem 'system_timer'
 #gem 'nested_form'
 #gem 'rails3-jquery-autocomplete'
 
-gem 'tenacity' # associations between different ORMs
+gem 'tenacity', :git => 'https://github.com/jwood/tenacity.git'# associations between different ORMs
 
 #Use git until rails 3.1 stuff is pulled into ryanb's gem
 gem 'nested_form', :git => 'https://github.com/jweslley/nested_form.git'
@@ -92,6 +92,7 @@ gem 'carrierwave' # file upload
 gem 'carrierwave-mongoid', :require => "carrierwave/mongoid"
 gem 'remotipart' #ajax upload
 gem 'mini_magick' # Image processing
+gem 'rack-gridfs'
 
 
 gem 'settingslogic' #Global constant management

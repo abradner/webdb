@@ -7,9 +7,18 @@ class RawFilesController < AjaxGenericController
     @raw_file = RawFile.new(:file_type_id => @file_type.id)
   end
 
+  def show
+    if @raw_file.raw_file.present?
+      send_file @raw_file.raw_file.path, :filename => @experiment.document.original_filename
+    else
+      redirect_to project_experiment_path(@experiment.project, @experiment), :alert => "The experiment #{@experiment.name} has no supplementary document."
+    end
+
+  end
   def create
     @raw_file = RawFile.new(params[:raw_file])
     @raw_file.user = current_user
+    @raw_file.file_type = @file_type
     #@raw_file.file_type = @file_type
 
 

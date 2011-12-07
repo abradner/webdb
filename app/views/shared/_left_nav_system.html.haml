@@ -32,7 +32,7 @@
                       %ul#system_file.expandable.collapsible.truncate
                       - ft.raw_files.each do |file|
                         %li#system_file.closed
-                          = link_to file.name, "#", :class => "file"
+                          = link_to file[:name], "#", :class => "file"
                 - if @system.file_types.blank?
                   No file types configured
       .dragger_container

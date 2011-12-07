@@ -27,7 +27,7 @@ class Management::SystemsController < ApplicationController
 
   def update
     sanitise_params_for_mgmt_system!
-
+    Rails.logger.debug "=======DEBUG: UPDATING SYSTEM=======\n"
     if @system.update_attributes(params[:system])
       redirect_to system_path(@system), :notice => "The System was successfully updated."
     else

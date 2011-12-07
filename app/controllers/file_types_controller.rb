@@ -20,6 +20,7 @@ class FileTypesController < AjaxGenericController
 
   def create
     @file_type = FileType.new(params[:file_type])
+    @file_type.extensions = FileType.parse_extension_list(params[:extension_list])
     @file_type.system = @system
     authorize! :manage, @file_type
     prepare_next_step(@file_type.save)
@@ -27,6 +28,7 @@ class FileTypesController < AjaxGenericController
 
 
   def update
+    params[:file_type][:extensions] = FileType.parse_extension_list(params[:extension_list])
     prepare_next_step(@file_type.update_attributes(params[:file_type]))
   end
 

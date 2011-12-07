@@ -33,7 +33,7 @@
     .left.line
       %h3 System Information:
     .information
-      %span.bold System Description:``
+      %span.bold System Description:
       %p=@system.description
 
   .system_right_col
@@ -69,7 +69,9 @@
       - unless @system.file_types.present?
         No File Types configured.
       - @system.file_types.sort_by(&:storage_location).each do |ft|
-        %p.bold [#{ft.storage_location.name}]::#{ft.name}
+        %p.bold #{ft.name}
         %p.light #{ft.raw_files.count} files, XXX MB
+        - ft.raw_files.each do |file|
+          = file.name
         %p &nbsp;
 

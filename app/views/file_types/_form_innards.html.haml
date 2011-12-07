@@ -17,15 +17,15 @@
           .lastUnit
             = f.select :storage_location_id, options_from_collection_for_select(@storage_locations, :id, :name) #TODO default
         .field.line
-          = f.label :extensions, 'Valid Extensions'
+          = label_tag 'extension_list', 'Valid Extensions'
           .lastUnit
-            = f.text_field :extensions, :class => "text narrow basic_field", :placeholder => "Comma separated list of valid file extensions, eg: csv,txt,out"
+            = text_field_tag 'extension_list', @file_type.extension_list, :class => "text narrow basic_field", :placeholder => "Comma separated list of valid file extensions, eg: csv,txt,out"
         .field.line
           = f.label :versioning, 'Maintain version history?'
           .lastUnit
             = f.check_box :versioning
         .field.line
-          = f.label :extensions, 'Define Metadata Schema?'
+          = label_tag 'metadata' 'Define Metadata Schema?'
           #metadata_checkbox_container.lastUnit
             = check_box_tag 'metadata', 1, true, :id => 'metadata_checkbox'
     #modal_right_container

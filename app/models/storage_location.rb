@@ -1,7 +1,13 @@
-class StorageLocation < ActiveRecord::Base
+class StorageLocation
+  include Mongoid::Document
+  include Mongoid::Timestamps
   include Tenacity
-  belongs_to :system
-  t_has_many :file_types, :dependent => :destroy
+  t_belongs_to :system
+  has_many :file_types, :dependent => :destroy
+
+  field :name, :type => String
+  field :storage_type, :type => String
+  field :location, :type => String
 
   validates :name, :presence => true
   validates :system_id, :presence => true

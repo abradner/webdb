@@ -1,18 +1,11 @@
 class System < ActiveRecord::Base
   include Tenacity
-#  has_many :storage_types
   belongs_to :colour_scheme
   t_has_many :data_objects, :dependent => :destroy
   has_many :security_groups, :dependent => :destroy
-  has_many :storage_locations, :dependent => :destroy
-  t_has_many :file_types #dependent=>destroyed on removal of storage_location
+  t_has_many :storage_locations, :dependent => :destroy
+  t_has_many :file_types
 
-  #has_many :file_containers, :class_name => "SystemFile"
-
-#  t_has_many :raw_storage_containers, :dependent => :destroy
-
-  #See comment in User model on has_many :systems
-  #belongs_to :user
 
   has_many :memberships, :class_name => "SystemMember"
   has_many :collaborations, :class_name => "SystemMember", :conditions => {:administrator => false}
@@ -49,6 +42,7 @@ class System < ActiveRecord::Base
 
   before_validation do
     name.strip! if name
+    debugger
   end
 
   def files
