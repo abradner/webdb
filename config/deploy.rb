@@ -9,7 +9,7 @@
 # see Advanced Rails Recipes 52 & 53
 # depends on ruby gem capistrano-ext
 set :scm, "git"
-set :stages, %w(development uat support_development support_uat showcase production)
+set :stages, %w(development uat staging production)
 set :default_stage, 'development'
 
 # set :default_environment, {
@@ -25,12 +25,12 @@ set(:rails_env) { "#{stage}" }
 
 set :application, 'webdb'
 #set :repository, "ssh://roses@agile-svn.ucc.usyd.edu.au/var/git/#{application}.git"
-set :repository, "git://github.com/abradner/webdb.git"
+set :repository, "https://github.com/abradner/webdb.git"
 
 set :user, 'roses'
 set :use_sudo, true
 
-set :http_proxy, "http://www-cache.usyd.edu.au:8080"
+set :http_proxy, "http://web-cache.usyd.edu.au:8080"
 
 # In order for sudo to work, we now need this:
 default_run_options[:pty] = true
@@ -65,61 +65,63 @@ task :development do
 end
 
 task :uat do
-  set :ruby_path, "/opt/ruby-enterprise-1.8.7-2010.02/bin"
+  set :ruby_path, "/opt/ruby-enterprise-1.8.7-2011.03/bin"
   set :rake, "export PATH=#{ruby_path}:$PATH; bundle exec rake"
   set :bundle_cmd, "export PATH=#{ruby_path}:$PATH; export http_proxy=#{http_proxy}; bundle" # Default is "bundle"
-  role :web, "agile-sdlc-uat-06.ucc.usyd.edu.au"
-  role :app, "agile-sdlc-uat-06.ucc.usyd.edu.au"
-  role :db,  "agile-sdlc-uat-06.ucc.usyd.edu.au", :primary => true
+  role :web, "archer-ers-uat-1.ucc.usyd.edu.au"
+  role :app, "archer-ers-uat-1.ucc.usyd.edu.au"
+  role :db,  "archer-ers-uat-1.ucc.usyd.edu.au", :primary => true
   set :stage, :uat
   set :branch, "uat"
   set :bundle_flags, ""
   set :bundle_without, [:test]
 end
 
-task :support_development do 
-  set :ruby_path, "/usr/local/bin"
-  set :rake, "export PATH=#{ruby_path}:$PATH; bundle exec rake"
-  set :bundle_cmd, "export PATH=#{ruby_path}:$PATH; export http_proxy=#{http_proxy}; bundle" # Default is "bundle"
-  set :domain, 'agile-sdlc-dev-06.ucc.usyd.edu.au'
-  role :web, domain
-  role :app, domain
-  role :db, domain, :primary => true
-  set :stage, :support_development
-  set :branch, :bugfix
-  set :deploy_to, "/var/www/apps/#{application}_support"
-  set :bundle_flags, ""
-  set :bundle_without, [:test]
-end
+#task :support_development do
+#  set :ruby_path, "/usr/local/bin"
+#  set :rake, "export PATH=#{ruby_path}:$PATH; bundle exec rake"
+#  set :bundle_cmd, "export PATH=#{ruby_path}:$PATH; export http_proxy=#{http_proxy}; bundle" # Default is "bundle"
+#  set :domain, 'agile-sdlc-dev-06.ucc.usyd.edu.au'
+#  role :web, domain
+#  role :app, domain
+#  role :db, domain, :primary => true
+#  set :stage, :support_development
+#  set :branch, :bugfix
+#  set :deploy_to, "/var/www/apps/#{application}_support"
+#  set :bundle_flags, ""
+#  set :bundle_without, [:test]
+#end
 
-task :support_uat do 
-  set :domain, 'agile-sdlc-uat-06.ucc.usyd.edu.au'
-  role :web, domain
-  role :app, domain
-  role :db, domain, :primary => true
-  set :stage, :support_uat
-  set :branch, :bugfix
-  set :deploy_to, "/var/www/apps/#{application}_support"
-  set :bundle_flags, ""
-  set :bundle_without, [:test]
-end
+#task :support_uat do
+#  set :domain, 'agile-sdlc-uat-06.ucc.usyd.edu.au'
+#  role :web, domain
+#  role :app, domain
+#  role :db, domain, :primary => true
+#  set :stage, :support_uat
+#  set :branch, :bugfix
+#  set :deploy_to, "/var/www/apps/#{application}_support"
+#  set :bundle_flags, ""
+#  set :bundle_without, [:test]
+#end
+#
+#task :showcase do
+#  set :domain, 'agile-uat.ucc.usyd.edu.au'
+#  role :web, domain
+#  role :app, domain
+#  role :db,  domain, :primary => true
+#  set :stage, :showcase
+#  set :branch, :production
+#  set :bundle_flags, ""
+#  set :bundle_without, [:test]
+#end
 
-task :showcase do 
-  set :domain, 'agile-uat.ucc.usyd.edu.au'
-  role :web, domain
-  role :app, domain
-  role :db,  domain, :primary => true
-  set :stage, :showcase
-  set :branch, :production
-  set :bundle_flags, ""
-  set :bundle_without, [:test]
-end
 
+#TODO
 task :production do
   set :ruby_path, "/usr/local/bin"
   set :rake, "export PATH=#{ruby_path}:$PATH; bundle exec rake"
   set :bundle_cmd, "export PATH=#{ruby_path}:$PATH; export http_proxy=#{http_proxy}; bundle" # Default is "bundle"
-  set :domain, 'agile-frb-pro-1.ucc.usyd.edu.au'
+  set :domain, '' #TODO
   role :web, domain
   role :app, domain
   role :db, domain, :primary => true
@@ -152,17 +154,12 @@ namespace :deploy do
     run "cd #{current_release}; RAILS_ENV=#{rails_env} script/delayed_job restart"
   end
   
-  desc "(Test only) Load fixtures into database"
-  task :fixtures do
-    rake = fetch(:rake, 'rake')
-    run "cd #{current_release}; #{rake} RAILS_ENV=staging spec:db:fixtures:load"
-  end
-
  desc "DO NOT RUN in production!!! Populate tables from Database Migrations / Fixtures"
   task :populate do
     rake = fetch(:rake, 'rake')
     run "cd #{current_release}; #{rake} RAILS_ENV=#{stage} db:populate"
   end
+
   desc "DO NOT RUN in production!!! This will delete live data! Run only in test environment."
   task :reset do
     rake = fetch(:rake, 'rake')
@@ -186,13 +183,6 @@ namespace :deploy do
     run "touch /var/www/apps/#{application}/current/tmp/restart.txt"
   end
 
-  desc "start - not used"
-  task :start, :roles => :app do
-  end
-
-  desc "stop - not used"
-  task :stop, :roles => :app do
-  end
 end
 
 desc "Tails the log on the remote server"

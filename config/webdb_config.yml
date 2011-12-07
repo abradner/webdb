@@ -33,7 +33,7 @@ test:
   <<: *defaults
 
 production:
-  raw_storage_root_path: /
+  raw_storage_root_path: /webdb
   <<: *defaults
 
 qa:
