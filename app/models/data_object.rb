@@ -15,6 +15,7 @@ class DataObject
   #has_many :inverse_relatives, :through => :inverse_data_object_relationships, :source => :data_object
 
   has_many :data_object_attributes
+  has_many :data_object_rows
   has_many :import_mappings
 
   field :name,              :type => String

@@ -67,7 +67,7 @@ class ImportMappingsController < AjaxDataObjectController
       values.each do |value|
         @assigned_attrs[mappings["#{value.id}"]] = value
       end
-      
+
       @unassigned_attrs = @data_object_attributes - values
 
     end
@@ -90,47 +90,50 @@ class ImportMappingsController < AjaxDataObjectController
 
       #TODO raw_file = @import_mapping.file_type.raw_files.find(@raw_file)
       file_name = "vendor/sample_data/#{@raw_file}.csv"
-      FasterCSV.foreach(file_name, {:col_sep => converted_delimiter, :headers => @includes_header, :return_headers => true}) do |csv|
+      FasterCSV.open(file_name, "rb", {:col_sep => converted_delimiter, :headers => @includes_header, :return_headers => true}) do |csv|
+        csv.each do |row|
 
-        if index > limit
-          break
-        end
+          # TODO use lineno
+          if index > limit
+            break
+          end
 
 
-        # FasterCSV returns arrays if headers => false, and FasterCSV:Rows if true
-        if @includes_header
-          if csv.header_row?
-            @csv[:header] = csv.fields
-            @num_of_columns = csv.fields.count
+          # FasterCSV returns arrays if headers => false, and FasterCSV:Rows if true
+          if @includes_header
+            if row.header_row?
+              @csv[:header] = row.fields
+              @num_of_columns = row.fields.count
 
-            if params[:import_mapping]
+              if params[:import_mapping]
 
-              @data_object_attributes.each do |doa|
-                if csv.fields.include?(doa.name)
-                  @assigned_attrs["column_#{csv.fields.index(doa.name)}"] = doa
+                @data_object_attributes.each do |doa|
+                  if row.fields.include?(doa.name)
+                    @assigned_attrs["column_#{row.fields.index(doa.name)}"] = doa
+                  end
                 end
+                @unassigned_attrs = @data_object_attributes - @assigned_attrs.values
+
               end
-              @unassigned_attrs = @data_object_attributes - @assigned_attrs.values
+
+            else
+              @csv[:data] << row.fields
+            end
+          else
+
+            if index == 0
+              @csv[:header] = (1..row.size).to_a
+              @num_of_columns = row.fields.count
 
             end
-
-          else
-            @csv[:data] << csv.fields
-          end
-        else
-
-          if index == 0
-            @csv[:header] = (1..csv.size).to_a
-            @num_of_columns = csv.fields.count
+            @csv[:data] << row
 
           end
-          @csv[:data] << csv
+
+
+          index += 1
 
         end
-
-
-        index += 1
-
       end
     end
 

@@ -34,7 +34,7 @@
 
     %label Please drag the attributes below and place them under the appropriate headers
     - @unassigned_attrs.each do |attr|
-      %p.draggable{"data_id" => attr.id, :class => ["icon_field", field_css_class(attr.attribute_type)] } #{attr.label}
+      %p.draggable{"data_id" => attr.id, :class => ["icon_field", field_css_class(attr.attribute_type)] } #{attr.label}#{"*" if attr.required?}
 - else
   .field.line
     %label
@@ -48,6 +48,9 @@
     = f.hidden_field(:delimiter, :value => @delimiter) if @delimiter.present?
     = f.hidden_field(:raw_file, :value => @raw_file) if @raw_file.present?
     = f.hidden_field(:num_of_columns, :value => @num_of_columns) if @num_of_columns.present?
+    - if @includes_header.present?
+      - @csv[:header].each do |cell|
+        = hidden_field_tag "import_mapping[header_row][]", cell
 
     #hidden_values
       -# gets updated by javascript during auto mapping of fields
@@ -66,7 +69,7 @@
     .field.line
       %label Choose what to do should there be a conflict of values
       .line
-        = f.select(:conflict_action, options_for_select(ImportMapping::ACTIONS))
+        = f.select(:conflict_action, options_for_select(ImportMapping::ACTIONS, @import_mapping.conflict_action))
 
     #bottom_actions_container
       .field.line

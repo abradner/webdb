@@ -13,7 +13,7 @@
             - if @assigned_attrs.present?
               - attr = @assigned_attrs["column_#{id}"]
               - if attr.present?
-                %p.draggable{"data_id" => attr.id, :class => ["icon_field", field_css_class(attr.attribute_type)] } #{attr.label}
+                %p.draggable{"data_id" => attr.id, :class => ["icon_field", field_css_class(attr.attribute_type)] } #{attr.label}#{"*" if attr.required?}
 
     %tbody
       - @csv[:data].each do |row|
