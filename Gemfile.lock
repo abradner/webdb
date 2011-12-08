@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: https://github.com/jwood/tenacity.git
-  revision: 7399d14d3fd7151e9372fdaad88b19053caa06bd
+  revision: 9240884f652799631b2f6813ecb80d2650c324ce
   specs:
     tenacity (0.5.4)
       activesupport (>= 2.3)
@@ -181,15 +181,13 @@ GEM
       metric_fu (~> 2.1.1)
       rake
     mime-types (1.16)
-    mini_magick (3.3)
-      subexec (~> 0.1.0)
     mongo (1.3.1)
       bson (>= 1.3.1)
     mongoid (2.3.3)
       activemodel (~> 3.1)
       mongo (~> 1.3)
       tzinfo (~> 0.3.22)
-    multi_json (1.0.3)
+    multi_json (1.0.4)
     mysql (2.8.1)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -300,7 +298,6 @@ GEM
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     sqlite3 (1.3.4)
-    subexec (0.1.0)
     syntax (1.0.0)
     system_timer (1.2.4)
     term-ansicolor (1.0.6)
@@ -348,7 +345,6 @@ DEPENDENCIES
   jquery-rails
   launchy
   metrical
-  mini_magick
   mongoid
   mysql
   nested_form!

@@ -1,8 +1,12 @@
 = form_header 'Edit Account Details'
+.contentbox_body
+  = button_link_to "Change Password", users_edit_password_path, :class => 'security'
 = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
   .contentbox_body
+    %p &nbsp;
     = render "shared/error_messages", :target => @user
     = render :partial => 'personal_details', :locals => {:f => f}
+
   .form_actions
     .add_variables
       = f.submit "Update", :class => "blue basic_field"

@@ -42,7 +42,6 @@ class System < ActiveRecord::Base
 
   before_validation do
     name.strip! if name
-    debugger
   end
 
   def files
@@ -53,9 +52,9 @@ class System < ActiveRecord::Base
     count
   end
 
-  def file(object_id)
-
-  end
+  #def file(object_id)
+  #
+  #end
 
  # scope :partial_systems, joins(:users).
 

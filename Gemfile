@@ -91,7 +91,7 @@ gem 'nested_form', :git => 'https://github.com/jweslley/nested_form.git'
 gem 'carrierwave' # file upload
 gem 'carrierwave-mongoid', :require => "carrierwave/mongoid"
 gem 'remotipart' #ajax upload
-gem 'mini_magick' # Image processing
+#gem 'mini_magick' # Image processing
 gem 'rack-gridfs'
 
 
