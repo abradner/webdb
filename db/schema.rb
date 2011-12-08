@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111130062238) do
+ActiveRecord::Schema.define(:version => 20111208015158) do
 
   create_table "colour_schemes", :force => true do |t|
     t.string   "name"
@@ -28,50 +28,6 @@ ActiveRecord::Schema.define(:version => 20111130062238) do
     t.datetime "updated_at"
   end
 
-  create_table "data_object_attributes", :force => true do |t|
-    t.integer  "data_object_id"
-    t.string   "name",           :limit => 45
-    t.string   "label"
-    t.string   "attribute_type", :limit => 45
-    t.integer  "length"
-    t.boolean  "required",                     :default => false
-    t.boolean  "is_id",                        :default => false
-    t.boolean  "editable",                     :default => true
-    t.integer  "column"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "data_object_relationships", :force => true do |t|
-    t.integer  "data_object_id"
-    t.integer  "relative_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "data_object_security_groups", :id => false, :force => true do |t|
-    t.integer  "data_object_id"
-    t.integer  "security_group_id"
-    t.boolean  "read"
-    t.boolean  "write"
-    t.boolean  "admin"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "data_object_security_groups", ["data_object_id"], :name => "data_object_security_groups_data_object_id_index"
-
-  create_table "data_objects", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "system_id"
-    t.text     "description"
-    t.string   "short_description", :limit => 512
-    t.integer  "display_columns"
-    t.boolean  "is_active"
-  end
-
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
     t.integer  "attempts",   :default => 0
@@ -86,14 +42,6 @@ ActiveRecord::Schema.define(:version => 20111130062238) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
-
-  create_table "file_types", :force => true do |t|
-    t.string   "name"
-    t.integer  "storage_location_id"
-    t.integer  "system_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "import_jobs", :force => true do |t|
     t.integer  "import_mapping_id"
@@ -131,15 +79,6 @@ ActiveRecord::Schema.define(:version => 20111130062238) do
     t.integer  "system_id"
   end
 
-  create_table "storage_locations", :force => true do |t|
-    t.string   "name"
-    t.string   "storage_type"
-    t.string   "location"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "system_id"
-  end
-
   create_table "system_members", :id => false, :force => true do |t|
     t.integer  "system_id",                        :null => false
     t.integer  "user_id",                          :null => false
@@ -161,17 +100,6 @@ ActiveRecord::Schema.define(:version => 20111130062238) do
     t.boolean  "is_active"
     t.string   "schema_name"
   end
-
-  create_table "updated_actions", :force => true do |t|
-    t.integer  "updated_id"
-    t.string   "updated_type"
-    t.integer  "created_by"
-    t.integer  "updated_by"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "updated_actions", ["updated_id", "updated_type"], :name => "index_updated_actions_on_updated_id_and_updated_type"
 
   create_table "user_security_groups", :id => false, :force => true do |t|
     t.integer  "user_id",           :null => false

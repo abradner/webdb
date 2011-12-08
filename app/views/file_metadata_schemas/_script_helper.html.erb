@@ -1,0 +1,8 @@
+<SCRIPT>
+$('#file_metadata_schema_field_type').change(function() {
+    $('#loading').addClass('loading');
+    $.ajax({url: '<%= change_type_system_file_type_file_metadata_schema_url(@system.id, @file_type.id, @file_metadata_schema._id) %>',
+      data: 'selected=' + this.value,
+      dataType: 'script'});
+});
+</SCRIPT>

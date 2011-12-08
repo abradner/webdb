@@ -8,17 +8,20 @@
           .lastUnit
             = f.text_field :label, :class => "small_text basic_field", :placeholder => "Display Label (max 255 chars)"
         .field.line
+          = f.label :required, "Required?"
+          .lastUnit
+            = f.check_box :required, :default => false
+        .field.line
           %label= required_field("Field Parameters")
           .lastUnit
             = "Field Type: "
-            = f.select :field_type, options_for_select(AppConfig.metadata_types.invert)
+            = f.select :field_type, options_for_select(AppConfig.metadata_types.invert), :include_blank => true
           #parameters_field.lastUnit
             -#= f.text_field :length, :class => "small_text basic_field", :placeholder => "Length or Decimal Places"
         .field.line
           %label= required_field("Field Options:")
-          .lastUnit
-            = f.label :required, "Required?"
-            = f.check_box :required, :default => false
+          #field_options.lastUnit
+            =render :partial => 'field_options', :locals => {:field_type => @file_metadata_schema.field_type}
         .field.line
           .field.actions
             = f.submit :class => "blue basic_field", :id => "save_button"
@@ -32,3 +35,8 @@
       -#= button_link_to "Close", "", :remote => true, :class => "jqmClose"
       = button_link_to "Close", system_file_types_path(@system)#, :remote => true, :class => "jqmClose"
       -#= link_to "Save and Define Metadata", "#", :remote => true, :class => "blue basic_field", :id => "save_button"
+
+:javascript
+   //blah
+   
+= render :partial => 'script_helper'
