@@ -43,7 +43,11 @@ end
 
   resources :systems do #, :only => [:show] do
     resources :file_types do
-      resources :raw_files
+      resources :raw_files do
+        member do
+          get :collect
+        end
+      end
       resources :file_metadata_schemas do
         member do
           get :change_type

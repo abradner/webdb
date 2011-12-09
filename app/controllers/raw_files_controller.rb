@@ -7,28 +7,33 @@ class RawFilesController < AjaxGenericController
     @raw_file = RawFile.new(:file_type_id => @file_type.id)
   end
 
-
   def show
-    send_data @raw_file.open_file, :filename => @raw_file.name
+    
   end
+  # This method uses the model to prepare the file. It should always work.
+  # It has been left in for future releases
+    #def collect
+    #  file = @raw_file.open_file
+    #  render :status => :not_found unless file
+    #  send_data file, :filename => @raw_file.name
+    #end
   
-  #def show
-  #    file_path = File.join(@raw_file.cached_path, @raw_file.name)
-  #    begin
-  #      if @raw_file.file_type.use_grid?
-  #        gridfs_file = Mongo::GridFileSystem.new(Mongoid.database).open(file_path, 'r')
-  #        send_data gridfs_file.read, :filename => @raw_file.name
-  #        return
-  #      end
-  #      if @raw_file.file_type.use_fs?
-  #        send_file file_path, :filename => @raw_file.name
-  #        return
-  #      end
-  #      redirect_to system_path(@system), :alert => "This file appears to be malformed. Try deleting and uploading again."
-  #    rescue
-  #      render :status => :not_found
-  #    end
-  #end
+  # This  method is more optimised to use send_file for FS records
+  def collect
+      file_path = File.join(@raw_file.cached_path, @raw_file.name)
+      begin
+        case @raw_file.cached_storage_location
+          when AppConfig.file_locations.database
+            gridfs_file = Mongo::GridFileSystem.new(Mongoid.database).open(file_path, 'r')
+            send_data gridfs_file.read, :filename => @raw_file.name
+          when AppConfig.file_locations.filesystem
+            send_file file_path, :filename => @raw_file.name
+        end
+      rescue
+        render :status => :not_found
+      end
+  end
+
 
   def create
     @raw_file = RawFile.new(params[:raw_file])

@@ -9,8 +9,10 @@ class RawFile
   belongs_to :file_type
   embeds_one :file_metadata
 
-  validates_presence_of :user_id
-  validates :raw_file, :presence => true
+  validates_presence_of :raw_file, :file_type, :user_id
+
+  validates_uniqueness_of :raw_file, :case_sensitive => true, :scope => :file_type_id, :message => "file exists in this file type collection"
+
 
   validate :valid_file_extension
 
@@ -19,13 +21,17 @@ class RawFile
 
   before_validation :configure_upload! #, :verify_upload!
 
-  field :name, :type => String
-  field :size, :type => Integer
-  field :historic_versions, :type => Array
-  field :version_counter, :type => Integer
-  field :imported, :type => Boolean
-  field :cached_path, :type => String
+  field :imported,                :type => Boolean
+
+  field :name,                    :type => String
+  field :cached_path,             :type => String
   field :cached_storage_location, :type => String
+
+  field :size,                    :type => Integer
+  field :size_with_versions,      :type => Integer
+  field :version_counter,         :type => Integer
+
+  field :historic_versions,       :type => Array
 
 
 

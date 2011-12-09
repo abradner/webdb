@@ -36,7 +36,7 @@
       %span.bold System Description:
       %p=@system.description
 
-  .system_right_col
+  .system_right_col.wide_col
     .left.line
       %h3 System Administrators:
     .row.information
@@ -61,7 +61,7 @@
         .item.light.truncate
           =dobj.short_description
 
-  .system_right_col
+  .system_right_col.wide_col
     %h3 Storage:
     -#-#toggle_hidden.button Upload #TODO
     -#.button Upload (Disabled)
@@ -69,10 +69,19 @@
       - unless @system.file_types.present?
         No File Types configured.
       - @system.file_types.sort_by(&:storage_location).each do |ft|
-        %p.bold #{ft.name}
-        %p.light #{ft.raw_files.count} files, XXX MB
-        - ft.raw_files.each do |file|
-          = file.name
-          =button_link_to "&darr;".html_safe, system_file_type_raw_file_path(@system, ft, file)
+        %p
+          %span.bold #{ft.name}
+          %span.light (#{ft.raw_files.count} files, XXX MB)
+        %table{:width => "100%"}
+          %tr
+            %th Name
+            %th{:width => "30%"} Actions
+          - ft.raw_files.each do |file|
+            %tr
+              %td= link_to file.name, system_file_type_raw_file_path(@system, ft, file)
+              %td
+                =button_link_to "&darr;".html_safe, collect_system_file_type_raw_file_path(@system, ft, file)
+                =button_link_to "", "#", :class => 'delete'
+
         %p &nbsp;
 
