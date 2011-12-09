@@ -72,16 +72,9 @@
         %p
           %span.bold #{ft.name}
           %span.light (#{ft.raw_files.count} files, XXX MB)
-        %table{:width => "100%"}
-          %tr
-            %th Name
-            %th{:width => "30%"} Actions
-          - ft.raw_files.each do |file|
-            %tr
-              %td= link_to file.name, system_file_type_raw_file_path(@system, ft, file)
-              %td
-                =button_link_to "&darr;".html_safe, collect_system_file_type_raw_file_path(@system, ft, file)
-                =button_link_to "", "#", :class => 'delete'
+          %ul
+            - ft.raw_files.each do |file|
+              %li= link_to file.name, system_file_type_raw_file_path(@system, ft, file), :class => "system_file"
 
         %p &nbsp;
 
