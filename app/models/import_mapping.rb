@@ -2,11 +2,12 @@ class ImportMapping
   include Mongoid::Document
   include Tenacity
   belongs_to :file_type
-  #TODO belongs_to :raw_file
+  belongs_to :raw_file
   belongs_to :data_object
 
   validate :all_unique_fields_mapped
   validate :all_required_fields_mapped
+  validate :only_append_if_no_ids
 
 
   DELIMITERS = [["Comma", ","], ["Colon", ":"], ["Pipe", "|"], ["Semicolon", ";"], ["Space", "\\s"], ["Tab", "\\t"]]
@@ -22,7 +23,6 @@ class ImportMapping
   field :name, :type => String
   field :includes_header, :type => Boolean, :default => false
   field :delimiter, :type => String
-  field :raw_file, :type => String # TODO to be replaced
   field :unique_fields, :type => Array
   field :conflict_action, :type => String
   field :num_of_columns, :type => Integer
@@ -57,6 +57,10 @@ class ImportMapping
       end
 
     end
+  end
+
+  def only_append_if_no_ids
+
   end
 
 

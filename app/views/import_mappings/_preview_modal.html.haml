@@ -6,8 +6,8 @@
       = form_for @import_mapping, :url => preview_system_data_object_import_mapping_path(@system, @data_object, @import_mapping),:method => :post, :remote => true do |f|
         %div
           = f.label(:raw_file, "File To Preview")
-          -#TODO= select_tag(:raw_file_id, @raw_files.collect{ |rf | [ rf.stored_file_identifier, rf.id]})
-          = f.select(:raw_file, options_for_select(@raw_files, @raw_file))
+          = f.select(:raw_file_id, options_from_collection_for_select(@raw_files, :id, :name))
+          -#= f.select(:raw_file, options_for_select(@raw_files, @raw_file))
         %div
           = f.label :delimiter, "Delimiter"
           = f.select :delimiter, options_for_select(ImportMapping::DELIMITERS, @delimiter)

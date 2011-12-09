@@ -38,8 +38,8 @@ class ImportMappingsController < AjaxDataObjectController
   end
 
   def preview
-    #TODO @raw_files = @import_mapping.file_type.raw_files
-    @raw_files = ImportMapping::RAW_FILES
+    @raw_files = @import_mapping.file_type.raw_files
+    #@raw_files = ImportMapping::RAW_FILES
     @data_object_attributes = @data_object.data_object_attributes
 
     @assigned_attrs = {}
@@ -50,7 +50,7 @@ class ImportMappingsController < AjaxDataObjectController
     # if previewing
     if params[:import_mapping]
       params[:includes_header].eql?("1") ? @includes_header = true : @includes_header = false
-      @raw_file = params[:import_mapping][:raw_file]
+      @raw_file = params[:import_mapping][:raw_file_id]
       @delimiter = params[:import_mapping][:delimiter]
 
       # returning to a predefined import mapping
@@ -88,52 +88,51 @@ class ImportMappingsController < AjaxDataObjectController
           converted_delimiter = @delimiter
       end
 
-      #TODO raw_file = @import_mapping.file_type.raw_files.find(@raw_file)
-      file_name = "vendor/sample_data/#{@raw_file}.csv"
-      FasterCSV.open(file_name, "rb", {:col_sep => converted_delimiter, :headers => @includes_header, :return_headers => true}) do |csv|
-        csv.each do |row|
+      file = RawFile.find(@raw_file)
+      
+      #file_name = "vendor/sample_data/#{@raw_file}.csv"
+      FasterCSV.new(file.open_file, {:col_sep => converted_delimiter, :headers => @includes_header, :return_headers => true}).each do |row|
+        p row
+        # TODO use lineno
+        if index > limit
+          break
+        end
 
-          # TODO use lineno
-          if index > limit
-            break
-          end
 
+        # FasterCSV returns arrays if headers => false, and FasterCSV:Rows if true
+        if @includes_header
+          if row.header_row?
+            @csv[:header] = row.fields
+            @num_of_columns = row.fields.count
 
-          # FasterCSV returns arrays if headers => false, and FasterCSV:Rows if true
-          if @includes_header
-            if row.header_row?
-              @csv[:header] = row.fields
-              @num_of_columns = row.fields.count
+            if params[:import_mapping]
 
-              if params[:import_mapping]
-
-                @data_object_attributes.each do |doa|
-                  if row.fields.include?(doa.name)
-                    @assigned_attrs["column_#{row.fields.index(doa.name)}"] = doa
-                  end
+              @data_object_attributes.each do |doa|
+                if row.fields.include?(doa.name)
+                  @assigned_attrs["column_#{row.fields.index(doa.name)}"] = doa
                 end
-                @unassigned_attrs = @data_object_attributes - @assigned_attrs.values
-
               end
+              @unassigned_attrs = @data_object_attributes - @assigned_attrs.values
 
-            else
-              @csv[:data] << row.fields
             end
+
           else
+            @csv[:data] << row.fields
+          end
+        else
 
-            if index == 0
-              @csv[:header] = (1..row.size).to_a
-              @num_of_columns = row.fields.count
-
-            end
-            @csv[:data] << row
+          if index == 0
+            @csv[:header] = (1..row.size).to_a
+            @num_of_columns = row.count
 
           end
-
-
-          index += 1
+          @csv[:data] << row
 
         end
+
+
+        index += 1
+
       end
     end
 

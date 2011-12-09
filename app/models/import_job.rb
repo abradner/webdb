@@ -38,6 +38,8 @@ class ImportJob
     end
 
     #TODO raw_file = @import_mapping.file_type.raw_files.find(@raw_file)
+
+    # TODO convert to rescue exceptions
     file_name = "vendor/sample_data/#{@raw_file}.csv"
     FasterCSV.open(file_name, "rb", {:col_sep => converted_delimiter, :headers => import_mapping.includes_header, :return_headers => true}) do |csv|
 
@@ -46,6 +48,7 @@ class ImportJob
         fields = row.fields
         line_num = csv.lineno
         unique_fields = import_mapping.unique_fields
+
         # do these quick validations only once
         if line_num == 1
 
@@ -73,24 +76,39 @@ class ImportJob
         end
 
         query = {}
+        @errors = false
 
-        #do row-by-row validations
+        #build a query to check if a data object row exists
         @mappings.each do |col_no, doa|
 
+          key = doa.name
           value = fields[col_no]
+          # TODO check that all unique fields are defined
 
-          query[doa.name]
+          # mark invalid if the current attribute is an identifier and its value is nil or doesn't exist
+          if unique_fields.include?(key) and value.blank?
+            @errors = true
+            results << "Row #{line_num} does not have a value for #{key}"
+            break
+
+          else
+            query[key] = value
+          end
+
         end
 
-        if @data_object.data_object_rows.where(query).entries.present?
 
-          case import_mapping.conflict_action
-            when ImportMapping::APPEND
+        # by now, all unique fields have been checked
+        # skip if row is invalid already.
+        if !@errors
 
-            when ImportMapping::OVERWRITE
-
-            when ImportMapping::DELETE
-
+          #if it exists. can delete/overwrite
+          entries = @data_object.data_object_rows.where(query).entries
+          if entries.present?
+            #nothing to do yet
+          else
+            new_row = @data_object.data_object_rows.build(query)
+            results << "Row #{line_num} is invalid and will not be imported into the data object" unless new_row.valid?
           end
 
         end
