@@ -30,7 +30,6 @@ class RawFile
 
   def valid_file_extension
     return if file_type.extensions.blank?
-    debugger
     extension = File.extname(name)
     extension.slice!(0) if extension.start_with?(".")
 
