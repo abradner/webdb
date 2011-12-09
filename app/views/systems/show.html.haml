@@ -73,5 +73,6 @@
         %p.light #{ft.raw_files.count} files, XXX MB
         - ft.raw_files.each do |file|
           = file.name
+          =button_link_to "&darr;".html_safe, system_file_type_raw_file_path(@system, ft, file)
         %p &nbsp;
 

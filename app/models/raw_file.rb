@@ -17,14 +17,33 @@ class RawFile
   mount_uploader :raw_file, RawStorageUploader
 
 
-  before_validation :configure_upload!#, :verify_upload!
+  before_validation :configure_upload! #, :verify_upload!
 
   field :name, :type => String
   field :size, :type => Integer
   field :historic_versions, :type => Array
   field :version_counter, :type => Integer
   field :imported, :type => Boolean
+  field :cached_path, :type => String
+  field :cached_storage_location, :type => String
 
+
+
+  def open_file
+    file_path = File.join(self.cached_path, self.name)
+    begin
+      case self.cached_storage_location
+        when AppConfig.file_locations.database
+          return Mongo::GridFileSystem.new(Mongoid.database).open(file_path, 'r')
+        when AppConfig.file_locations.filesystem
+          return File.open(file_path, 'r')
+      end
+      nil
+    rescue
+      nil
+    end
+
+  end
 
   private
 
@@ -49,25 +68,34 @@ class RawFile
   def configure_upload!
     self.name = raw_file.filename
     self.size = raw_file.size
+    self.cached_path = build_store_dir
+
 
     #Configure CarrierWave
-    if file_type.use_grid?; CarrierWave::Uploader::Base.storage= :grid_fs
-    elsif file_type.use_fs?; CarrierWave::Uploader::Base.storage= :file
-    else; self.errors.add(:file_type, :invalid)
+    #TODO Tidy, DRY and refactor this block
+    if file_type.use_grid?
+      CarrierWave::Uploader::Base.storage= :grid_fs
+      self.cached_storage_location = AppConfig.file_locations.database
+    elsif file_type.use_fs?
+      CarrierWave::Uploader::Base.storage= :file
+      self.cached_storage_location = AppConfig.file_locations.filesystem
+    else
+      self.errors.add(:file_type, :invalid)
+      return
     end
 
 
     handle_versions!
 
-    raw_file.set_store_dir build_store_dir
+    raw_file.set_store_dir self.cached_path
 
     unless Rails.env.production?
 
       out = "================================\n" <<
-            "Storing file #{name}, #{size } (Version #{version_counter || 0}) in\n" <<
-            raw_file.store_dir << "via \n" <<
-            raw_file.get_storage.to_s << "\n" <<
-            "================================\n"
+          "Storing file #{name}, #{size } (Version #{version_counter || 0}) in\n" <<
+          raw_file.store_dir << "via \n" <<
+          raw_file.get_storage.to_s << "\n" <<
+          "================================\n"
       Rails.logger.debug out
     end
 
