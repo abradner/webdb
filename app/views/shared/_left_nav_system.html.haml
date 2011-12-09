@@ -8,31 +8,26 @@
             %li#system_item.open
               %a#arrow.expanded Data Objects
               %ul#system_dobj
-                =#.expandable
                 - @system.data_objects.each do |dobj|
                   %li#system_dobj
-                    =#.closed
-                    =#%a#arrow.collapsed
                     = link_to dobj.name, system_data_object_path(@system, dobj), :id => "dobj_#{dobj.id}", :title => dobj.name, :class => ["system_data_object", is_current_object?(dobj,"data_objects") ? "current" : ""]
                 - if @system.data_objects.blank?
                   No data objects configured
-          &nbsp;
-          %ul#system_list.expandable.collapsible.truncate
+
             %li#system_item.open
               %a#arrow.expanded System Storage
               %ul#system_ftype.expandable.collapsible.truncate
                 - @system.file_types.each do |ft|
                   %li#system_ftype.closed
-                    %a#arrow.collapsed
-                    %a.file_type #{ft.name} (#{ft.raw_files.count})
+                    %a#arrow.collapsed #{ft.name} (#{ft.raw_files.count})
                     - if ft.raw_files.blank?
                       %ul#system_file
                         %li.light Empty
                     -else
                       %ul#system_file.expandable.collapsible.truncate
-                      - ft.raw_files.each do |file|
-                        %li#system_file.closed
-                          = link_to file[:name], "#", :class => "file"
+                        - ft.raw_files.each do |file|
+                          %li#system_file.closed
+                            = link_to file[:name], system_file_type_raw_file_path(@system, ft, file), :class => "file", :class => "system_file"
                 - if @system.file_types.blank?
                   No file types configured
       .dragger_container

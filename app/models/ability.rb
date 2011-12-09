@@ -92,6 +92,8 @@ class Ability
     can :manage, FileType, :system_id => system_administrations
 
 
+    can :update, RawFile, :user_id => user.id
+
 
     # Data Object privileges
     can_manage_data_object = user.can_manage_data_objects

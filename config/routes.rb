@@ -46,6 +46,7 @@ end
       resources :raw_files do
         member do
           get :collect
+          get :manage_versions
         end
       end
       resources :file_metadata_schemas do

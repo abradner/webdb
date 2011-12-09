@@ -1,0 +1,40 @@
+#container_page_header.wrapper.clearfix
+  #container_page_title
+    %h1.title.file
+      %span=@raw_file.name
+
+  #container_page_buttons.right
+    -if (can? :update, @raw_file) || (can? :manage, @file_type)
+      =button_link_to "Replace", edit_system_file_type_raw_file_path(@system, @file_type, @raw_file), :remote => true, :class => "green add"
+      =button_link_to "Edit", edit_system_file_type_raw_file_path(@system, @file_type, @raw_file), :class => "edit", :remote => true
+      =button_link_to "Manage Versions", manage_versions_system_file_type_raw_file_path(@system, @file_type, @raw_file), :class => "edit", :remote => true
+    -if can? :manage, @file_type
+      = button_link_to "Delete", system_file_type_raw_file_path(@system, @file_type, @raw_file),
+                          :confirm =>"This will delete the specified file!",
+                          :id => 'delete_file_link', :class => 'red delete', :method => :delete
+
+
+%h2 Collect File
+#container_page_content.wrapper
+  =button_link_to "Click to download", collect_system_file_type_raw_file_path(@system, @file_type, @raw_file), :class => "blue basic_field"
+%h2 Details
+#container_page_content.wrapper
+  .system_left_col
+    .left.line
+      %h3 File Metadata:
+    .information
+      %span.bold Field:
+      %p Lorem Ipsum
+
+  .system_right_col
+    .left.line
+      %h3 File Information:
+    .row.information
+      %span.bold Size:
+      %p Lorem Ipsum
+    .row.information
+      %span.bold Owner:
+      %p Lorem Ipsum
+    .row.information
+      %span.bold Updated:
+      %p Lorem Ipsum
