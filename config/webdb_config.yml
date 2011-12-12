@@ -36,5 +36,8 @@ production:
   raw_storage_root_path: /webdb
   <<: *defaults
 
+uat:
+  <<: *production
+
 qa:
   <<: *production

@@ -51,6 +51,17 @@ class RawFile
 
   end
 
+  def version_words
+    case self.version_counter
+      when nil || 0
+        return "Unversioned"
+      when 1
+        return "Initial"
+      else
+        return self.version_counter.to_s
+    end
+  end
+
   private
 
   def valid_file_extension

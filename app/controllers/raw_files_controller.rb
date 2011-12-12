@@ -7,9 +7,20 @@ class RawFilesController < AjaxGenericController
     @raw_file = RawFile.new(:file_type_id => @file_type.id)
   end
 
-  def show
-    
+  def edit
+    #TODO
   end
+
+  def edit_metadata
+    #TODO
+  end
+
+  def manage_versions
+    #TODO
+  end
+
+
+
   # This method uses the model to prepare the file. It should always work.
   # It has been left in for future releases
     #def collect

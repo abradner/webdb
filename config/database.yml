@@ -24,5 +24,11 @@ production:
   pool: 5
   timeout: 5000
 
+uat:
+  adapter: sqlite3
+  database: db/uat.sqlite3
+  pool: 5
+  timeout: 5000
+
 cucumber:
   <<: *test

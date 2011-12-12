@@ -6,6 +6,15 @@ test:
   host: localhost
   database: webdb_test
 
+qa:
+  host: localhost
+  database: webdb_qa
+
+uat:
+  host: localhost
+  database: webdb_uat
+
+
 # set these environment variables on your prod server
 production:
   host: <%= ENV['MONGOID_HOST'] %>

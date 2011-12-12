@@ -6,7 +6,7 @@
   #container_page_buttons.right
     -if (can? :update, @raw_file) || (can? :manage, @file_type)
       =button_link_to "Replace", edit_system_file_type_raw_file_path(@system, @file_type, @raw_file), :remote => true, :class => "green add"
-      =button_link_to "Edit", edit_system_file_type_raw_file_path(@system, @file_type, @raw_file), :class => "edit", :remote => true
+      =button_link_to "Edit", edit_metadata_system_file_type_raw_file_path(@system, @file_type, @raw_file), :class => "edit", :remote => true
       =button_link_to "Manage Versions", manage_versions_system_file_type_raw_file_path(@system, @file_type, @raw_file), :class => "edit", :remote => true
     -if can? :manage, @file_type
       = button_link_to "Delete", system_file_type_raw_file_path(@system, @file_type, @raw_file),
@@ -31,10 +31,16 @@
       %h3 File Information:
     .row.information
       %span.bold Size:
-      %p Lorem Ipsum
+      =number_to_human_size(@raw_file.size)
     .row.information
       %span.bold Owner:
-      %p Lorem Ipsum
+      =@raw_file.user.full_name
+    .row.information
+      %span.bold Created:
+      %span{:title => @raw_file.created_at} #{time_ago_in_words(@raw_file.created_at)} ago
     .row.information
       %span.bold Updated:
-      %p Lorem Ipsum
+      %span{:title => @raw_file.updated_at} #{time_ago_in_words(@raw_file.updated_at)} ago
+    .row.information
+      %span.bold Version:
+      =@raw_file.version_words

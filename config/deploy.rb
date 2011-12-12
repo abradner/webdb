@@ -25,12 +25,15 @@ set(:rails_env) { "#{stage}" }
 
 set :application, 'webdb'
 #set :repository, "ssh://roses@agile-svn.ucc.usyd.edu.au/var/git/#{application}.git"
-set :repository, "https://github.com/abradner/webdb.git"
-
-set :user, 'roses'
+set :repository, "http://github.com/abradner/webdb.git"
+set :user, 'rails'
 set :use_sudo, true
 
-set :http_proxy, "http://web-cache.usyd.edu.au:8080"
+#USYD SPECIFIC STUFF
+#set :use_sudo, false
+#set :repository, "ssh://roses@agile-svn.ucc.usyd.edu.au/var/git/#{application}.git"
+#set :user, 'roses'
+#set :http_proxy, "http://web-cache.usyd.edu.au:8080"
 
 # In order for sudo to work, we now need this:
 default_run_options[:pty] = true
@@ -52,6 +55,7 @@ set :runner, nil
 # set :bundle_flags,       "--deployment --quiet"
 # set :bundle_without,      [:development, :test]
 
+
 task :development do
   set :ruby_path, "/usr/local/bin"
   set :rake, "export PATH=#{ruby_path}:$PATH; bundle exec rake"
@@ -65,14 +69,21 @@ task :development do
 end
 
 task :uat do
-  set :ruby_path, "/opt/ruby-enterprise-1.8.7-2011.03/bin"
-  set :rake, "export PATH=#{ruby_path}:$PATH; bundle exec rake"
-  set :bundle_cmd, "export PATH=#{ruby_path}:$PATH; export http_proxy=#{http_proxy}; bundle" # Default is "bundle"
-  role :web, "archer-ers-uat-1.ucc.usyd.edu.au"
-  role :app, "archer-ers-uat-1.ucc.usyd.edu.au"
-  role :db,  "archer-ers-uat-1.ucc.usyd.edu.au", :primary => true
+  $:.unshift(File.expand_path('./lib', ENV['rvm_path'])) # Add RVM's lib directory to the load path.
+  require "rvm/capistrano"                  # Load RVM's capistrano plugin.
+  set :rvm_ruby_string, 'ree-1.8.7-2011.03@webdb'        # Or whatever env you want it to run in.
+  set :rvm_type, :user  # Copy the exact line. I really mean :user here
+
+  #set :ruby_path, "/opt/ruby-enterprise-1.8.7-2011.03/bin"
+  #set :ruby_path, "/home/rails/.rvm/rubies/ree-1.8.7-2011.03/bin"
+  #set :rake, "export PATH=#{ruby_path}:$PATH; bundle exec rake"
+  #set :bundle_cmd, "export PATH=#{ruby_path}:$PATH; bundle" # Default is "bundle"
+  #set :bundle_cmd, "export PATH=#{ruby_path}:$PATH; export http_proxy=#{http_proxy}; bundle" # Default is "bundle"
+  role :web, "gsw1-archer-uat.intersect.org.au"
+  role :app, "gsw1-archer-uat.intersect.org.au"
+  role :db,  "gsw1-archer-uat.intersect.org.au", :primary => true
   set :stage, :uat
-  set :branch, "uat"
+  set :branch, "master"
   set :bundle_flags, ""
   set :bundle_without, [:test]
 end
