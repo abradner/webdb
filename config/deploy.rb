@@ -130,7 +130,13 @@ namespace :deploy do
   task :restart_delayed_job do
     run "cd #{current_release}; RAILS_ENV=#{rails_env} script/delayed_job restart"
   end
-  
+
+  desc "Load the schema into the database (WARNING: destructive!)"
+  task :schema_load, :roles => :db do
+    rake = fetch(:rake, 'rake')
+     run "cd #{current_release}; #{rake} RAILS_ENV=#{stage} db:schema:load"
+   end
+
  desc "DO NOT RUN in production!!! Populate tables from Database Migrations / Fixtures"
   task :populate do
     rake = fetch(:rake, 'rake')
