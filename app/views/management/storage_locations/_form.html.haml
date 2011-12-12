@@ -19,6 +19,7 @@
       = f.label :location, required_field('Location:')
       .lastUnit
         = f.text_field :location, :class => "text basic_field", :placeholder => "Exact path on the fs to be used as RawStore root. include trailing /"
+      %p NB: Filesystem locations will be stored under #{AppConfig.raw_storage_root_path} as configured by the system administrator
     .field.line
       .field.actions
         = f.submit :class => "blue basic_field"

@@ -19,5 +19,12 @@ class StorageLocation
     name.strip! if name
   end
 
+  def augmented_location
+    if self.storage_type.eql? AppConfig.file_locations[:filesystem]
+      File.join AppConfig.raw_storage_root_path, location
+    else
+      location
+    end
+  end
 
 end

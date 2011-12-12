@@ -16,7 +16,7 @@
       %td= s.name
       %td= s.storage_type
       %td= link_to s.system.name, system_path(s.system)
-      %td= s.location
+      %td= s.augmented_location
       %td
         = button_link_to "E", edit_management_storage_location_path(s)
         = button_link_to "X", management_storage_location_path(s), :method => "delete",
