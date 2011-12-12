@@ -4,8 +4,11 @@
       = link_to root_path, :id => :owner_logo_container do
         = image_tag "university_sydney_logo_mono.gif", :border => "0"
       -#= t('app_name')
+
     .menu
       %ul
+        - unless Rails.env.production?
+          %li Environment: #{Rails.env}
         - if user_signed_in?
           - if can? :admin, User
             %li= link_to 'WebDB Management', management_overview_path
