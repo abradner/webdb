@@ -160,6 +160,21 @@ namespace :deploy do
     run "touch /var/www/apps/#{application}/current/tmp/restart.txt"
   end
 
+  desc "Full redepoyment, it runs deploy:update, deploy:refresh_db, and deploy:restart"
+  task :full_redeploy do
+    update
+    refresh_db
+    restart
+  end
+
+  # Helper task which re-creates the database
+  task :refresh_db, :roles => :db do
+    schema_load
+    seed
+    populate
+  end
+
+
 end
 
 desc "Tails the log on the remote server"
