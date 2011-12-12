@@ -11,7 +11,7 @@ class RawFile
 
   validates_presence_of :raw_file, :file_type, :user_id
 
-  validates_uniqueness_of :raw_file, :case_sensitive => true, :scope => :file_type_id, :message => "file exists in this file type collection"
+  validates_uniqueness_of :name, :case_sensitive => true, :scope => :file_type_id, :message => "file exists in this file type collection"
 
 
   validate :valid_file_extension
