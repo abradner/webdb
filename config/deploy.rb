@@ -19,6 +19,10 @@ set :default_stage, 'development'
 
 require 'capistrano/ext/multistage'
 require 'bundler/capistrano'
+
+$:.unshift(File.expand_path('./lib', ENV['rvm_path'])) # Add RVM's lib directory to the load path.
+require "rvm/capistrano"                  # Load RVM's capistrano plugin.
+
 # require 'net/ssh/proxy/http'
 
 set(:rails_env) { "#{stage}" }
@@ -56,75 +60,37 @@ set :runner, nil
 # set :bundle_without,      [:development, :test]
 
 
-task :development do
-  set :ruby_path, "/usr/local/bin"
-  set :rake, "export PATH=#{ruby_path}:$PATH; bundle exec rake"
-  set :bundle_cmd, "export PATH=#{ruby_path}:$PATH; export http_proxy=#{http_proxy}; bundle" # Default is "bundle"
-  role :app, "agile-sdlc-dev-06.ucc.usyd.edu.au"
-  role :web, "agile-sdlc-dev-06.ucc.usyd.edu.au"
-  role :db,  "agile-sdlc-dev-06.ucc.usyd.edu.au", :primary => true
-  set :stage, :development
-  set :branch, "development"
-  set :bundle_without, [:test]
-end
+#task :development do
+#  set :ruby_path, "/usr/local/bin"
+#  set :rake, "export PATH=#{ruby_path}:$PATH; bundle exec rake"
+#  set :bundle_cmd, "export PATH=#{ruby_path}:$PATH; export http_proxy=#{http_proxy}; bundle" # Default is "bundle"
+#  role :app, "agile-sdlc-dev-06.ucc.usyd.edu.au"
+#  role :web, "agile-sdlc-dev-06.ucc.usyd.edu.au"
+#  role :db,  "agile-sdlc-dev-06.ucc.usyd.edu.au", :primary => true
+#  set :stage, :development
+#  set :branch, "development"
+#  set :bundle_without, [:test]
+#end
 
 task :uat do
-  $:.unshift(File.expand_path('./lib', ENV['rvm_path'])) # Add RVM's lib directory to the load path.
-  require "rvm/capistrano"                  # Load RVM's capistrano plugin.
+
   set :rvm_ruby_string, 'ree-1.8.7-2011.03@webdb'        # Or whatever env you want it to run in.
   set :rvm_type, :user  # Copy the exact line. I really mean :user here
+
+  role :web, 'gsw1-archer-uat.intersect.org.au' 
+  role :app, 'gsw1-archer-uat.intersect.org.au'
+  role :db, 'gsw1-archer-uat.intersect.org.au', :primary => true
 
   #set :ruby_path, "/opt/ruby-enterprise-1.8.7-2011.03/bin"
   #set :ruby_path, "/home/rails/.rvm/rubies/ree-1.8.7-2011.03/bin"
   #set :rake, "export PATH=#{ruby_path}:$PATH; bundle exec rake"
   #set :bundle_cmd, "export PATH=#{ruby_path}:$PATH; bundle" # Default is "bundle"
   #set :bundle_cmd, "export PATH=#{ruby_path}:$PATH; export http_proxy=#{http_proxy}; bundle" # Default is "bundle"
-  role :web, "gsw1-archer-uat.intersect.org.au"
-  role :app, "gsw1-archer-uat.intersect.org.au"
-  role :db,  "gsw1-archer-uat.intersect.org.au", :primary => true
   set :stage, :uat
   set :branch, "master"
   set :bundle_flags, ""
   set :bundle_without, [:test]
 end
-
-#task :support_development do
-#  set :ruby_path, "/usr/local/bin"
-#  set :rake, "export PATH=#{ruby_path}:$PATH; bundle exec rake"
-#  set :bundle_cmd, "export PATH=#{ruby_path}:$PATH; export http_proxy=#{http_proxy}; bundle" # Default is "bundle"
-#  set :domain, 'agile-sdlc-dev-06.ucc.usyd.edu.au'
-#  role :web, domain
-#  role :app, domain
-#  role :db, domain, :primary => true
-#  set :stage, :support_development
-#  set :branch, :bugfix
-#  set :deploy_to, "/var/www/apps/#{application}_support"
-#  set :bundle_flags, ""
-#  set :bundle_without, [:test]
-#end
-
-#task :support_uat do
-#  set :domain, 'agile-sdlc-uat-06.ucc.usyd.edu.au'
-#  role :web, domain
-#  role :app, domain
-#  role :db, domain, :primary => true
-#  set :stage, :support_uat
-#  set :branch, :bugfix
-#  set :deploy_to, "/var/www/apps/#{application}_support"
-#  set :bundle_flags, ""
-#  set :bundle_without, [:test]
-#end
-#
-#task :showcase do
-#  set :domain, 'agile-uat.ucc.usyd.edu.au'
-#  role :web, domain
-#  role :app, domain
-#  role :db,  domain, :primary => true
-#  set :stage, :showcase
-#  set :branch, :production
-#  set :bundle_flags, ""
-#  set :bundle_without, [:test]
-#end
 
 
 #TODO
