@@ -32,11 +32,11 @@ test:
   raw_storage_root_path: /tmp/test
   <<: *defaults
 
-uat:
+qa:
   raw_storage_root_path: /webdb
   <<: *defaults
 
-qa:
+uat:
   raw_storage_root_path: /webdb
   <<: *defaults
 
