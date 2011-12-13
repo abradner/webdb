@@ -28,7 +28,15 @@ class DataObjectAttribute
   validates_uniqueness_of :label, :case_sensitive => false, :scope => :data_object_id, :message => "has been taken in this data object"
   validates_uniqueness_of :sort_order, :scope => :data_object_id, :message => "Conflicting Sort Order. This shouldn't happen, raise a support ticket"
 
+  validate :reserved_names
+
   scope :visible_fields, where(:visible.eql? true) #TODO build visible field
   scope :required, where(:required => true)
+
+  def reserved_names
+    if AppConfig['reserved_attribute_names'].include?(self.name)
+      self.errors.add(:base, "Internal name is reserved and cannot be used.")
+    end
+  end
 end
 

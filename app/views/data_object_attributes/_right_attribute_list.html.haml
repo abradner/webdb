@@ -12,7 +12,8 @@
     -extra_class = ""
     - extra_class = "selected_element" if @data_object_attribute.present? && attr.eql?(@data_object_attribute)
     %p.truncate{:id => attr.id}
-      =link_to attr.label, edit_system_data_object_data_object_attribute_path(@system, @data_object, attr), :remote => true, :class => [field_css_class(attr.attribute_type), extra_class]
+      -# TODO weird issue with the linking here, not passing the throws an error.
+      = link_to attr.label, edit_system_data_object_data_object_attribute_path(@system.id, @data_object.id, attr.id), :remote => true, :class => [field_css_class(attr.attribute_type), extra_class]
       = "*" if attr.required
   %p.light.right * Required Fields
 

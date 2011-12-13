@@ -5,9 +5,8 @@
     - if @raw_files
       = form_for @import_mapping, :url => preview_system_data_object_import_mapping_path(@system, @data_object, @import_mapping),:method => :post, :remote => true do |f|
         %div
-          = f.label(:raw_file, "File To Preview")
+          = f.label(:raw_file_id, "File To Preview")
           = f.select(:raw_file_id, options_from_collection_for_select(@raw_files, :id, :name))
-          -#= f.select(:raw_file, options_for_select(@raw_files, @raw_file))
         %div
           = f.label :delimiter, "Delimiter"
           = f.select :delimiter, options_for_select(ImportMapping::DELIMITERS, @delimiter)
@@ -22,7 +21,7 @@
 - if @raw_file
   .field.line
     %label
-      = "File Preview : #{@raw_file} with '#{@delimiter}' as the delimiter, "
+      = "File Preview : #{@raw_file.name} with '#{@delimiter}' as the delimiter, "
       = @includes_header ? "with": "without"
       = " headers"
     = render :partial => "file_preview", :locals => {:csv => @csv}
@@ -46,7 +45,7 @@
   = form_for [@system, @data_object, @import_mapping], :remote => true, :html => {:id => "mapping_form"} do |f|
     = f.hidden_field(:includes_header, :value => @includes_header) if @includes_header.present?
     = f.hidden_field(:delimiter, :value => @delimiter) if @delimiter.present?
-    = f.hidden_field(:raw_file, :value => @raw_file) if @raw_file.present?
+    = f.hidden_field(:raw_file_id, :value => @raw_file.id) if @raw_file.present?
     = f.hidden_field(:num_of_columns, :value => @num_of_columns) if @num_of_columns.present?
     - if @includes_header.present?
       - @csv[:header].each do |cell|

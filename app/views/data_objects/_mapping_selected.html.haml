@@ -1,23 +1,26 @@
-.field.line
-%h3 Valid files for #{@import_mapping.display_name}
-.field.line
-  = form_for @data_object, :url => import_selected_system_data_object_path(@system, @data_object),:method => :post, :remote => true do |f|
-    %div
-      = label_tag("raw_file", "Select a file to import")
-      = select_tag("raw_file", options_for_select(@raw_files))
-      -#= TODO select_tag("raw_files", options_from_collection_for_select(@raw_files, :id, :stored_file_identifier))
-    %div
-      = hidden_field_tag("import_mapping", @import_mapping.id)
-    .field
-    .line
-      Please note:
-    .line
-      The file will undergo validations first before you are allowed to import the data.
-    .line
-      The duration will depend on the amount of data you are importing.
-    .line
-      You will also receive an email when you can progress further with the import.
-    #bottom_actions_container
-      .field.line
-        .field.actions
-          = f.submit "Create Import Job"
+- if @raw_files
+  .field.line
+  %h3 Valid files for #{@import_mapping.display_name}
+  .field.line
+    = form_for @data_object, :url => import_selected_system_data_object_path(@system, @data_object),:method => :post, :remote => true do |f|
+      %div
+        = label_tag("raw_file_id", "Select a file to import")
+        = select_tag("raw_file_id", options_from_collection_for_select(@raw_files, :id, :name))
+      %div
+        = hidden_field_tag("import_mapping_id", @import_mapping.id)
+      .field
+      .line
+        Please note:
+      .line
+        The file will undergo validations first before you are allowed to import the data.
+      .line
+        The duration will depend on the amount of data you are importing.
+      .line
+        You will also receive an email when you can progress further with the import.
+      #bottom_actions_container
+        .field.line
+          .field.actions
+            = f.submit "Create Import Job"
+- else
+  .field.line
+  %h3 No valid files for #{@import_mapping.display_name}

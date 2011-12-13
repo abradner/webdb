@@ -5,7 +5,7 @@ class FileType
 
   field :name, :type => String
   field :content, :type => String
-  field :extensions, :type => Array #TODO change to array
+  field :extensions, :type => Array
   field :versioning, :type => Boolean
 
   t_belongs_to :system

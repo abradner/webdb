@@ -1,10 +1,12 @@
-%p An import job has finished validating its raw file
+%p An import job has finished validating its raw file "#{@import_job.raw_file.name}"
 %p
-  Email: #{@user.email}
+  Data Object: #{@import_job.data_object.name}
   %br/
-  First name: #{@user.first_name}
-  %br/
-  Last name: #{@user.last_name}
+  Import Mapping: #{@import_job.import_mapping.name}
+%p
+  The results are:
+  - @results.each do |result|
+    %p= result
 %p
   You can check the progress of an import job here
   -# TODO url

@@ -23,6 +23,16 @@ defaults: &defaults
   file_locations:
     database: db
     filesystem: fs
+  reserved_attribute_names:
+    - id
+    - _id
+    - object_id
+    - created_at
+    - updated_at
+    - type
+    - _type
+    - data_object_id
+
 
 development:
   raw_storage_root_path: /tmp

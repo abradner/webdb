@@ -37,41 +37,45 @@ class Notifier < ActionMailer::Base
   end
 
   def notify_user_of_import_validation_started(import_job)
+    @import_job = import_job
     @user = import_job.user
     mail(:to => @user.email,
          :from => APP_CONFIG['import_job_sender'],
          :reply_to => APP_CONFIG['import_job_sender'],
-         :subject => PREFIX + "Reset password instructions")
+         :subject => PREFIX + "Validation started on import job")
 
   end
 
   def notify_user_of_import_validation_ended(import_job, results)
+    @import_job = import_job
     @user = import_job.user
     @results = results
     mail(:to => @user.email,
          :from => APP_CONFIG['import_job_sender'],
          :reply_to => APP_CONFIG['import_job_sender'],
-         :subject => PREFIX + "Reset password instructions")
+         :subject => PREFIX + "Validation ended on import job")
 
   end
 
   def notify_user_of_import_started(import_job)
+    @import_job = import_job
     @user = import_job.user
     mail(:to => @user.email,
          :from => APP_CONFIG['import_job_sender'],
          :reply_to => APP_CONFIG['import_job_sender'],
-         :subject => PREFIX + "Reset password instructions")
+         :subject => PREFIX + "Import job started")
 
   end
 
   def notify_user_of_import_ended(import_job, results)
+    @import_job = import_job
     @user = import_job.user
     @results = results
 
     mail(:to => @user.email,
          :from => APP_CONFIG['import_job_sender'],
          :reply_to => APP_CONFIG['import_job_sender'],
-         :subject => PREFIX + "Reset password instructions")
+         :subject => PREFIX + "Import job completed")
 
   end
 

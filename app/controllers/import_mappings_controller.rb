@@ -39,7 +39,6 @@ class ImportMappingsController < AjaxDataObjectController
 
   def preview
     @raw_files = @import_mapping.file_type.raw_files
-    #@raw_files = ImportMapping::RAW_FILES
     @data_object_attributes = @data_object.data_object_attributes
 
     @assigned_attrs = {}
@@ -50,7 +49,7 @@ class ImportMappingsController < AjaxDataObjectController
     # if previewing
     if params[:import_mapping]
       params[:includes_header].eql?("1") ? @includes_header = true : @includes_header = false
-      @raw_file = params[:import_mapping][:raw_file_id]
+      @raw_file = RawFile.find(params[:import_mapping][:raw_file_id])
       @delimiter = params[:import_mapping][:delimiter]
 
       # returning to a predefined import mapping
@@ -88,11 +87,10 @@ class ImportMappingsController < AjaxDataObjectController
           converted_delimiter = @delimiter
       end
 
-      file = RawFile.find(@raw_file)
+      #TODO handle exception of non csv readable files
       
-      #file_name = "vendor/sample_data/#{@raw_file}.csv"
-      FasterCSV.new(file.open_file, {:col_sep => converted_delimiter, :headers => @includes_header, :return_headers => true}).each do |row|
-        p row
+      FasterCSV.new(@raw_file.open_file, {:col_sep => converted_delimiter, :headers => @includes_header, :return_headers => true}).each do |row|
+
         # TODO use lineno
         if index > limit
           break

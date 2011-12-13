@@ -15,7 +15,7 @@
         .field.line
           %label= required_field("Attribute Type")
           .lastUnit
-            = f.select :attribute_type, options_for_select(AppConfig.attribute_types.invert)
+            = f.select :attribute_type, options_for_select(AppConfig.attribute_types.invert, @data_object_attribute.attribute_type)
         .field.line
           .lastUnit
             = f.text_field :length, :class => "small_text basic_field", :placeholder => "Length or Decimal Places"

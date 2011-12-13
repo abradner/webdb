@@ -14,7 +14,6 @@ class ImportMapping
   OVERWRITE = "Overwrite"
   APPEND = "Append"
   DELETE = "Delete"
-  RAW_FILES = ["contract", "customer_order_total", "GeoIPCountryWhois", "students", "transaction"] # temporary
 
   ACTIONS = [APPEND, OVERWRITE, DELETE]
 
@@ -60,7 +59,7 @@ class ImportMapping
   end
 
   def only_append_if_no_ids
-
+    #TODO Mongoid.destructive_fields
   end
 
 
