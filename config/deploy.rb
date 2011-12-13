@@ -146,9 +146,15 @@ namespace :deploy do
   desc "DO NOT RUN in production!!! This will delete live data! Run only in test environment."
   task :reset do
     rake = fetch(:rake, 'rake')
-    run "cd #{current_release}; #{rake} RAILS_ENV=#{stage} db:migrate:reset"
+    run "cd #{current_release}; #{rake} RAILS_ENV=#{stage} db:migrate:reset db:mongoid:drop"
   end
   
+  desc "DO NOT RUN in production!!! This will delete live data! Run only in test environment."
+  task :refresh_mongoid do
+    rake = fetch(:rake, 'rake')
+    run "cd #{current_release}; #{rake} RAILS_ENV=#{stage} db:mongoid:drop"
+  end
+
   desc "TO BE RUN DURING INITIAL DEPLOY ONLY!!!! Populates initial data."
   task :seed do
     rake = fetch(:rake, 'rake')
@@ -174,8 +180,10 @@ namespace :deploy do
   end
 
   # Helper task which re-creates the database
+  desc "DO NOT RUN in production!!! This will delete live data! Run only in test environment."
   task :refresh_db, :roles => :db do
     schema_load
+    refresh_mongoid
     seed
     populate
   end

@@ -2,9 +2,12 @@ def populate_data
 
   User.delete_all
   System.delete_all
+  cs = ColourScheme.find_by_name("Default")
+  cs.delete unless cs.blank?
 
 
   create_test_users
+  create_basic_settings
 end
 
 def create_test_users
@@ -57,3 +60,29 @@ def create_unapproved_user(attrs)
 end
 
 
+def create_basic_settings
+  #Colour Schemes
+  cs = ColourScheme.new(:name => "Default")
+  cs.save!
+
+  #Systems
+  managers = User.find_all_by_role_id(Role.find_by_name('manager').id)
+
+  s = System.new  :name               => "Sample System 1",
+                  :code               => "SYS00001",
+                  :description        => "This is a sample system where all managers are administrators",
+                  :schema_name        => "system_1"
+  s.colour_scheme = cs
+  s.administrators = managers
+  s.save!
+
+
+  #Sample Raw Storage Location
+  #Sample File Type
+  #Sample Files
+  #Sample Data Object
+  #Sample Import Mapping
+  #Sample Data
+  #Sample Security Settings
+
+end
