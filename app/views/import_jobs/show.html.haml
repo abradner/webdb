@@ -1,0 +1,14 @@
+%p= @import_job.data_object.name
+%p= @import_job.import_mapping.name
+%p= @import_job.raw_file.name
+%p= @import_job.status
+
+- if @import_job.validated and @import_job.can_import
+  - if @import_job.status.eql?("Importing Data")
+    Data is currently importing
+  - elsif @import_job.imported
+    Data has been imported
+  - else
+    = button_link_to "Import Data", import_data_system_data_object_import_job_path(@system, @data_object, @import_job)
+- else
+  Raw file is invalid for this import

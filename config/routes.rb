@@ -1,8 +1,8 @@
 Webdb::Application.routes.draw do
   devise_for :users, :controllers => {:registrations => "user_registers", :passwords => "user_passwords"} do
-  get "/users/edit_password", :to => "user_registers#edit_password" #allow users to edit their own password
-  put "/users/update_password", :to => "user_registers#update_password" #allow users to edit their own password
-end
+    get "/users/edit_password", :to => "user_registers#edit_password" #allow users to edit their own password
+    put "/users/update_password", :to => "user_registers#update_password" #allow users to edit their own password
+  end
 
   namespace :management do
     resources :systems do
@@ -16,9 +16,9 @@ end
     end
     resources :storage_locations
     resources :colour_schemes
-    resource :overview do 
+    resource :overview do
       get :index, :on => :collection
-    end#, :only => [:index]
+    end #, :only => [:index]
   end
 
   resources :users, :only => [:show] do
@@ -67,7 +67,16 @@ end
           post :preview
         end
       end
+
+      resources :import_jobs, :except => [:edit, :update] do
+        member do
+          get :import_data
+          get :validate
+        end
+      end
+
       resources :data_object_security_settings
+
       member do
         #get :edit_security
         #get :edit_file_types
@@ -165,9 +174,9 @@ end
   # match ':controller(/:action(/:id(.:format)))'
 
 
-# This should always be the last route
-# It is here to handle routing errors
-# It should match every route not already matched
-# Solution taken from http://techoctave.com/c7/posts/36-rails-3-0-rescue-from-routing-error-solution
+  # This should always be the last route
+  # It is here to handle routing errors
+  # It should match every route not already matched
+  # Solution taken from http://techoctave.com/c7/posts/36-rails-3-0-rescue-from-routing-error-solution
   match '*a', :to => 'pages#routing_error' unless Rails.env.development?
 end

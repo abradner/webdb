@@ -1,11 +1,11 @@
 %p An import job has started importing its raw file data
 
 %p
-  Email: #{@user.email}
+  Data Object: #{@import_job.data_object.name}
   %br/
-  First name: #{@user.first_name}
+  Import Mapping: #{@import_job.import_mapping.name}
   %br/
-  Last name: #{@user.last_name}
+  Raw File: #{@import_job.raw_file.name}
 %p
-  You can check the progress of an import job here 
-  -# TODO url
+  You can check the progress of an import job here
+%p= system_data_object_import_job_url(@import_job.data_object.system, @import_job.data_object, @import_job)

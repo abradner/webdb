@@ -3,10 +3,12 @@
   Data Object: #{@import_job.data_object.name}
   %br/
   Import Mapping: #{@import_job.import_mapping.name}
+  %br/
+  Raw File: #{@import_job.raw_file.name}
 %p
   The results are:
   - @results.each do |result|
     %p= result
 %p
   You can check the progress of an import job here
-  -# TODO url
+%p= system_data_object_import_job_url(@import_job.data_object.system, @import_job.data_object, @import_job)
