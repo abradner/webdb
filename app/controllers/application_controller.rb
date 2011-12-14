@@ -43,10 +43,19 @@ class ApplicationController < ActionController::Base
     if can? :admin, User
     #  @partial_systems = System.part
       @systems = System.all :order => :name
+      @inactive_systems = System.inactive.all
+      @active_systems = System.active.all
     end
 
   end
 
-
+  def flash_message(type, message)
+    if flash[type]
+      flash[type] << "\n".html_safe
+    else
+      flash[type] = []
+    end
+    flash[type] << message
+  end
 
 end

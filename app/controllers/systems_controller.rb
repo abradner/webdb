@@ -9,9 +9,29 @@ class SystemsController < ApplicationController
     redirect_to pages_home_path
   end
 
-  def show;end
-  def edit_members; end
-  def configure;  end
+  def show
+    flash_message :notice, "Warning: System is inactive and in read-only mode." unless @system.is_active?
+
+    #Workaround for scopes not working through tenacity associations (me cries. well, it's probably faster)
+    if @system.data_objects.present?
+      @active_data_objects = Array.new
+      @inactive_data_objects = Array.new
+      @system.data_objects.each do |dobj|
+        dobj.is_active? ? @active_data_objects << dobj :
+                          @inactive_data_objects << dobj
+      end
+    end
+
+  end
+
+  def edit_members
+    unless @system.is_active?
+      redirect_to :back, :alert => "The system #{@system.name} is inactive and cannot be changed. Reactivate it first."
+    end
+  end
+
+  def configure;
+  end
 
   def select_raw_file_type
     if (ft = params[:file_type_id]).present?
@@ -21,6 +41,10 @@ class SystemsController < ApplicationController
   end
 
   def update_members
+    unless @system.is_active?
+      redirect_to :back, :alert => "The system #{@system.name} is inactive and cannot be changed. Reactivate it first."
+      return
+    end
     #TODO remove admins from the list of user ids
     if @system.update_attribute(:collaborator_ids, params[:member_ids])
       redirect_to @system, :notice => "The users of this system were updated."

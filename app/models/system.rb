@@ -26,8 +26,8 @@ class System < ActiveRecord::Base
            :class_name => 'User',
            :source => :user
 
-  scope :inactive, where(:is_active => false)
-  scope :active, where(:is_active => true)
+  scope :active, where(:is_active => true).order(:name)
+  scope :inactive, where(:is_active => false).order(:name)
 
   accepts_nested_attributes_for :memberships, :administrators
 
@@ -50,6 +50,16 @@ class System < ActiveRecord::Base
       count += ft.raw_files.count
     end
     count
+  end
+
+  def deactivate!
+    self.is_active = false
+    save!(:validate => false)
+  end
+
+  def activate!
+    self.is_active = true
+    save!(:validate => false)
   end
 
   #def file(object_id)

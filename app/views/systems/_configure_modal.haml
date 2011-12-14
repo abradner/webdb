@@ -3,13 +3,18 @@
 .field.line
   %label Settings
   .lastUnit
+    - if @system.is_active?
+      -#=button_link_to "Edit Security Groups", system_security_groups_path(@system), :class => "security"
+      =button_link_to "Edit System Members", edit_members_system_path(@system), :class => "security"
+    -else
+      %p.line Activate this system to make changes
     -if can? :manage, System
       =button_link_to "Manage System", edit_management_system_path(@system), :class => 'edit red'
-    =button_link_to "Edit Security Groups", system_security_groups_path(@system), :class => "security"
-    =button_link_to "Edit System Members", edit_members_system_path(@system), :class => "security"
 .field.line
   %label Contents
   .lastUnit
-    =button_link_to "Add Data Object", new_system_data_object_path(@system), :remote => true, :class => "add"
-    =button_link_to "Edit Filetypes", system_file_types_path(@system), :class => "file_type"
-
+    - if @system.is_active?
+      =button_link_to "Add Data Object", new_system_data_object_path(@system), :remote => true, :class => "add"
+      =button_link_to "Edit Filetypes", system_file_types_path(@system), :class => "file_type"
+    -else
+      Activate this system to make changes

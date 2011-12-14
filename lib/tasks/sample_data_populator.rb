@@ -71,7 +71,8 @@ def create_basic_settings
   s = System.new  :name               => "Sample System 1",
                   :code               => "SYS00001",
                   :description        => "This is a sample system where all managers are administrators",
-                  :schema_name        => "system_1"
+                  :schema_name        => "system_1",
+                  :is_active          => false
   s.colour_scheme = cs
   s.administrators = managers
   s.save!

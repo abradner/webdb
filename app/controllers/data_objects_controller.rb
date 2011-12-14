@@ -18,7 +18,11 @@ class DataObjectsController < ApplicationController
     authorize! :new, @data_object
   end
 
-  def edit;
+  def edit
+    unless @data_object.is_active?
+      redirect_to :back, :alert => "The Data Object #{@data_object.name} is inactive and cannot be changed. Reactivate it first."
+      return
+    end
   end
 
   def configure;
@@ -37,14 +41,22 @@ class DataObjectsController < ApplicationController
   end
 
   def update
+    unless @data_object.is_active?
+      redirect_to :back, :alert => "The Data Object #{@data_object.name} is inactive and cannot be changed. Reactivate it first."
+      return
+    end
     @errors = true unless @data_object.update_attributes(params[:data_object])
     prepare_attributes_for_wizard! unless @errors
   end
 
   def activate
-    if false #TODO write tests here
-      @data_object.update_attribute(is_active, true)
-    end
+    @data_object.activate!
+    redirect_to system_data_object_path(@system, @data_object), :notice => "The Data Object was successfully activated."
+  end
+
+  def deactivate
+    @data_object.deactivate!
+    redirect_to system_data_object_path(@system, @data_object), :notice => "The Data Object was successfully deactivated."
   end
 
   def import
@@ -68,6 +80,11 @@ class DataObjectsController < ApplicationController
 
 
   def destroy
+    if @data_object.is_active?
+      redirect_to :back, :alert => "The Data Object #{@data_object.name} is active and cannot be deleted. Deactivate it first."
+      return
+    end
+
     if @data_object.destroy
       redirect_to system_url(@data_object.system), :notice => "The data object #{@data_object.name} has been successfully removed."
     else

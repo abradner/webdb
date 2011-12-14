@@ -10,6 +10,8 @@ end
         get :deactivate
         get :activate
         post :create
+        get :export_data
+        get :export_structure
       end
     end
     resources :storage_locations
@@ -77,6 +79,10 @@ end
         get :import
         post :import_selected
         post :mapping_selected
+
+        get :deactivate
+        get :activate
+
       end
     end
     resources :security_groups
@@ -92,8 +98,6 @@ end
       get :select_raw_file_type
       put :select_raw_file_type
 
-      get :deactivate
-      get :activate
 
       get :configure
     end

@@ -14,11 +14,19 @@
             %h3 Systems you can access:
             - @collaborations.each do |s|
               = render :partial => "shared/list_systems_management", :locals => {:system => s}
-          %p &nbsp;
           - if @systems.present?
-            %h3 All configured systems:
-            - @systems.each do |s|
-              = render :partial => "shared/list_systems_management", :locals => {:system => s}
+            %p &nbsp;
+            %h3 All Active systems:
+            - if @active_systems.present?
+              - @active_systems.each do |s|
+                = render :partial => "shared/list_systems_management", :locals => {:system => s}
+            - else
+              No systems are active!
+            %p &nbsp;
+            - if @inactive_systems.present?
+              %h3 All Inactive systems:
+              - @inactive_systems.each do |s|
+                = render :partial => "shared/list_systems_management", :locals => {:system => s}
           - else
             No systems are configured!
       .dragger_container

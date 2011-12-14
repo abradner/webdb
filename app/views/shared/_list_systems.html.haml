@@ -1,5 +1,4 @@
 #system_item{:class => "closed"}
   = link_to system.name, system
   - if system_admin
-    = link_to "(Edit)", edit_system_path(system)
     %p.details Users: #{system.memberships.count}, Data Objects: #{system.data_objects.count}

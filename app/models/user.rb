@@ -5,9 +5,6 @@ class User < ActiveRecord::Base
 
   belongs_to :role
 
-  # 2011-09-29 - users don't "have" systems, since their is no concept of a system owner.
-  #has_many :systems
-
   has_many :security_groups, :through => :user_security_groups
   has_many :user_security_groups, :dependent => :destroy
 
@@ -18,12 +15,14 @@ class User < ActiveRecord::Base
   has_many :system_memberships,
            :through => :memberships,
            :class_name => 'System',
-           :source => :system
+           :source => :system,
+           :conditions => {:is_active => true}
 
   has_many :system_collaborations,
            :through => :collaborations,
            :class_name => 'System',
-           :source => :system
+           :source => :system,
+           :conditions => {:is_active => true}
 
   has_many :system_administrations,
            :through => :administrations,

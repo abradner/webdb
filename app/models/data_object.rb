@@ -45,6 +45,16 @@ class DataObject
     name.strip! if name
   end
 
+  def deactivate!
+    self.is_active = false
+    save!(:validate => false)
+  end
+
+  def activate!
+    self.is_active = true
+    save!(:validate => false)
+  end
+
   #def unrelated
   #  ids = System.find(self.system_id).data_object_ids - self.relative_ids - Array(self.id)
   #  DataObject.find(ids)

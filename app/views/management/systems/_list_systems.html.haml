@@ -1,0 +1,41 @@
+%table
+  %tr
+    %th
+      %h3 Name
+    %th
+      %h3 Description
+    %th
+      %h3 Information
+    %th
+      %h3 View
+    %th
+      %h3 Export
+    %th
+      %h3 Edit
+  - sys.each do |s|
+    %tr
+      %td= s.name
+      %td= s.description
+      %td.light
+        %p Objects: #{s.data_objects.count}
+        %p Files: #{s.files}
+        %p Users: #{s.memberships.count}
+      %td
+        = button_link_to "View", s
+      %td
+        %p.row= button_link_to "Structure only", export_structure_management_system_path(s)
+        %p.row= button_link_to "Everything", export_data_management_system_path(s)
+      %td
+        -if active
+          %p.row= button_link_to "Edit", edit_management_system_path(s), :class => 'edit'#, :remote => true
+          %p.row= button_link_to "Deactivate", deactivate_management_system_path(s),
+                              :confirm =>"This will deactivate the system. It will only be accessible by managers and administrators and will be read only.",
+                              :id => 'deactivate_system_link', :class => 'red delete'
+        - else
+          %p.row= button_link_to "Activate", activate_management_system_path(s),
+                              :confirm =>"Reactivate system for use?",
+                              :id => 'activate_system_link', :class => 'green add'
+          %p.row= button_link_to "DESTROY", management_system_path(s),
+                              :confirm =>"Continuing will DESTROY ALL DATA ASSOCIATED WITH THE SYSTEM. proceed with caution!",
+                              :id => 'delete_system_link', :class => 'red delete', :method => :delete
+

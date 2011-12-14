@@ -1,32 +1,26 @@
 %h2 System Management
+.row
 %ul
-  %li= button_link_to 'Add System', new_management_system_path, :class => "add"
+  %li
+    = button_link_to 'Add System', new_management_system_path, :class => "add"
+    = button_link_to 'X   Import System', "", :class => ""
+
 -#=button_link_to "Delete", management_system_path, :method => "delete",
 -#                      :confirm =>"Are you sure you want to delete this system and all related data?",
 -#                      :id => 'system_delete_link', :class => 'red delete'
 
-%table
-  %tr
-    %th
-      %h3 Name
-    %th
-      %h3 Description
-    %th
-      %h3 Information
-    %th
-      %h3 Actions
-  - @systems.each do |s|
-    %tr
-      %td= s.name
-      %td= s.description
-      %td.light
-        %p Objects: #{s.data_objects.count}
-        %p Files: #{s.files}
-        %p Users: #{s.memberships.count}
-      %td
-        = button_link_to "View", s
-        = button_link_to "Edit", edit_management_system_path(s), :class => 'edit'#, :remote => true
-        = button_link_to "Deactivate", deactivate_management_system_path(s),
-                            :confirm =>"This will deactivate the system. It will still be accessible, however it will be read only.",
-                            :id => 'deactivate_system_link', :class => 'red delete'
+.row
+%h3 Active Systems
+-if @active_systems.blank?
+  No active systems.
+-else
+  =render :partial => 'list_systems', :locals => {:sys => @active_systems, :active => true}
+
+.row
+  
+%h3 Retired and Inactive Systems
+-if @inactive_systems.blank?
+  No inactive systems.
+-else
+  =render :partial => 'list_systems', :locals => {:sys => @inactive_systems, :active => false}
 

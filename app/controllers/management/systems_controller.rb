@@ -9,7 +9,12 @@ class Management::SystemsController < ApplicationController
   def new
     @colour_schemes = ColourScheme.all
   end
+
   def edit
+    unless @system.is_active?
+      redirect_to management_systems_path, :alert => "The system #{@system.name} is inactive and cannot be changed. Reactivate it first."
+      return
+    end
     @colour_schemes = ColourScheme.all
   end
 
@@ -27,7 +32,6 @@ class Management::SystemsController < ApplicationController
 
   def update
     sanitise_params_for_mgmt_system!
-    Rails.logger.debug "=======DEBUG: UPDATING SYSTEM=======\n"
     if @system.update_attributes(params[:system])
       redirect_to system_path(@system), :notice => "The System was successfully updated."
     else
@@ -35,16 +39,47 @@ class Management::SystemsController < ApplicationController
       render :edit
     end
   end
-  
+
   def index
+
+    #@inactive_systems = System.inactive.all
+    #@active_systems = System.active.all
+  end
+
+  def activate
+    @system.activate!
+    redirect_to management_systems_path, :notice => "The System was successfully activated."
+  end
+
+  def deactivate
+    @system.deactivate!
+    redirect_to management_systems_path, :notice => "The System was successfully deactivated."
   end
 
   def destroy
+    if @system.is_active?
+      redirect_to :back, :alert => "The system #{@system.name} is active could not be deleted. Deactivate it first."
+      return
+    end
+
     if @system.destroy
       redirect_to systems_url, :notice => "The system #{@system.name} has been successfully removed."
     else
       redirect_to :back, :alert => "The system #{@system.name} could not be deleted."
     end
+  end
+
+  def export_structure
+    respond_to :json
+
+    render :json => System.all
+
+  end
+
+  def export_data
+
+
+    render :file => @system.to_yaml, content_type => 'text/yaml'
   end
 
   private

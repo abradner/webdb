@@ -15,10 +15,6 @@
         =@system.code
     .entry
       %p
-        Colour scheme:
-        =@system.colour_scheme.present? ? @system.colour_scheme.name : "Default"
-    .entry
-      %p
         Members:
         =@system.memberships.count || 0
 
@@ -51,15 +47,24 @@
   %h2 Content
   .system_left_col
     %h3 Data Objects
-    - unless @system.data_objects.present?
-      No Data Objects configured.
+    - if @system.data_objects.present?
       %ul
-    - @system.data_objects.each do |dobj|
-      =link_to system_data_object_path(@system, dobj) do
-        .entry.data_object
-          %span=dobj.name
-        .item.light.truncate
-          =dobj.short_description
+        - unless @active_data_objects.blank?
+          - @active_data_objects.each do |dobj|
+            =link_to system_data_object_path(@system, dobj) do
+              .entry.data_object
+                %span=dobj.name
+              .item.light.truncate
+                =dobj.short_description
+        - unless @inactive_data_objects.blank?
+          - @inactive_data_objects.each do |dobj|
+            =link_to system_data_object_path(@system, dobj) do
+              .entry.data_object.inactive
+                %span=dobj.name
+              .item.light.truncate
+                =dobj.short_description
+    -else
+      No Data Objects configured.
 
   .system_right_col.wide_col
     %h3 Storage:
