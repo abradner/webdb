@@ -91,6 +91,7 @@ GEM
       execjs
     coffee-script-source (1.1.2)
     colored (1.2)
+    colorize (0.5.8)
     columnize (0.3.4)
     cucumber (1.1.0)
       builder (>= 2.1.2)
@@ -333,6 +334,7 @@ DEPENDENCIES
   carrierwave-mongoid
   cheat
   coffee-rails (~> 3.1.1)
+  colorize
   cucumber
   cucumber-rails
   database_cleaner

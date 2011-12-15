@@ -174,18 +174,25 @@ namespace :deploy do
 
   desc "Full redepoyment, it runs deploy:update, deploy:refresh_db, and deploy:restart"
   task :full_redeploy do
-    update
-    refresh_db
-    restart
+      update
+      refresh_db
+      restart
   end
 
   # Helper task which re-creates the database
   desc "DO NOT RUN in production!!! This will delete live data! Run only in test environment."
   task :refresh_db, :roles => :db do
-    schema_load
-    refresh_mongoid
-    seed
-    populate
+    require 'colorize'
+    puts "This step (deploy:refresh_db) will erase all data and start from scratch.\nYou probably don't want to do it. Are you sure?' [NO/yes]".colorize(:red)
+    input = STDIN.gets.chomp
+    if input.match(/^yes/)
+      schema_load
+      refresh_mongoid
+      seed
+      populate
+    else
+      puts "Skipping database nuke"
+    end
   end
 
 

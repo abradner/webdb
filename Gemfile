@@ -64,8 +64,9 @@ gem 'capistrano-ext'
 gem 'capistrano'
 
 gem 'fastercsv'
-
 gem 'delayed_job'
+
+gem 'colorize' #Colourisable console output - http://colorize.rubyforge.org
 
 gem 'haml'
 gem "haml-rails"
