@@ -12,6 +12,19 @@ class PagesController < ApplicationController
 
   end
 
+  def helper
+
+    case params[:selected_helper]
+      when "time"
+        page = 'shared/helpers/time'
+      when "regex"
+        page = 'shared/helpers/regex'
+      else
+        page = "#{Rails.root}/public/404.html"
+    end
+    render page, :layout => nil
+  end
+
   def routing_error
      render :file => "#{Rails.root}/public/404.html", :status => 404
    end

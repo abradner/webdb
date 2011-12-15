@@ -21,7 +21,7 @@
         .field.line
           %label= required_field("Field Options:")
           #field_options.lastUnit
-            =render :partial => 'field_options', :locals => {:field_type => @file_metadata_schema.field_type}
+            =render :partial => 'file_metadata_schemas/field_options', :locals => {:field_type => @file_metadata_schema.field_type}
         .field.line
           .field.actions
             = f.submit :class => "blue basic_field", :id => "save_button"
@@ -39,4 +39,4 @@
 :javascript
    //blah
    
-= render :partial => 'script_helper'
+= render :partial => 'file_metadata_schemas/script_helper'

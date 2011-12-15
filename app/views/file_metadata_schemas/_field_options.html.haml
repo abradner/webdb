@@ -5,11 +5,19 @@
     Select a field type to specify options
 - when "DateTime"
     Specify format of date and time (not reqd for metadata)
+    =button_link_to "Show Syntax", helper_pages_url(:selected_helper => "time"), :class => "helperPopup"
+    =text_field_tag :options
+    - show_interpretation_field = true
 - when "Date"
-    Specify format of date and (not reqd for metadata)
+    Specify format of date (times will be ignored) (not reqd for metadata)
+    =button_link_to "Show Syntax", helper_pages_url(:selected_helper => "time"), :class => "helperPopup"
+    =text_field_tag :options
+    - show_interpretation_field = true
 - when "Char"
     Regex for validation (default /./)
-    \/TEXTFIELD/
+    =button_link_to "Show Syntax", helper_pages_url(:selected_helper => "regex"), :class => "helperPopup"
+    %p /#{text_field_tag :options}/#{text_field_tag :options_extra, "", :size => 1, :maxlength => 1}/
+    - show_interpretation_field = true
 - when "String"
     Length of String
 - when "Text"
@@ -28,3 +36,13 @@
     Max Size
 - else
     Unrecognised field type! Take a screenshot and submit a bug report
+
+
+:javascript
+    $('.helperPopup').click(function (event){
+        var url = $(this).attr("href");
+        var windowName = "popUp";//$(this).attr("name");
+        var windowSize = "width=620,height=600";
+        window.open(url, windowName, windowSize);
+        event.preventDefault();
+    });

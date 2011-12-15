@@ -172,12 +172,10 @@ class User < ActiveRecord::Base
   def full_name
     "#{first_name} #{last_name}".strip
   end
-
-  def name
-    full_name
-  end
+  alias :name :full_name
 
   def is_superuser?
+    return false if self.role.blank?
     self.role.name.eql?("manager")
   end
 

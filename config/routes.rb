@@ -116,7 +116,13 @@ Webdb::Application.routes.draw do
     end
   end
 
+
   root :to => "pages#home"
+
+  resource :pages, :only => [] do
+    get :home
+    get :helper
+  end
 
   get "pages/home"
 
