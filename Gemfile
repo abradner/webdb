@@ -60,8 +60,10 @@ gem 'jquery-rails'
 gem 'devise'
 #gem 'updated_by', :git => 'git://github.com/lucasrenan/updated-by.git' # created/updated by hooks for each record wih devise
 gem 'cancan'
+
 gem 'capistrano-ext'
 gem 'capistrano'
+gem 'capistrano_colors'
 
 gem 'fastercsv'
 gem 'delayed_job'
