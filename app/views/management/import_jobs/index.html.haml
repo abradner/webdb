@@ -30,6 +30,8 @@
             Data has been imported
           - else
             = button_link_to "Import Data", import_data_system_data_object_import_job_path(system, data_object, i)
+        - elsif !i.validated
+          Pending validation
         - else
           Raw file invalid
 

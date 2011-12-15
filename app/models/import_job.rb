@@ -36,7 +36,7 @@ class ImportJob
     end
 
     @data_object = import_mapping.data_object
-
+    @includes_header = import_mapping.includes_header
     @action = import_mapping.conflict_action
 
     case import_mapping.delimiter
@@ -51,16 +51,11 @@ class ImportJob
     #TODO handle exception of non csv readable files
 
     line_num = 0
+    line_num += 1 if @includes_header # header row is skipped
 
     FasterCSV.new(self.raw_file.open_file, {:col_sep => converted_delimiter, :headers => @includes_header, :return_headers => false}).each do |row|
       #increment before any breaks
       line_num += 1
-
-      if @includes_header and line_num == 1
-        # skip header row
-        # return_headers not behaving properly
-        next
-      end
 
       fields = row
       query = {}
@@ -79,7 +74,7 @@ class ImportJob
         if @unique_fields.include?(key)
           if value.blank?
             is_valid = false
-            results << "Row #{line_num} does not have a value for #{key} and was skipped"
+            results << "Line #{line_num} does not have a value for #{key} and was skipped"
             break
 
           else
@@ -103,16 +98,16 @@ class ImportJob
             if entries.blank?
               row = @data_object.data_object_rows.build(new_attrs)
 
-              results << "Row #{line_num} was added to the data object" if row.save
+              results << "Line #{line_num} was added to the data object" if row.save
             else
-              results << "Row #{line_num} exists in the data object already"
+              results << "Line #{line_num} exists in the data object already"
 
             end
 
           when ImportMapping::DELETE
             count = entries.count
             entries.map(&:destroy) if entries.present?
-            results << "Row #{line_num} deleted #{count} records"
+            results << "Line #{line_num} deleted #{count} records"
 
           when ImportMapping::OVERWRITE
             count = 0
@@ -124,9 +119,9 @@ class ImportJob
               end
 
             end
-            results << "Row #{line_num} overwrote #{count} records" unless row.save
+            results << "Line #{line_num} overwrote #{count} records" unless row.save
           else
-            results << "Row #{line_num} skipped"
+            results << "Line #{line_num} skipped"
 
         end
 
@@ -142,7 +137,7 @@ class ImportJob
 
   end
 
-  handle_asynchronously :import
+  #handle_asynchronously :import
 
   def validate_file
     self.update_attribute(:status, "Validating")
@@ -158,7 +153,7 @@ class ImportJob
     end
 
     @data_object = import_mapping.data_object
-
+    @includes_header = import_mapping.includes_header
     @action = import_mapping.conflict_action
 
     case import_mapping.delimiter
@@ -229,7 +224,7 @@ class ImportJob
         if @unique_fields.include?(key)
           if value.blank?
             is_valid = false
-            results << "Row #{line_num} does not have a value for #{key}"
+            results << "Line #{line_num} does not have a value for #{key}"
             break
 
           else
@@ -252,10 +247,10 @@ class ImportJob
           when ImportMapping::APPEND
             if entries.blank?
               row = @data_object.data_object_rows.build(new_attrs)
-              results << "Row #{line_num} is invalid and will not be imported into the data object" unless row.valid?
+              results << "Line #{line_num} is invalid and will not be imported into the data object" unless row.valid?
 
             else
-              results << "Row #{line_num} exists in the data object already"
+              results << "Line #{line_num} exists in the data object already"
 
             end
 
@@ -263,7 +258,7 @@ class ImportJob
             #nothing to report, always valid for deleting
           when ImportMapping::OVERWRITE
             row = entries.first.assign_attributes(new_attrs, :without_protection => true) if entries.present?
-            results << "Row #{line_num} is invalid and will not be imported into the data object" unless row.valid?
+            results << "Line #{line_num} is invalid and will not be imported into the data object" unless row.valid?
 
         end
       end
@@ -275,7 +270,7 @@ class ImportJob
     end
 
     self.update_attribute(:validated, true)
-    self.update_attribute(:status, "Validated. Ready for import")
+    self.update_attribute(:status, "Validated.")
 
     Notifier.notify_user_of_import_validation_ended(self, results).deliver
 

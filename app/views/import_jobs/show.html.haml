@@ -9,6 +9,8 @@
   - elsif @import_job.imported
     Data has been imported
   - else
-    = button_link_to "Import Data", import_data_system_data_object_import_job_path(@system, @data_object, @import_job)
+    = button_link_to "Import Data", import_data_system_data_object_import_job_path(@system, @data_object,@import_job)
+- elsif !@import_job.validated
+  Pending validation
 - else
-  Raw file is invalid for this import
+  Raw file invalid
