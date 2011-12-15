@@ -5,8 +5,7 @@ class ImportJobsController < ApplicationController
 
   load_and_authorize_resource :system
   load_and_authorize_resource :data_object
-  load_resource :import_job
-  #load_and_authorize_resource :import_job
+  load_and_authorize_resource :import_job, :through => :data_object
 
 
   def index

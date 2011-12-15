@@ -17,6 +17,7 @@ class DataObject
   has_many :data_object_attributes, :dependent => :destroy
   has_many :data_object_rows, :dependent => :destroy
   has_many :import_mappings, :dependent => :destroy
+  has_many :import_jobs, :dependent => :destroy
 
   field :name,              :type => String
   field :description,       :type => String

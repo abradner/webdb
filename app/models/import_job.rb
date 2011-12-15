@@ -1,15 +1,21 @@
 class ImportJob
   include Mongoid::Document
+  include Mongoid::Timestamps
+  
   include Tenacity
   belongs_to :data_object
   belongs_to :import_mapping
   belongs_to :raw_file
+
   t_belongs_to :user
 
   field :can_import, :type => Boolean, :default => true
   field :validated, :type => Boolean, :default => false
   field :imported, :type => Boolean, :default => false
   field :status, :type => String, :default => "Pending validation"
+  field :total_count, :type => Integer
+  field :current_count, :type => Integer
+  field :started_process_at, :type => DateTime
 
   validates_inclusion_of [:can_import, :validated, :imported], :in => [true, false]
 
@@ -21,7 +27,8 @@ class ImportJob
       return
     end
 
-    self.update_attribute(:status, "Importing Data")
+    self.update_attribute(:started_process_at, Time.now)
+    self.update_attribute(:status, "Importing data")
 
     Notifier.notify_user_of_import_started(self).deliver
     @mappings = {}
@@ -57,10 +64,18 @@ class ImportJob
     # headers => true returns FasterCSV::Row
     # which is pretty annoying
 
-    FasterCSV.new(self.raw_file.open_file, {:col_sep => converted_delimiter, :return_headers => false}).each do |line|
+    #How long is the file?
+    file = self.raw_file.open_file
+    self.update_attribute :total_count, file.readlines.size
+    file.seek(0)
 
-      if line_num % AppConfig['update_status_interval'] == 0
-        self.update_attribute(:status, "Processed #{line_num} rows.")
+    update_interval = AppConfig['update_status_interval'] || 100
+
+    FasterCSV.new(file, {:col_sep => converted_delimiter, :return_headers => false}).each do |line|
+
+      if line_num % update_interval == 0
+        self.update_attribute(:current_count, line_num)
+        self.update_attribute(:status, "Processed #{line_num}/#{self.total_count} rows")
       end
 
       #increment before any breaks
@@ -69,7 +84,7 @@ class ImportJob
       if @includes_header and line_num == 1
         next
       end
-            
+
       fields = line
       query = {}
       new_attrs = {}
@@ -144,7 +159,7 @@ class ImportJob
     end
 
     self.update_attribute(:imported, true)
-    self.update_attribute(:status, "Data Imported")
+    self.update_attribute(:status, "Data imported")
 
     Notifier.notify_user_of_import_ended(self, results).deliver
 
@@ -153,6 +168,8 @@ class ImportJob
   handle_asynchronously :import
 
   def validate_file
+
+    self.update_attribute(:started_process_at, Time.now)
     self.update_attribute(:status, "Validating")
     Notifier.notify_user_of_import_validation_started(self).deliver
     @mappings = {}
@@ -187,10 +204,18 @@ class ImportJob
     # headers => true returns FasterCSV::Row
     # which is pretty annoying
 
-    FasterCSV.new(self.raw_file.open_file, {:col_sep => converted_delimiter, :return_headers => true}).each do |line|
+    #How long is the file?
+    file = self.raw_file.open_file
+    self.update_attribute :total_count, file.readlines.size
+    file.seek(0)
 
-      if line_num % AppConfig['update_status_interval'] == 0
-        self.update_attribute(:status, "Processed #{line_num} rows.")
+    update_interval = AppConfig['update_status_interval'] || 100
+
+    FasterCSV.new(file, {:col_sep => converted_delimiter, :return_headers => false}).each do |line|
+
+      if line_num % update_interval == 0
+        self.update_attribute(:current_count, line_num)
+        self.update_attribute(:status, "Processed #{line_num}/#{self.total_count} rows")
       end
 
       #increment before any breaks
@@ -227,7 +252,7 @@ class ImportJob
           self.update_attribute(:can_import, true)
           self.update_attribute(:validated, true)
           self.update_attribute(:status, "Validated. Ready for import")
-          results << "This file is valid and all data will be appended to the Data Object."
+          results << "This file is valid and all data will be appended to the data object"
           break
 
         end
@@ -300,7 +325,7 @@ class ImportJob
     end
 
     self.update_attribute(:validated, true)
-    self.update_attribute(:status, "Validated. Ready to import.")
+    self.update_attribute(:status, "Validated and ready to import")
 
     Notifier.notify_user_of_import_validation_ended(self, results).deliver
 
