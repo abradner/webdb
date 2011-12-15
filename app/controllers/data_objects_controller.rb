@@ -11,6 +11,8 @@ class DataObjectsController < ApplicationController
   end
 
   def show;
+    @visible_attr_names = @data_object.data_object_attributes.visible_fields.collect(&:name)
+
   end
 
   def new

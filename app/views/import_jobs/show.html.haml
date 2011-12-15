@@ -3,14 +3,7 @@
 %p= @import_job.raw_file.name
 %p= @import_job.status
 
-- if @import_job.validated and @import_job.can_import
-  - if @import_job.status.eql?("Importing Data")
-    Data is currently importing
-  - elsif @import_job.imported
-    Data has been imported
-  - else
-    = button_link_to "Import Data", import_data_system_data_object_import_job_path(@system, @data_object,@import_job)
-- elsif !@import_job.validated
-  Pending validation
-- else
-  Raw file invalid
+- if @import_job.status.eql?("Validated. Ready to import.")
+  = button_link_to "Import Data", import_data_system_data_object_import_job_path(@system, @data_object, @import_job)
+- elsif @import_job.status.eql?("Pending validation")
+  = button_link_to "Validate", validate_system_data_object_import_job_path(@system, @data_object, @import_job)

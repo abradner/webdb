@@ -32,6 +32,8 @@ defaults: &defaults
     - type
     - _type
     - data_object_id
+  update_status_interval:
+    5
 
 
 development:

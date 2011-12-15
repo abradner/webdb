@@ -6,7 +6,8 @@
     %th System
     %th Data Object
     %th Import Mapping
-    %th Import Mapping Type
+    %th File Type
+    %th Raw File
     %th Initiated By
     %th Status
     %th Actions
@@ -19,19 +20,12 @@
       %td= link_to system.name, system_path(system)
       %td= link_to data_object.name, system_data_object_path(system, data_object)
       %td= i.import_mapping.name
-      %td= i.import_mapping.type
+      %td= i.import_mapping.file_type.name
+      %td= i.raw_file.name
       %td= link_to i.user.full_name, user_path(i.user)
       %td= i.status
       %td
-        - if i.validated and i.can_import
-          - if i.status.eql?("Importing Data")
-            Data is currently importing
-          - elsif i.imported
-            Data has been imported
-          - else
-            = button_link_to "Import Data", import_data_system_data_object_import_job_path(system, data_object, i)
-        - elsif !i.validated
-          Pending validation
-        - else
-          Raw file invalid
-
+        - if i.status.eql?("Validated. Ready to import.")
+          = button_link_to "Import Data", import_data_system_data_object_import_job_path(system, data_object, i)
+        - elsif i.status.eql?("Pending validation")
+          = button_link_to "Validate", validate_system_data_object_import_job_path(system, data_object, i)

@@ -9,11 +9,17 @@ class ImportJob
   field :can_import, :type => Boolean, :default => true
   field :validated, :type => Boolean, :default => false
   field :imported, :type => Boolean, :default => false
-  field :status, :type => String,  :default => "Initialized"
+  field :status, :type => String, :default => "Pending validation"
 
   validates_inclusion_of [:can_import, :validated, :imported], :in => [true, false]
 
   def import
+
+
+    if !self.can_import
+
+      return
+    end
 
     self.update_attribute(:status, "Importing Data")
 
@@ -22,12 +28,6 @@ class ImportJob
     @unique_fields = []
 
     results = []
-
-    if !self.can_import
-      results << "Attempted import of invalid file."
-      Notifier.notify_user_of_import_ended(self, results).deliver
-      return
-    end
 
     import_mapping.mappings.each do |k, v|
       doa = DataObjectAttribute.find(v)
@@ -51,13 +51,26 @@ class ImportJob
     #TODO handle exception of non csv readable files
 
     line_num = 0
-    line_num += 1 if @includes_header # header row is skipped
 
-    FasterCSV.new(self.raw_file.open_file, {:col_sep => converted_delimiter, :headers => @includes_header, :return_headers => false}).each do |row|
+    # includes_header not relevant in reading a file
+    # because headers => false returns Array while
+    # headers => true returns FasterCSV::Row
+    # which is pretty annoying
+
+    FasterCSV.new(self.raw_file.open_file, {:col_sep => converted_delimiter, :return_headers => false}).each do |line|
+
+      if line_num % AppConfig['update_status_interval'] == 0
+        self.update_attribute(:status, "Processed #{line_num} rows.")
+      end
+
       #increment before any breaks
       line_num += 1
 
-      fields = row
+      if @includes_header and line_num == 1
+        next
+      end
+            
+      fields = line
       query = {}
       new_attrs = {}
 
@@ -119,7 +132,7 @@ class ImportJob
               end
 
             end
-            results << "Line #{line_num} overwrote #{count} records" unless row.save
+            results << "Line #{line_num} overwrote #{count} records"
           else
             results << "Line #{line_num} skipped"
 
@@ -137,7 +150,7 @@ class ImportJob
 
   end
 
-  #handle_asynchronously :import
+  handle_asynchronously :import
 
   def validate_file
     self.update_attribute(:status, "Validating")
@@ -169,11 +182,21 @@ class ImportJob
 
     line_num = 0
 
-    FasterCSV.new(self.raw_file.open_file, {:col_sep => converted_delimiter, :headers => @includes_header, :return_headers => true}).each do |row|
+    # includes_header not relevant in reading a file
+    # because headers => false returns Array while
+    # headers => true returns FasterCSV::Row
+    # which is pretty annoying
+
+    FasterCSV.new(self.raw_file.open_file, {:col_sep => converted_delimiter, :return_headers => true}).each do |line|
+
+      if line_num % AppConfig['update_status_interval'] == 0
+        self.update_attribute(:status, "Processed #{line_num} rows.")
+      end
+
       #increment before any breaks
       line_num += 1
 
-      fields = row
+      fields = line
 
       # do these quick validations only once
       if line_num == 1
@@ -183,7 +206,7 @@ class ImportJob
           results << "The file is invalid for importing as it does not have #{import_mapping.num_of_columns} columns."
           self.update_attribute(:can_import, false)
           self.update_attribute(:validated, true)
-          self.update_attribute(:status, "Validated - Raw file invalid")
+          self.update_attribute(:status, "Validated - Raw file invalid, import disabled")
           break
         end
 
@@ -193,7 +216,7 @@ class ImportJob
             results << "The file is invalid for importing as it does not have the same headers as defined in the import mapping."
             self.update_attribute(:can_import, false)
             self.update_attribute(:validated, true)
-            self.update_attribute(:status, "Validated - Raw file invalid")
+            self.update_attribute(:status, "Validated - Raw file invalid, import disabled")
             break
 
           end
@@ -201,10 +224,15 @@ class ImportJob
 
         #if there are no unique fields, data is always appended, therefore valid
         if @unique_fields.empty?
+          self.update_attribute(:can_import, true)
+          self.update_attribute(:validated, true)
+          self.update_attribute(:status, "Validated. Ready for import")
           results << "This file is valid and all data will be appended to the Data Object."
           break
 
         end
+
+        next
       end
 
       query = {}
@@ -257,9 +285,11 @@ class ImportJob
           when ImportMapping::DELETE
             #nothing to report, always valid for deleting
           when ImportMapping::OVERWRITE
-            row = entries.first.assign_attributes(new_attrs, :without_protection => true) if entries.present?
-            results << "Line #{line_num} is invalid and will not be imported into the data object" unless row.valid?
+            if entries.present?
 
+              row = entries.first.assign_attributes(new_attrs, :without_protection => true)
+              results << "Line #{line_num} is invalid and will not be imported into the data object" unless row.valid?
+            end
         end
       end
 
@@ -270,7 +300,7 @@ class ImportJob
     end
 
     self.update_attribute(:validated, true)
-    self.update_attribute(:status, "Validated.")
+    self.update_attribute(:status, "Validated. Ready to import.")
 
     Notifier.notify_user_of_import_validation_ended(self, results).deliver
 

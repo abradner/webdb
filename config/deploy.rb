@@ -205,4 +205,4 @@ task :tail_log, :roles => :app do
 end
 
 # Install after hooks
-after "deploy:update_code", "deploy:update_permissions"
+after "deploy:update_code", "deploy:update_permissions", "deploy:restart_delayed_job"

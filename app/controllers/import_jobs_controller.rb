@@ -28,6 +28,12 @@ class ImportJobsController < ApplicationController
   end
 
   def validate
+    if !@import_job.validated
+      @import_job.validate_file
+      redirect_to system_data_object_import_job_path(@system, @data_object, @import_job), :notice => "The import job is being validated now"
+    else
+      redirect_to system_data_object_import_job_path(@system, @data_object, @import_job), :alert => "This import job has been validated already"
+    end
 
   end
 
