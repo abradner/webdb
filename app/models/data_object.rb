@@ -14,9 +14,9 @@ class DataObject
   #has_many :inverse_data_object_relationships, :class_name => "DataObjectRelationship", :foreign_key => "relative_id"
   #has_many :inverse_relatives, :through => :inverse_data_object_relationships, :source => :data_object
 
-  has_many :data_object_attributes
-  has_many :data_object_rows
-  has_many :import_mappings
+  has_many :data_object_attributes, :dependent => :destroy
+  has_many :data_object_rows, :dependent => :destroy
+  has_many :import_mappings, :dependent => :destroy
 
   field :name,              :type => String
   field :description,       :type => String

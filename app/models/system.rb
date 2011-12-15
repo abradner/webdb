@@ -7,7 +7,7 @@ class System < ActiveRecord::Base
   t_has_many :file_types
 
 
-  has_many :memberships, :class_name => "SystemMember"
+  has_many :memberships, :class_name => "SystemMember", :dependent => :destroy
   has_many :collaborations, :class_name => "SystemMember", :conditions => {:administrator => false}
   has_many :administrations, :class_name => "SystemMember", :conditions => {:administrator => true}
 

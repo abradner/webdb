@@ -10,8 +10,8 @@ class FileType
 
   t_belongs_to :system
   belongs_to :storage_location
-  has_many :import_mappings
-  has_many :raw_files
+  has_many :import_mappings, :dependent => :destroy
+  has_many :raw_files, :dependent => :destroy
   embeds_many :file_metadata_schemas
 
 

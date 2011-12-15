@@ -23,8 +23,8 @@
       %td
         = button_link_to "View", s
       %td
-        %p.row= button_link_to "Structure only", export_structure_management_system_path(s)
-        %p.row= button_link_to "Everything", export_data_management_system_path(s)
+        %p.row= button_link_to "X Structure only", export_structure_management_system_path(s)
+        %p.row= button_link_to "X Everything", export_data_management_system_path(s)
       %td
         -if active
           %p.row= button_link_to "Edit", edit_management_system_path(s), :class => 'edit'#, :remote => true

@@ -22,6 +22,7 @@ class Management::SystemsController < ApplicationController
     sanitise_params_for_mgmt_system!
     @system = System.new(params[:system])
 
+
     if @system.save
       redirect_to management_systems_path, :notice => "The System was successfully created."
     else
@@ -70,16 +71,42 @@ class Management::SystemsController < ApplicationController
   end
 
   def export_structure
-    respond_to :json
-
-    render :json => System.all
+    #Tenacity breaks the :include directives. normal methods just won't work.
+    render :status => :not_implemented
+    #respond_to :json
+    #
+    #render :json => System.all
 
   end
 
   def export_data
+    #Tenacity breaks the :include directives. normal methods just won't work.
+    render :status => :not_implemented
+
+    #objects = Array.new
+    #@system.data_objects.each do |dobj|
+    #  objects << dobj.to_xml(:include => {
+    #                      :data_object_attributes => {},
+    #                      :data_object_rows => {},
+    #                      :import_mappings => {}
+    #                      }
+    #                     )
+    #end
+    #
+    #data = @system.to_xml(:include => {
+    #    :data_objects => {:include => {
+    #                        :data_object_attributes => {},
+    #                        :data_object_rows => {},
+    #                        :import_mappings => {}
+    #                        }
+    #                      },
+    #    :storage_locations => {},
+    #    :file_types => {}
+    #})
 
 
-    render :file => @system.to_yaml, content_type => 'text/yaml'
+    #render :xml => data
+    #render :file => @system.to_yaml, content_type => 'text/yaml'
   end
 
   private

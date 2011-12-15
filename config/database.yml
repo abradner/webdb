@@ -19,16 +19,18 @@ test: &test
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
-  pool: 5
-  timeout: 5000
+  adapter: mysql
+  database: webdb
+  username: webdb
+  password: *****
+  host: localhost
 
 uat:
-  adapter: sqlite3
-  database: db/uat.sqlite3
-  pool: 5
-  timeout: 5000
+  adapter: mysql
+  database: webdb_uat
+  username: webdb
+  password: webdb
+  host: localhost
 
 cucumber:
   <<: *test

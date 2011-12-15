@@ -2,6 +2,7 @@ def populate_data
 
   User.delete_all
   System.delete_all
+
   cs = ColourScheme.find_by_name("Default")
   cs.delete unless cs.blank?
 

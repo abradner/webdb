@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111212055612) do
+ActiveRecord::Schema.define(:version => 20111215005855) do
 
   create_table "colour_schemes", :force => true do |t|
     t.string   "name"
@@ -81,13 +81,12 @@ ActiveRecord::Schema.define(:version => 20111212055612) do
 
   create_table "systems", :force => true do |t|
     t.string   "name"
-    t.string   "code",                     :limit => 12
+    t.string   "code",             :limit => 12
     t.integer  "colour_scheme_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "description",              :limit => 255
-    t.string   "raw_storage_container_id"
-    t.boolean  "is_active"
+    t.text     "description",      :limit => 255
+    t.boolean  "is_active",                       :default => false, :null => false
     t.string   "schema_name"
   end
 

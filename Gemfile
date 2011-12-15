@@ -21,7 +21,7 @@ group :test do
 
   # Testing specific applications
 #  gem 'escape_utils'
-#  gem 'email_spec'
+  gem 'email_spec'
 end
     
 group :development, :test do
