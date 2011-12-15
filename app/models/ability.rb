@@ -63,6 +63,7 @@ class Ability
 
       can :manage, ColourScheme
       can :manage, StorageLocation
+      can :manage, ImportJob
       #can :manage, FileContentType
     end
 
@@ -109,6 +110,8 @@ class Ability
     can :manage, DataObjectAttribute, :data_object_id => can_manage_data_object
     can :read, DataObjectAttribute, :data_object_id => can_read_data_object
 
+    can :manage, ImportJob, :data_object_id => can_manage_data_object
+    can :read, ImportJob, :data_object_id => can_read_data_object
 
     #Data Object Relationship privileges
     #can :manage, DataObjectRelationship, :system_id => system_administrations ##TODO admin security groups (both objects )& administrators

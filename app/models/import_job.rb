@@ -56,6 +56,12 @@ class ImportJob
       #increment before any breaks
       line_num += 1
 
+      if @includes_header and line_num == 1
+        # skip header row
+        # return_headers not behaving properly
+        next
+      end
+
       fields = row
       query = {}
       new_attrs = {}

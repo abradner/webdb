@@ -19,6 +19,10 @@ Webdb::Application.routes.draw do
     resource :overview do
       get :index, :on => :collection
     end #, :only => [:index]
+
+    resources :import_jobs, :only => [:index]
+
+
   end
 
   resources :users, :only => [:show] do
