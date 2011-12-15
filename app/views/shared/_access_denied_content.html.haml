@@ -1,0 +1,11 @@
+= image_tag "btn_close_x.png", :border => 0, :class => 'lightbox_close_icon jqmClose jqmClose_x', :alt =>'Cancel', :id => 'close_modal'
+
+%h2
+  Access Denied
+#modal_flash
+  - if flash[:notice]
+    %p#notice= flash[:notice]
+  - if flash[:alert]
+    %p#alert= flash[:alert]
+
+= button_link_to "Close", "", :remote => true, :class => "jqmClose" 

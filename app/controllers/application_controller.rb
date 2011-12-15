@@ -17,7 +17,11 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     flash[:alert] = exception.message
     Rails.logger.debug "Access denied on #{exception.action}, Details: \n#{exception.subject.inspect}" unless Rails.env.production?
-    redirect_to :back
+
+    respond_to do |format|
+      format.js { render :partial => 'shared/access_denied_popup'}
+      format.all { redirect_to :back }
+    end
   end
 
 
