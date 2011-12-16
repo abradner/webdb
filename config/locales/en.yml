@@ -6,3 +6,32 @@ en:
   app_name: "WebDB"
   db: "Database"
   fs: "File System"
+
+  parser_strings:
+    generic: &parser_strings_generic
+      none: "Select a field type to specify options"
+      foreign: "Unrecognised field type! Take a screenshot and submit a bug report"
+
+      DateTime: "Specify format of date and time"
+      Date: "Specify format of date (times will be ignored)"
+      Char: "Enter Regex for validation (default matches everything)"
+      String: "Length of String"
+      Text: "Length of text field"
+      Integer: "Range of integers (min, max, specified)"
+      Float: "Display (dp, sig fig)"
+      Multi: "There will be the following options (tick the checkbox to have it preselected):"
+      Radio: "There will be the following options (click the radio button to use it as default):"
+      Select: "There will be the following options (click the radio button to use it as default):"
+      Blob: "Max Size (KB):"
+
+    metadata:
+      <<: *parser_strings_generic
+      DateTime: "No Options Available"
+      Date: "No Options Available"
+      Char: "No Options Available"
+      Integer: "No Options Available"
+      Float: "No Options Available"
+      Blob: "No Options Available"
+
+    attributes:
+      <<: *parser_strings_generic

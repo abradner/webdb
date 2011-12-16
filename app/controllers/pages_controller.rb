@@ -12,16 +12,21 @@ class PagesController < ApplicationController
 
   end
 
+
   def helper
 
     case params[:selected_helper]
       when "time"
+        @helper = params[:selected_helper]
         page = 'shared/helpers/time'
       when "regex"
+        @helper = params[:selected_helper]
         page = 'shared/helpers/regex'
       else
+        @helper = ""
         page = "#{Rails.root}/public/404.html"
     end
+
     render page, :layout => nil
   end
 

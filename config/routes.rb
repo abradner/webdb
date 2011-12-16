@@ -124,6 +124,7 @@ Webdb::Application.routes.draw do
   resource :pages, :only => [] do
     get :home
     get :helper
+    get :parser
   end
 
   get "pages/home"

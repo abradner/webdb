@@ -15,7 +15,11 @@
     -extra_class = ""
     - extra_class = "selected_element" if @file_metadata_schema.present? && fms.eql?(@file_metadata_schema)
     %p.truncate{:id => fms.id}
-      =link_to fms.label, edit_system_file_type_file_metadata_schema_path(@system, @file_type, fms), :remote => true, :class => [field_css_class(fms.field_type), extra_class]
+      -begin
+        =link_to fms.label, edit_system_file_type_file_metadata_schema_path(@system, @file_type, fms), :remote => true, :class => [field_css_class(fms.field_type), extra_class]
+      -rescue
+        -#There is an almighty bug when you save a metadata field that has errors-
+        -# the bar on the right tries to load the link to the record that doesn't exist
       = "*" if fms.required
   %p.light.right * Required Field
 

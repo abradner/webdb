@@ -20,15 +20,21 @@
 %h2 Details
 #container_page_content.wrapper
   .system_left_col
-    .left.line
-      %h3 File Metadata:
-    .information
-      %span.bold Field:
-      %p Lorem Ipsum
+    %h3 File Metadata:
+    -if @raw_file[:file_metadata].blank?
+      %span.bold No metadata found!!
+    -else
+      -@file_type.file_metadata_schemas.each do |fms|
+        .information
+          %span.bold #{fms.label}:
+          - if @raw_file[:file_metadata][fms.label].blank?
+            Field contains no data!
+          -else
+            = @raw_file[:file_metadata][fms.label]
+
 
   .system_right_col
-    .left.line
-      %h3 File Information:
+    %h3 File Information:
     .row.information
       %span.bold Size:
       =number_to_human_size(@raw_file.size)

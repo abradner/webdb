@@ -1,0 +1,52 @@
+- index = 0
+
+%ul#select_list
+  - unless stored_values.blank? || stored_values[:values].blank?
+    - stored_values[:values].each do |v|
+    - Rails.logger.debug(stored_values.inspect)
+      - selected = is_option_selected? stored_values, index
+      %li{:id => "value_#{index}"}
+        = text_field_tag "value[#{index}]", v
+        - if multi
+          = check_box_tag "selection[#{index}]", 1, selected
+        - else
+          = radio_button_tag "selection", index, selected
+        %span.remove_button.basic_field{:name => "remove_field"}
+      -index+=1
+
+=link_to "Add Element", '#', :id => "add_select_element", :remote => true
+
+-#=hidden_field_tag :selected, selected_builder_values(stored_values)
+-#=hidden_field_tag :options, builder_values(stored_values)
+=hidden_field_tag :multi, multi
+=hidden_field_tag :num_elements, index
+-#
+
+
+:javascript
+    $("#add_select_element").click(function(event) {
+        var elements = $("#num_elements").val();
+        var multi = $("#multi").val();
+        var selection_option = "";
+
+        if (multi == "true") {
+          selection_option = '<input type="hidden" name="selection['+elements+']" value="0">'
+                            +'<input type="checkbox" name="selection['+elements+']" value="1">';
+        } else {
+          selection_option = '<input type="radio" name="selection" value="'+elements+'">';
+        }
+        var new_row ='<li id="value_' + elements+ '">'
+                  +'<input type="text" name="value['+elements+']">'
+                  + selection_option
+                  +'<span name="remove_element" class="remove_button basic_field"></span></li>';
+
+        $('ul#select_list').append(new_row);
+        elements++;
+        $("#num_elements").val(elements);
+       //event.preventDefault();
+    });
+
+    $(".remove_button").live('click', function() {
+        $(this).parent().remove();
+        return false;
+    });

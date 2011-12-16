@@ -3,25 +3,25 @@
         source: '<%=source%>',
         minLength: 1,
         select: function(event, ui) {
-                    if (ui) {
-                        var member_id = ui.item.id;
-                        var selector = $("li#member_" + member_id);
-                        if (selector.length == 0) {
-                            var member_name = ui.item.value;
-                            $('ul#member_list').append('<li id="member_'
-                                    + member_id
-                                    + '"><input type="hidden" name="member_ids[]" value="'
-                                    + member_id
-                                    + '">'
-                                    + member_name
-                                    + '<span name="remove_member" class="remove_button basic_field"></span></li>');
+            if (ui) {
+                var member_id = ui.item.id;
+                var selector = $("li#member_" + member_id);
+                if (selector.length == 0) {
+                    var member_name = ui.item.value;
+                    $('ul#member_list').append('<li id="member_'
+                            + member_id
+                            + '"><input type="hidden" name="member_ids[]" value="'
+                            + member_id
+                            + '">'
+                            + member_name
+                            + '<span name="remove_member" class="remove_button basic_field"></span></li>');
 
-                        }
-
-                    }
-                    $('#member').val('');
-                    return false;
                 }
+
+            }
+            $('#member').val('');
+            return false;
+        }
     });
 
     $(".remove_button").live('click', function() {

@@ -26,6 +26,18 @@ module ApplicationHelper
     render_field_content(label, content)
   end
 
+  #convenience methods to gather the values and selections for a select builder
+  def builder_values (values_container)
+    values_container[:values].blank? ? "" : values_container[:values].join(",")
+  end
+  def selected_builder_values (values_container)
+    values_container[:selected].blank? ? "" : values_container[:selected].join(",")
+  end
+  def is_option_selected? (values_container, num)
+    values_container[:selected].include? num
+  end
+
+
   private
   def render_field_content(label, content)
     div_class = cycle("field_bg", "field_nobg")

@@ -1,10 +1,22 @@
 =render :partial => 'shared/modal_form', :locals => {:obj => @raw_file, :modal_title => "Add To Raw Storage"}
 #modal_content_container
-  #form_metadata
-    = render :partial => 'raw_files/form_metadata'
-  #form_upload
-    %h3 Upload
-    = form_for [@system, @file_type, @raw_file], :html => {:multipart => true} do |f|
+  = form_for [@system, @file_type, @raw_file], :html => {:multipart => true} do |f|
+    #form_metadata
+      %h3 Metadata
+      -@file_type.file_metadata_schemas.each do |fms|
+        .field.line
+          = fms.required ? required_field(label_tag(fms.label)) : label_tag(fms.label)
+          .lastUnit
+            = custom_field_for_schema("raw_file[file_metadata]", fms)
+
+      -#= render :partial => 'raw_files/form_metadata'
+    #form_upload
+      %h3 Upload
       = f.file_field :raw_file
       = f.submit "Upload File", :class => "blue basic_field"
-    -#= render :partial => 'raw_files/form_upload'
+    .field.line
+      .field.actions
+        = button_link_to "Back", select_raw_file_type_system_path(@system), :remote => true
+        -#= button_link_to "Close", "", :remote => true, :class => "jqmClose"
+        = button_link_to "Close", system_path(@system)#, :remote => true, :class => "jqmClose"
+        -#= link_to "Save and Define Metadata", "#", :remote => true, :class => "blue basic_field", :id => "save_button"

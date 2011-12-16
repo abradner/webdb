@@ -1,0 +1,28 @@
+:javascript
+    $('#file_metadata_schema_field_type').change(function() {
+        $('#loading').addClass('loading');
+        $.ajax({url: '#{change_type_system_file_type_file_metadata_schema_url(@system.id, @file_type.id, @file_metadata_schema._id)}',
+          data: 'selected=' + this.value,
+          dataType: 'script'});
+    });
+
+    $('#parser_preview').click(function(event) {
+        $('#parser_preview').addClass('loading');
+        $.ajax({url: '#{parser_pages_url}',
+            data: 'selected_helper=#{@helper}&' + this.value,
+            dataType: 'script'});
+        event.preventDefault();
+    });
+
+
+    $('.helperPopup').click(function (event){
+        var url = $(this).attr("href");
+        var windowName = "popUp";//$(this).attr("name");
+        var windowSize = "width=620,height=600";
+        window.open(url, windowName, windowSize);
+        event.preventDefault();
+    });
+
+    //$('#ios_checkbox_container').ready(function() {
+    //    $('#file_metadata_schema_required').iphoneStyle({ checkedLabel: 'Required', uncheckedLabel: 'Optional'});
+    //});

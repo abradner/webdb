@@ -7,7 +7,7 @@ class RawFile
 
   t_belongs_to :user
   belongs_to :file_type
-  embeds_one :file_metadata
+  #embeds_one :file_metadata
 
   validates_presence_of :raw_file, :file_type, :user_id
 
@@ -32,6 +32,7 @@ class RawFile
   field :version_counter,         :type => Integer
 
   field :historic_versions,       :type => Array
+  field :file_metadata,           :type => Hash
 
 
 
@@ -53,7 +54,7 @@ class RawFile
 
   def version_words
     case self.version_counter
-      when nil || 0
+      when nil, 0
         return "Unversioned"
       when 1
         return "Initial"
