@@ -185,6 +185,7 @@ class ImportJob
     self.update_attribute(:started_process_at, Time.now)
     self.update_attribute(:status, "Validating")
     Notifier.notify_user_of_import_validation_started(self).deliver
+    
     @mappings = {}
     @unique_fields = []
     results = []
@@ -392,11 +393,13 @@ class ImportJob
   handle_asynchronously :validate_file
 
   def reset
-    @import_job.update_attribute(:status, "Pending validation")
-    @import_job.update_attribute(:validated, false)
-    @import_job.update_attribute(:can_import, false)
-    @import_job.update_attribute(:imported, false)
-    @import_job.update_attribute(started_process_at,false)
+    self.update_attribute(:status, "Pending validation")
+    self.update_attribute(:validated, false)
+    self.update_attribute(:can_import, false)
+    self.update_attribute(:imported, false)
+    self.update_attribute(:current_count, 0)
+    self.update_attribute(:total_count, 0)
+    self.update_attribute(:started_process_at,nil)
 
   end
 
