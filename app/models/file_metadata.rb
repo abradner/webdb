@@ -10,7 +10,7 @@ class FileMetadata
   before_validation :parse_input
 
   validates_presence_of :filename, :size
-  #validates :required_fields
+  validate :required_fields
 
 
   protected
