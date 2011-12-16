@@ -110,6 +110,9 @@ class Ability
     can :manage, DataObjectAttribute, :data_object_id => can_manage_data_object
     can :read, DataObjectAttribute, :data_object_id => can_read_data_object
 
+    can :manage, DataObjectRow, :data_object_id => can_manage_data_object
+    can :read, DataObjectRow, :data_object_id => can_read_data_object
+
     can :manage, ImportJob, :data_object_id => can_manage_data_object
     can :read, ImportJob, :data_object_id => can_read_data_object
 

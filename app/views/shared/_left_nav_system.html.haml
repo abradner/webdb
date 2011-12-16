@@ -10,7 +10,7 @@
               %ul#system_dobj
                 - @system.data_objects.each do |dobj|
                   %li#system_dobj
-                    = link_to dobj.name, system_data_object_path(@system, dobj), :id => "dobj_#{dobj.id}", :title => dobj.name, :class => ["system_data_object", is_current_object?(dobj,"data_objects") ? "current" : ""]
+                    = link_to dobj.name, system_data_object_path(@system, dobj), :id => "dobj_#{dobj.id}", :title => dobj.name, :class => ["system_data_object", is_current_object?(dobj,"data_object") ? "current" : ""]
                 - if @system.data_objects.blank?
                   No data objects configured
 

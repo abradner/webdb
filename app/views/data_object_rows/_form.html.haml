@@ -1,0 +1,13 @@
+= render :partial => "shared/form_header", :locals => {:action => action, :obj => "Data Object Row"}
+= render :partial => "shared/form_errors", :locals => {:obj => @data_object_row}
+
+= form_for [@system, @data_object, @data_object_row] do |f|
+  .lightbox
+    - @data_object.data_object_attributes.each do |attr|
+      .field.line
+        = f.label attr.name, attr.required ? required_field(attr.label) : attr.label
+        .lastUnit
+          = f.text_field attr.name
+    .field.line
+      .field.actions
+        = f.submit :class => "blue basic_field"

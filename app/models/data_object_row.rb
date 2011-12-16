@@ -8,14 +8,22 @@ class DataObjectRow
 
   validates_presence_of :data_object_id
 
-  validate :id_attrs_present
+  #validate :id_attrs_present
   validate :required_attrs_present
 
+  #ids are required anyway
   def id_attrs_present
+    if self.data_object
 
-    # check all ID attributes are defined
+      id_attrs = self.data_object.data_object_attributes.is_id
 
-    # Possibly handled by import job? since they can't query without unique attributes
+      id_attrs.each do |attr|
+
+        if self[attr.name].blank?
+          self.errors.add(attr.label, "can't be blank")
+        end
+      end
+    end
   end
 
   def required_attrs_present
@@ -25,8 +33,8 @@ class DataObjectRow
       required_attrs = self.data_object.data_object_attributes.required
 
       required_attrs.each do |attr|
-        if self[attr.name].nil?
-          self.errors.add(attr.name, "can't be blank")
+        if self[attr.name].blank?
+          self.errors.add(attr.label, "can't be blank")
         end
       end
     end

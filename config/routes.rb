@@ -65,6 +65,7 @@ Webdb::Application.routes.draw do
     resources :data_objects do
       #resources :data_object_relationships
       resources :data_object_attributes
+      resources :data_object_rows
       resources :import_mappings do
         member do
           get :preview

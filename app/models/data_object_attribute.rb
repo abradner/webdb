@@ -29,13 +29,21 @@ class DataObjectAttribute
   validates_uniqueness_of :sort_order, :scope => :data_object_id, :message => "Conflicting Sort Order. This shouldn't happen, raise a support ticket"
 
   validate :reserved_names
+  validate :id_is_required
 
   scope :visible_fields, where(:visible.eql? true) #TODO build visible field
   scope :required, where(:required => true)
+  scope :is_id, where(:is_id => true)
 
   def reserved_names
     if AppConfig['reserved_attribute_names'].include?(self.name)
       self.errors.add(:base, "Internal name is reserved and cannot be used.")
+    end
+  end
+
+  def id_is_required
+    if self.is_id
+      self.errors.add(:base, "IDs should be marked as required attributes") unless self.required
     end
   end
 end
