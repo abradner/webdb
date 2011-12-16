@@ -29,10 +29,7 @@
             = button_link_to "Import Data", import_data_system_data_object_import_job_path(system, data_object, i)
           - elsif i.status.eql?("Pending validation")
             = button_link_to "Validate", validate_system_data_object_import_job_path(system, data_object, i)
-          - elsif i.started_process_at.present?
-            - time_taken = i.updated_at - i.started_process_at
-            - current_count = i.current_count
-            - rows_left = i.total_count - current_count
-            = distance_of_time_in_words(i.started_process_at, i.started_process_at + (time_taken / current_count * rows_left).seconds) << " remaining"
+          - else
+            = get_time_left(i)
           = button_link_to "Reset", reset_system_data_object_import_job_path(system, data_object, i), :confirm => "Are you sure you want to reset? This will not undo imported data."
 

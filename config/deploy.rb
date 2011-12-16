@@ -117,19 +117,19 @@ namespace :deploy do
     run "cd #{current_release}; #{rake} aclgen:create"
   end
     
-  desc "Starts delayed job"  
+  desc "Starts delayed job"
   task :start_delayed_job do
-    run "cd #{current_release}; RAILS_ENV=#{rails_env} script/delayed_job start"
+    run "cd #{current_release}; RAILS_ENV=#{stage} script/delayed_job start"
   end
     
   desc "Stops delayed job"
   task :stop_delayed_job do 
-    run "cd #{current_release}; RAILS_ENV=#{rails_env} script/delayed_job stop"
+    run "cd #{current_release}; RAILS_ENV=#{stage} script/delayed_job stop"
   end
     
   desc "Restarts delayed job"
   task :restart_delayed_job do
-    run "cd #{current_release}; RAILS_ENV=#{rails_env} script/delayed_job restart"
+    run "cd #{current_release}; RAILS_ENV=#{stage} script/delayed_job restart"
   end
 
   desc "Load the schema into the database (WARNING: destructive!)"
