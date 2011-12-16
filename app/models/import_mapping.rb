@@ -11,11 +11,13 @@ class ImportMapping
 
 
   DELIMITERS = [["Comma", ","], ["Colon", ":"], ["Pipe", "|"], ["Semicolon", ";"], ["Space", "\\s"], ["Tab", "\\t"]]
-  OVERWRITE = "Overwrite"
-  APPEND = "Append"
+  UPDATE = "Update only"
+  CREATE = "Create only"
   DELETE = "Delete"
+  BOTH = "Create/Update"
 
-  ACTIONS = [APPEND, OVERWRITE, DELETE]
+  REQUIRED = [CREATE, BOTH]
+  ACTIONS = [CREATE, UPDATE, BOTH, DELETE]
 
   # mappings are stored as "column_#{no}" => do_attr.id
   field :mappings, :type => Hash
@@ -23,7 +25,7 @@ class ImportMapping
   field :includes_header, :type => Boolean, :default => false
   field :delimiter, :type => String
   field :unique_fields, :type => Array
-  field :conflict_action, :type => String
+  field :action, :type => String
   field :num_of_columns, :type => Integer
   field :header_row, :type => Array
 
@@ -51,8 +53,8 @@ class ImportMapping
       mapped_attrs = self.mappings.values
       required_attrs = data_object.data_object_attributes.required.collect { |doa| doa.id.to_s }
       mapped_required_attrs = required_attrs & mapped_attrs
-      if self.conflict_action == APPEND and mapped_required_attrs != required_attrs
-        self.errors.add(:base, "All required attributes must be mapped for an 'Append' mapping.")
+      if REQUIRED.include?(self.action) and mapped_required_attrs != required_attrs
+        self.errors.add(:base, "All required attributes must be mapped for a '#{self.action}' mapping.")
       end
 
     end

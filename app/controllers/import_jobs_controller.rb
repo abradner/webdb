@@ -16,24 +16,31 @@ class ImportJobsController < ApplicationController
   end
 
   def import_data
-    
+
     if @import_job.can_import
+      @import_job.update_attribute(:status, "Import requested")
       @import_job.import
-      redirect_to system_data_object_import_job_path(@system, @data_object, @import_job), :notice => "Data is being imported into the data object now"
+      redirect_to system_data_object_import_jobs_path(@system, @data_object), :notice => "Data is being imported into the data object now"
     else
-      redirect_to system_data_object_import_job_path(@system, @data_object, @import_job), :alert => "The raw file in this import job is invalid and cannot be imported"
+      redirect_to system_data_object_import_jobs_path(@system, @data_object), :alert => "The raw file in the import job is invalid and cannot be imported"
     end
 
   end
 
   def validate
     if !@import_job.validated
+      @import_job.update_attribute(:status, "Validation requested")
       @import_job.validate_file
-      redirect_to system_data_object_import_job_path(@system, @data_object, @import_job), :notice => "The import job is being validated now"
+      redirect_to system_data_object_import_jobs_path(@system, @data_object), :notice => "The import job is being validated now"
     else
-      redirect_to system_data_object_import_job_path(@system, @data_object, @import_job), :alert => "This import job has been validated already"
+      redirect_to system_data_object_import_jobs_path(@system, @data_object), :alert => "The import job has been validated already"
     end
 
+  end
+
+  def reset
+    @import_job.reset
+    redirect_to system_data_object_import_jobs_path(@system, @data_object), :notice => "The import job has been reset"
   end
 
   def create
@@ -41,6 +48,6 @@ class ImportJobsController < ApplicationController
   end
 
   def new
-    
+
   end
 end

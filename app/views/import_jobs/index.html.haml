@@ -1,37 +1,4 @@
 %h2 Import Job Management
 
 %h3 Existing Import Jobs for #{@data_object.name}
-%table
-  %tr
-    %th System
-    %th Data Object
-    %th Import Mapping
-    %th File Type
-    %th Raw File
-    %th Initiated By
-    %th Status
-    %th Actions
-
-
-  - @import_jobs.each do |i|
-    %tr
-      - system = i.data_object.system
-      - data_object = i.data_object
-      %td= link_to system.name, system_path(system)
-      %td= link_to data_object.name, system_data_object_path(system, data_object)
-      %td= i.import_mapping.name
-      %td= i.import_mapping.file_type.name
-      %td= i.raw_file.name
-      %td= link_to i.user.full_name, user_path(i.user)
-      %td= i.status
-      %td
-        - if i.status.eql?("Validated and ready to import")
-          = button_link_to "Import Data", import_data_system_data_object_import_job_path(system, data_object, i)
-        - elsif i.status.eql?("Pending validation")
-          = button_link_to "Validate", validate_system_data_object_import_job_path(system, data_object, i)
-        - else
-          - time_taken = i.updated_at - i.started_process_at
-          - current_count = i.current_count
-          - rows_left = i.total_count - current_count
-          = distance_of_time_in_words(i.started_process_at, i.started_process_at + (time_taken / current_count * rows_left).seconds) << " remaining"
-
+= render 'index_table', :import_jobs => @import_jobs

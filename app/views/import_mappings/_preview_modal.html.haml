@@ -66,9 +66,9 @@
         = f.collection_select(:unique_fields, @non_id_attrs, :id, :name, {}, {:multiple => true})
 
     .field.line
-      %label Choose what to do should there be a conflict of values
+      %label Choose what action to use
       .line
-        = f.select(:conflict_action, options_for_select(ImportMapping::ACTIONS, @import_mapping.conflict_action))
+        = f.select(:action, options_for_select(ImportMapping::ACTIONS, @import_mapping.action))
 
     #bottom_actions_container
       .field.line

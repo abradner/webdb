@@ -75,9 +75,10 @@ class DataObjectsController < ApplicationController
   # does the actual import
   def import_selected
     import_job = ImportJob.create(:user_id => current_user.id, :data_object => @data_object, :import_mapping_id => params[:import_mapping_id], :raw_file_id => params[:raw_file_id])
+    import_job.update_attribute(:status, "Validation requested")
     import_job.validate_file
     flash[:notice] = "The import job was created successfully and is undergoing validations."
-    @redirect_path = system_data_object_url(@system, @data_object)
+    @redirect_path = system_data_object_import_jobs_url(@system, @data_object)
   end
 
 

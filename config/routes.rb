@@ -76,6 +76,7 @@ Webdb::Application.routes.draw do
         member do
           get :import_data
           get :validate
+          get :reset
         end
       end
 

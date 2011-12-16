@@ -14,6 +14,7 @@
   .lastUnit
     - if @data_object.is_active?
       =button_link_to "File Import Mappings", system_data_object_import_mappings_path(@system, @data_object), :remote => true, :class => "file_type"
+      =button_link_to "Import Jobs", system_data_object_import_jobs_path(@system, @data_object)
       =button_link_to "Deactivate", deactivate_system_data_object_path(@system, @data_object),
                             :confirm =>"This will set the data object to 'read-only' mode. It will still be visible. Continue?",
                             :id => 'data_object_deactivate_link', :class => 'red'

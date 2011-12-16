@@ -1,0 +1,11 @@
+participant_id,study_id,last_name,first_name,middle_name,dob,year,parent name
+1,45,zzz,aaa,,01/01/01,1,a b
+2,212,xxx,bbb,def,02/04/89,13,c d
+3,,yyy,ccc,ghi,01/05/90,12,e f
+4,4454,www,ddd,jkl,06/08/20,40,g h
+5,1,vvv,eee,mno,,15,I j
+7,33,ttt,ggg,pqr,04/06/87,12,k l
+8,7,sss,hhh,stu,05/08/79,4,m n
+9,44,rrr,iii,vwx,23/07/95,2,o p
+10,2,qqq,jjj,yz,,5,q r
+,,,,,
