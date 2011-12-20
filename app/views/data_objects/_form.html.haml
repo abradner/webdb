@@ -13,11 +13,11 @@
     = f.label :description, 'Description:'
     .lastUnit
       = f.text_area :description, :class => "text description_field", :placeholder => "A detailed description of your data object"
-  -#.field.line
-  -#  = f.label :display_columns, 'Columns To Display:'
-  -#  .lastUnit.scrollbar
-  -#    = f.select :display_columns, [1,2,3]
-  = f.hidden_field :display_columns, 3
+  .field.line
+    = f.label :display_columns, 'Columns To Display:'
+    .lastUnit.scrollbar
+      = f.select :display_columns, [1,2,3]
+  -#= f.hidden_field :display_columns, 3
   .field.line
     .field.actions
       = f.submit "Save and continue", :class => "blue basic_field"
