@@ -200,8 +200,8 @@ describe User do
     #password rules: at least one lowercase, uppercase, number, symbol
     # too short < 6
     it { should_not allow_value("AB$9a").for(:password) }
-    # too long > 20
-    it { should_not allow_value("Aa0$56789012345678901").for(:password) }
+    # long > 20
+    it { should allow_value("Aa0$56789012345678901").for(:password) }
     # missing upper
     it { should_not allow_value("aaa000$$$").for(:password) }
     # missing lower

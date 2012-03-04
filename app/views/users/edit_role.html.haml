@@ -4,7 +4,7 @@
     = render "shared/error_messages", :target => @user
     .input_group
       = f.label :role_id, "Role"
-      = f.collection_select(:role_id, @roles, :id, :name, :default => "user")
+      = f.collection_select(:role_id, @roles, :id, :name, :default => "user", :include_blank => true)
   .form_actions
     .add_variables
       = f.submit "Save", :class => "blue basic_field"

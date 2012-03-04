@@ -38,7 +38,6 @@ group :development, :test do
   gem 'launchy'    # So you can do Then show me the page
   gem 'faker'
   gem 'metrical'
-  gem 'simplecov', '>=0.3.8', :require => false, :group => :test
   gem 'ruby-debug' # for 1.8.x
 #  gem 'ruby-debug19', :require => 'ruby-debug' # for 1.9.x
 

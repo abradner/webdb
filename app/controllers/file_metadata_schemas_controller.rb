@@ -39,7 +39,7 @@ class FileMetadataSchemasController < AjaxGenericController
     @errors = true unless @file_type.file_metadata_schemas.create(params[:file_metadata_schema])
 
     if @errors
-      Rails.logger.debug ("Something went wrong in the update")
+      Rails.logger.debug("Something went wrong in the update")
     else
       @errors = true unless @file_type.file_metadata_schemas.find(params[:id]).destroy
     end

@@ -8,8 +8,8 @@ Feature: Change my password
     And I am logged in as "georgina@intersect.org.au"
 
   Scenario: Change password
-    Given I am on the home page
-    When I follow "Change My Password"
+    Given I am on the edit my details page
+    When I follow "Change Password"
     And I fill in "New password" with "Pass.123"
     And I fill in "Confirm new password" with "Pass.123"
     And I fill in "Current password" with "Pas$w0rd"
@@ -19,8 +19,8 @@ Feature: Change my password
     And I should be able to log in with "georgina@intersect.org.au" and "Pass.123"
 
   Scenario: Change password not allowed if current password is empty
-    Given I am on the home page
-    When I follow "Change My Password"
+    Given I am on the edit my details page
+    When I follow "Change Password"
     And I fill in "New password" with "Pass.123"
     And I fill in "Confirm new password" with "Pass.123"
     And I press "Update"
@@ -28,8 +28,8 @@ Feature: Change my password
     And I should be able to log in with "georgina@intersect.org.au" and "Pas$w0rd"
 
   Scenario: Change password not allowed if current password is incorrect
-    Given I am on the home page
-    When I follow "Change My Password"
+    Given I am on the edit my details page
+    When I follow "Change Password"
     And I fill in "New password" with "Pass.123"
     And I fill in "Confirm new password" with "Pass.123"
     And I fill in "Current password" with "asdf"
@@ -38,8 +38,8 @@ Feature: Change my password
     And I should be able to log in with "georgina@intersect.org.au" and "Pas$w0rd"
 
   Scenario: Change password not allowed if confirmation doesn't match new password
-    Given I am on the home page
-    When I follow "Change My Password"
+    Given I am on the edit my details page
+    When I follow "Change Password"
     And I fill in "New password" with "Pass.123"
     And I fill in "Confirm new password" with "Pass.1233"
     And I fill in "Current password" with "Pas$w0rd"
@@ -48,16 +48,16 @@ Feature: Change my password
     And I should be able to log in with "georgina@intersect.org.au" and "Pas$w0rd"
 
   Scenario: Change password not allowed if new password blank
-    Given I am on the home page
-    When I follow "Change My Password"
+    Given I am on the edit my details page
+    When I follow "Change Password"
     And I fill in "Current password" with "Pas$w0rd"
     And I press "Update"
     Then I should see "Password can't be blank"
     And I should be able to log in with "georgina@intersect.org.au" and "Pas$w0rd"
 
   Scenario: Change password not allowed if new password doesn't meet password rules
-    Given I am on the home page
-    When I follow "Change My Password"
+    Given I am on the edit my details page
+    When I follow "Change Password"
     And I fill in "New password" with "Pass.abc"
     And I fill in "Confirm new password" with "Pass.abc"
     And I fill in "Current password" with "Pas$w0rd"

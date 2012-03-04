@@ -1,2 +1,0 @@
-module Management::StorageLocationsHelper
-end
