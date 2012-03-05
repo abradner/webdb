@@ -2,16 +2,16 @@
 
 FactoryGirl.define do
   factory :colour_scheme do
-      name "MyString"
-      banner "MyString"
-      background "MyString"
-      body "MyString"
-      h1 "MyString"
-      h2 "MyString"
-      h3 "MyString"
-      a "MyString"
-      a_visited "MyString"
-      a_active "MyString"
-      a_hover "MyString"
+      sequence(:name) {|n| "Colour Scheme #{n}"}
+      banner "000000"
+      background "111111"
+      body "222222"
+      h1 "333333"
+      h2 "444444"
+      h3 "555555"
+      a "666666"
+      a_visited "777777"
+      a_active "888888"
+      a_hover "999999"
     end
 end
