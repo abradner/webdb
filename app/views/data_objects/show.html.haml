@@ -26,17 +26,16 @@
     .left.line
       %h3 Description:
     .row.information
+      %p Records: #{@data_object.data_object_rows.count}
       %p=@data_object.description
-  .system_right_col
-    .left.line
-      %h3 Summary:
-    .row.information
-      %p Files Imported
-      %p.light (blah)
-      %p Records
-      %p.light (blah)
-      %p Authors
-      %p.light (blah)
+  -#.system_right_col
+  -#  .left.line
+  -#    %h3 Summary:
+  -#  .row.information
+  -#    -#%p Files Imported
+  -#    -#%p.light (blah)
+  -#    -#%p Authors
+  -#    -#%p.light (blah)
 
 -#TODO Move this
 - cols = Array.new
@@ -55,10 +54,10 @@
           %p.bold Data Object Attributes need to be configured
         - else
           %th
-            %h3 Actions
+            %h4 Actions
           - @data_object.data_object_attributes.visible_fields.each do |attr|
             %th
-              %h3{:title => "Internal Name: " << attr.name }= attr.label
+              %h4{:title => "Internal Name: " << attr.name }= attr.label
       - @data_object.data_object_rows.each do |row|
         %tr
           %td
