@@ -5,71 +5,71 @@ Feature: Administer users
 
   Background:
     Given I have users
-      | email                     | first_name | last_name |
-      | raul@intersect.org.au     | Raul       | Carrizo   |
-      | georgina@intersect.org.au | Georgina   | Edwards   |
+      | email                         | first_name | last_name |
+      | regular.user@intersect.org.au | Regular    | User      |
+      | super.user@intersect.org.au   | Super      | User      |
     And I have the usual roles and permissions
-    And I am logged in as "georgina@intersect.org.au"
-    And "georgina@intersect.org.au" has role "manager"
+    And I am logged in as "super.user@intersect.org.au"
+    And "super.user@intersect.org.au" has role "manager"
 
   Scenario: View a list of users
-    Given "raul@intersect.org.au" is deactivated
+    Given "regular.user@intersect.org.au" is deactivated
     When I am on the list users page
     Then I should see "users" table with
-      | First name | Last name | Email                     | Role          | Status |
-      | Georgina   | Edwards   | georgina@intersect.org.au | manager | Active |
-      | Raul       | Carrizo   | raul@intersect.org.au     |               | Deactivated |
+      | First name | Last name | Email                         | Role    | Status      |
+      | Regular    | User      | regular.user@intersect.org.au |         | Deactivated |
+      | Super      | User      | super.user@intersect.org.au   | manager | Active      |
 
   Scenario: View user details
-    Given "raul@intersect.org.au" has role "Researcher"
+    Given "regular.user@intersect.org.au" has role "Researcher"
     And I am on the list users page
-    When I follow "View Details" for "raul@intersect.org.au"
-    Then I should see field "Email" with value "raul@intersect.org.au"
-    And I should see field "First name" with value "Raul"
-    And I should see field "Last name" with value "Carrizo"
+    When I follow "View Details" for "regular.user@intersect.org.au"
+    Then I should see field "Email" with value "regular.user@intersect.org.au"
+    And I should see field "First name" with value "Regular"
+    And I should see field "Last name" with value "User"
     And I should see field "Role" with value "Researcher"
     And I should see field "Status" with value "Active"
 
   Scenario: Go back from user details
     Given I am on the list users page
-    When I follow "View Details" for "georgina@intersect.org.au"
+    When I follow "View Details" for "super.user@intersect.org.au"
     And I follow "Back"
     Then I should be on the list users page
 
   Scenario: Edit role
-    Given "raul@intersect.org.au" has role "Researcher"
+    Given "regular.user@intersect.org.au" has role "Researcher"
     And I am on the list users page
-    When I follow "View Details" for "raul@intersect.org.au"
+    When I follow "View Details" for "regular.user@intersect.org.au"
     And I follow "Edit role"
     And I select "manager" from "Role"
     And I press "Save"
-    Then I should be on the user details page for raul@intersect.org.au
-    And I should see "The role for raul@intersect.org.au was successfully updated."
+    Then I should be on the user details page for regular.user@intersect.org.au
+    And I should see "The role for regular.user@intersect.org.au was successfully updated."
     And I should see field "Role" with value "manager"
 
   Scenario: Edit role from list page
-    Given "raul@intersect.org.au" has role "Researcher"
+    Given "regular.user@intersect.org.au" has role "Researcher"
     And I am on the list users page
-    When I follow "Edit role" for "raul@intersect.org.au"
+    When I follow "Edit role" for "regular.user@intersect.org.au"
     And I select "manager" from "Role"
     And I press "Save"
-    Then I should be on the user details page for raul@intersect.org.au
-    And I should see "The role for raul@intersect.org.au was successfully updated."
+    Then I should be on the user details page for regular.user@intersect.org.au
+    And I should see "The role for regular.user@intersect.org.au was successfully updated."
     And I should see field "Role" with value "manager"
 
   Scenario: Cancel out of editing roles
-    Given "raul@intersect.org.au" has role "Researcher"
+    Given "regular.user@intersect.org.au" has role "Researcher"
     And I am on the list users page
-    When I follow "View Details" for "raul@intersect.org.au"
+    When I follow "View Details" for "regular.user@intersect.org.au"
     And I follow "Edit role"
     And I select "manager" from "Role"
     And I follow "Back"
-    Then I should be on the user details page for raul@intersect.org.au
+    Then I should be on the user details page for regular.user@intersect.org.au
     And I should see field "Role" with value "Researcher"
 
   Scenario: Role should be mandatory when editing Role
     And I am on the list users page
-    When I follow "View Details" for "raul@intersect.org.au"
+    When I follow "View Details" for "regular.user@intersect.org.au"
     And I follow "Edit role"
     And I select "" from "Role"
     And I press "Save"
@@ -77,29 +77,29 @@ Feature: Administer users
 
   Scenario: Deactivate active user
     Given I am on the list users page
-    When I follow "View Details" for "raul@intersect.org.au"
+    When I follow "View Details" for "regular.user@intersect.org.au"
     And I follow "Deactivate"
     Then I should see "The user has been deactivated"
     And I should see "Activate"
 
   Scenario: Activate deactivated user
-    Given "raul@intersect.org.au" is deactivated
+    Given "regular.user@intersect.org.au" is deactivated
     And I am on the list users page
-    When I follow "View Details" for "raul@intersect.org.au"
+    When I follow "View Details" for "regular.user@intersect.org.au"
     And I follow "Activate"
     Then I should see "The user has been activated"
     And I should see "Deactivate"
 
   Scenario: Can't deactivate the last administrator account
     Given I am on the list users page
-    When I follow "View Details" for "georgina@intersect.org.au"
+    When I follow "View Details" for "super.user@intersect.org.au"
     And I follow "Deactivate"
     Then I should see "You cannot deactivate this account as it is the only account with manager privileges."
     And I should see field "Status" with value "Active"
 
   Scenario: Editing own role has alert
     Given I am on the list users page
-    When I follow "View Details" for "georgina@intersect.org.au"
+    When I follow "View Details" for "super.user@intersect.org.au"
     And I follow "Edit role"
     Then I should see "You are changing the role of the user you are logged in as."
 

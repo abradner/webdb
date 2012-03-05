@@ -4,8 +4,8 @@ Feature: Edit my details
   I want to edit my details
   
   Background:
-    Given I have a user "georgina@intersect.org.au"
-    And I am logged in as "georgina@intersect.org.au"
+    Given I have a user "super.user@intersect.org.au"
+    And I am logged in as "super.user@intersect.org.au"
 
   Scenario: Edit my information
     Given I am on the home page
