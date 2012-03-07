@@ -1,4 +1,9 @@
 %h2 Import Job Management
-
+This page will refresh every 10 seconds
 %h3 Existing Import Jobs
 = render 'import_jobs/index_table', :import_jobs => @import_jobs
+
+:javascript
+  setTimeout(function(){
+     window.location.reload(1);
+  }, 10000);

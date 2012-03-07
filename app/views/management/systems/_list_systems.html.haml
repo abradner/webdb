@@ -1,17 +1,11 @@
-%table
+%table.table.table-striped.table-bordered.table-condensed
   %tr
-    %th
-      %h3 Name
-    %th
-      %h3 Description
-    %th
-      %h3 Information
-    %th
-      %h3 View
-    %th
-      %h3 Export
-    %th
-      %h3 Edit
+    %th Name
+    %th Description
+    %th Information
+    %th View
+    %th Export
+    %th Edit
   - sys.each do |s|
     %tr
       %td= s.name
@@ -23,8 +17,8 @@
       %td
         = button_link_to "View", s
       %td
-        %p.row= button_link_to "X Structure only", export_structure_management_system_path(s)
-        %p.row= button_link_to "X Everything", export_data_management_system_path(s)
+        %p.row= button_link_to "[N/A] Structure only", export_structure_management_system_path(s)
+        %p.row= button_link_to "[N/A] Everything", export_data_management_system_path(s)
       %td
         -if active
           %p.row= button_link_to "Edit", edit_management_system_path(s), :class => 'edit'#, :remote => true

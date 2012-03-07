@@ -1,25 +1,30 @@
-%h2 Raw Storage Management
-%ul
-  %li= button_link_to 'New Storage Location', new_management_storage_location_path, :class => "add"
+#container_page_header.wrapper.clearfix
+  #container_page_title
+    %h1.title.file_type
+      %span Raw Storage Management
 
-%h3 Existing Locations
-%table
-  %tr
-    %th Name
-    %th Type
-    %th Associated System
-    %th Path
-    %th Actions
+  #container_page_buttons.right
+    = button_link_to 'New Storage Location', new_management_storage_location_path, :class => "green add"
 
-  - @storage_locations.each do |s|
-    %tr
-      %td= s.name
-      %td= s.storage_type
-      %td= link_to s.system.name, system_path(s.system)
-      %td= s.augmented_location
-      %td
-        = button_link_to "E", edit_management_storage_location_path(s)
-        = button_link_to "X", management_storage_location_path(s), :method => "delete",
-                            :confirm =>"This will actually break things if you continue",
-                            :id => 'storage_delete_link', :class => 'red'
+  #container_page_content.wrapper
+    %h3 Storage Locations
+    %table.table.table-striped.table-bordered.table-condensed
+      %tr
+        %th Name
+        %th Type
+        %th Associated System
+        %th Path
+        %th Actions
+
+      - @storage_locations.each do |s|
+        %tr
+          %td= s.name
+          %td= s.storage_type
+          %td= link_to s.system.name, system_path(s.system)
+          %td= s.augmented_location
+          %td
+            = button_link_to "", edit_management_storage_location_path(s),:class => 'edit small_button', :title => "Edit"
+            = button_link_to "", management_storage_location_path(s), :method => "delete",
+                                :confirm =>"This will actually break things if you continue",
+                                :id => 'storage_delete_link', :class => "delete red small_button", :title => "Delete"
 

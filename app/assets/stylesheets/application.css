@@ -10,6 +10,7 @@
 
  *= require_self
 
+
  *= require resets
  *= require buttons
  *= require base
@@ -19,11 +20,14 @@
  *= require layout_left_nav
  *= require layout_right_content
 
+
  *= require extra_icons
 
  *= require modal_styles
  *= require metadata_styles
 
  *= require webdb
+
+ *= require bootstrap-tables
  *= require overrides
 */

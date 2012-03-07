@@ -106,8 +106,11 @@ class ImportMappingsController < AjaxDataObjectController
             if params[:import_mapping]
 
               @data_object_attributes.each do |doa|
-                if row.fields.include?(doa.name) or row.fields.include?(doa.label)
-                  @assigned_attrs["column_#{row.fields.index(doa.name)}"] = doa
+                #Does the
+                if row.fields.include?(doa.name) || row.fields.include?(doa.label)
+
+                  col = row.fields.index(doa.name) || row.fields.index(doa.label)
+                  @assigned_attrs["column_#{col}"] = doa
                 end
               end
               @unassigned_attrs = @data_object_attributes - @assigned_attrs.values

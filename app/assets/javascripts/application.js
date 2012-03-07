@@ -15,6 +15,14 @@
 //= require_self
 // #= require_tree .
 
+jQuery.event.add(window, "load", resizeFrame);
+jQuery.event.add(window, "resize", resizeFrame);
+
+function resizeFrame() {
+    var w = $(window).width() - ($('#container_left_navigation').width() + 60);
+    $("#container_right_content").css('width', w );
+}
+
 $(document).ready(function() {
     setTimeout(function() {
         // Appear/Disappear
@@ -61,6 +69,7 @@ $(function() {
 //            alert();
 //        }
 //    });
+
 
 
 

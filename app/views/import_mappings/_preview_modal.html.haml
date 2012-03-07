@@ -59,7 +59,7 @@
       .line#required_attrs
         - @id_attrs.each do |attr|
           = hidden_field_tag "import_mapping[unique_fields][]", attr.id
-          %p #{attr.name}
+          %p #{attr.label}
     .field.line
       %label Choose additional fields to validate uniqueness on (ctrl + click to select multiple fields)
       .line

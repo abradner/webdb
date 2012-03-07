@@ -2,18 +2,13 @@
 %ul
   %li= button_link_to 'New File Type', new_system_file_type_path(@system), :class => "add", :remote => true
 
-%table
+%table.table.table-striped.table-bordered.table-condensed
   %tr
-    %th
-      %h3 Name
-    %th
-      %h3 Type
-    %th
-      %h3 Class
-    %th
-      %h3 Information
-    %th
-      %h3 Actions
+    %th Name
+    %th Type
+    %th Class
+    %th Information
+    %th Actions
   - @file_types.each do |ft|
     %tr
       %td= ft.name

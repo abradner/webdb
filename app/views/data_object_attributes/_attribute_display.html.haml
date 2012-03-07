@@ -1,6 +1,6 @@
 %p.bold Data Object Preview
 #column_list{:style => "background:#eee"}
-  %table{:width => "100%"}
+  %table.table.table-striped.table-bordered.table-condensed
     %tr
       - @data_object.display_columns.times do |n|
         %td.column{:align => "center", :width => "#{100 / @data_object.display_columns}%", "data-id" => n } Column #{n+1}

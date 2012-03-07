@@ -1,14 +1,19 @@
 #container_page_header.wrapper.clearfix
   #container_page_title
     %h1.title.data_object
-      %span= @data_object.name
+      %span Import jobs for #{@data_object.name}
 
   #container_page_buttons.right
     -if can? :write, @data_object
-      =button_link_to "Import", import_system_data_object_path(@system, @data_object), :class => "green add", :remote => true
+      -#=button_link_to "Import", import_system_data_object_path(@system, @data_object), :class => "green add", :remote => true
       =button_link_to "Back", system_data_object_path(@system, @data_object)
 
+This page will refresh every 10 seconds
 %h3 Existing Import Jobs
 
 = render 'index_table', :import_jobs => @import_jobs
 
+:javascript
+  setTimeout(function(){
+     window.location.reload(1);
+  }, 10000);
