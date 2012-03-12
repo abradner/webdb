@@ -2,17 +2,17 @@ class DataObjectAttribute
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :name,            :type => String
-  field :label,           :type => String
-  field :attribute_type,  :type => String
-  field :options,         :type => String
-  field :length,          :type => Integer
-  field :column,          :type => Integer
-  field :sort_order,      :type => Integer
-  field :required,        :type => Boolean,       :default => false
-  field :is_id,           :type => Boolean,       :default => false
-  field :editable,        :type => Boolean,       :default => true
-  field :visible,         :type => Boolean,       :default => false
+  field :name, :type => String
+  field :label, :type => String
+  field :attribute_type, :type => String
+  field :options, :type => String
+  field :length, :type => Integer
+  field :column, :type => Integer
+  field :sort_order, :type => Integer
+  field :required, :type => Boolean, :default => false
+  field :is_id, :type => Boolean, :default => false
+  field :editable, :type => Boolean, :default => true
+  field :visible, :type => Boolean, :default => false
 
   #updated_by
   belongs_to :data_object
@@ -37,6 +37,8 @@ class DataObjectAttribute
   scope :required, where(:required => true)
   scope :is_id, where(:is_id => true)
 
+  before_save :tidy_options!
+
   def reserved_names
     if AppConfig['reserved_attribute_names'].include?(self.name)
       self.errors.add(:base, "Internal name is reserved and cannot be used.")
@@ -50,19 +52,24 @@ class DataObjectAttribute
   end
 
 
-  #def option_list
-  #  self.options.blank? ? "" : option.join(",")
-  #end
-  #
-  #def option_list=(val)
-  #
-  #  list = str.split(",")
-  #  list.each do |ext|
-  #    ext.slice!(0) if ext.start_with?(".")
-  #  end
-  #  list.compact!
-  #  list
-  #end
+  def options_to_a
+    tidy_options! if self.options_changed?
+    self.options.blank? ? Array.new : options.split(",")
+  end
+
+
+  private
+
+  def tidy_options!
+    return if options.blank?
+    list = self.options.split(",")
+    list.each do |opt|
+      opt.chomp!
+      opt.chomp!(' ')
+    end
+    list.compact!
+    self.options = list.join(",")
+  end
 
 
 end

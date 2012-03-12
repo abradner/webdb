@@ -19,7 +19,6 @@ FactoryGirl.define do
   factory :data_object_attribute do
 
     #ATTRIBUTE_TYPES[rand(ATTRIBUTE_TYPES.length-1)]
-
     association :data_object
     sequence(:name) { |n| "attr_#{n}" }
     sequence(:label) { |n| "Attribute #{n}" }
