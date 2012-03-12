@@ -48,5 +48,22 @@ class DataObjectAttribute
       self.errors.add(:base, "IDs should be marked as required attributes") unless self.required
     end
   end
+
+
+  #def option_list
+  #  self.options.blank? ? "" : option.join(",")
+  #end
+  #
+  #def option_list=(val)
+  #
+  #  list = str.split(",")
+  #  list.each do |ext|
+  #    ext.slice!(0) if ext.start_with?(".")
+  #  end
+  #  list.compact!
+  #  list
+  #end
+
+
 end
 
