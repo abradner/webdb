@@ -9,7 +9,7 @@ Feature: Export data from data objects
     And system "MySystem" has data object My Object
     And data object "My Object" has attributes:
       | label       | name   | attribute_type | length | editable | is_id | required | visible |
-      | Attribute 1 | attr_1 | string         | 40     | true     | false | false    | true    |
+      | Attribute 1 | attr_1 | String         | 40     | true     | false | false    | true    |
     And data object "My Object" has rows:
       | attr_1 |
       | abc    |

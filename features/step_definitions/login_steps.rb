@@ -30,6 +30,10 @@ Given /^I have a user "([^"]*)" with role "([^"]*)"$/ do |email, role|
 end
 
 Given /^I am logged in as "([^"]*)"$/ do |email|
+  unless User.find_by_email(email)
+    user = Factory(:user, :email => email, :password => "Pas$w0rd", :status => 'A')
+    set_user_role(user, "Administrator")
+  end
   visit path_to("the login page")
   fill_in("user_email", :with => email)
   fill_in("user_password", :with => "Pas$w0rd")
@@ -67,5 +71,12 @@ And /^I request a reset for "([^"]*)"$/ do |email|
   click_link "Forgot your password?"
   fill_in "Email", :with => email
   click_button "Send me reset password instructions"
+end
+
+
+def set_user_role(user, role_name)
+  role = Role.find_or_create_by_name(role_name)
+  user.role_id = role.id
+  user.save!
 end
 

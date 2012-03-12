@@ -4,7 +4,7 @@
       %span=@data_object.name
 
   #container_page_buttons.right
-    -if can? :write, @data_object
+    -if can? :change_content, @data_object
       =button_link_to "Import", import_system_data_object_path(@system, @data_object), :class => "green add", :remote => true
     -if can? :manage, @data_object
       =button_link_to "Configure", configure_system_data_object_path(@system, @data_object), :class => "edit", :remote => true
@@ -14,7 +14,7 @@
       %p
         Records:
         = @data_object.data_object_rows.count
-    - if can? :write, @data_object
+    -if can? :change_content, @data_object
       .entry
         %p
           #{link_to "Import jobs", system_data_object_import_jobs_path(@system, @data_object)} requiring action:
@@ -54,28 +54,30 @@
       %p Click "Configure" to define them.
   - elsif  @data_object.data_object_rows.blank?
     %p.bold Data Object is Empty.
-    -if can? :write, @data_object
+    -if can? :change_content, @data_object
       %p You can add data by either:
       %ul
         %li Manually entering it by clicking the 'Add Record' button below
         %li Importing a data file by clicking 'Import' at the top right.
   - else
     #data_object_attr_table
-      %table.table.table-striped.table-bordered.table-condensed
+      %table.table.table-striped.table-bordered.table-condensed#data_object_contents
         %tr
-          %th Actions
+          -if can? :change_content, @data_object
+            %th Actions
           - @data_object.data_object_attributes.visible_fields.each do |attr|
             %th{:title => "Internal Name: " << attr.name }= attr.label
         - @data_object.data_object_rows.each do |row|
           %tr{:class => cycle('field_bg', 'field_nobg')}
-            %td
-              = button_link_to "", edit_system_data_object_data_object_row_path(@system, @data_object, row), :class => 'edit small_button', :title => "Edit"
-              = button_link_to "", system_data_object_data_object_row_path(@system, @data_object, row), :method => :delete, :confirm => "Are you sure you want to delete this row?", :class => "delete red small_button", :title => "Delete"
+            -if can? :change_content, @data_object
+              %td
+                = button_link_to "", edit_system_data_object_data_object_row_path(@system, @data_object, row), :class => 'edit small_button', :title => "Edit"
+                = button_link_to "", system_data_object_data_object_row_path(@system, @data_object, row), :method => :delete, :confirm => "Are you sure you want to delete this row?", :class => "delete red small_button", :title => "Delete"
             - @visible_attr_names.each do |name|
               %td= row[name]
   .field.line
     .field.actions
-      -if can? :write, @data_object
+      -if can? :change_content, @data_object
         = button_link_to "Add Record", new_system_data_object_data_object_row_path(@system, @data_object), :class => 'blue add', :title => "Add Record"
 
 

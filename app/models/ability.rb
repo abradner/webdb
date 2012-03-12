@@ -98,23 +98,26 @@ class Ability
 
     # Data Object privileges
     can_manage_data_object = user.can_manage_data_objects
-    can_read_data_object = user.can_read_data_objects
-
-    can :write, DataObject, :system_id => can_manage_data_object
-    can :update, DataObject, :system_id => can_manage_data_object
-
-    can :show, DataObject, :system_id => system_memberships
-    can :manage, DataObject, :system_id => system_administrations
+    can_read_data_object   = user.can_read_data_objects
+    can_write_data_object  = user.can_read_data_objects
 
 
-    can :manage, DataObjectAttribute, :data_object_id => can_manage_data_object
-    can :read, DataObjectAttribute, :data_object_id => can_read_data_object
+    can :show,            DataObject, :system_id => system_memberships
+    can :manage,          DataObject, :system_id => system_administrations
 
-    can :manage, DataObjectRow, :data_object_id => can_manage_data_object
-    can :read, DataObjectRow, :data_object_id => can_read_data_object
+    can :write,           DataObject, :system_id => system_administrations
+    can :update,          DataObject, :system_id => system_administrations
 
-    can :manage, ImportJob, :data_object_id => can_manage_data_object
-    can :read, ImportJob, :data_object_id => can_read_data_object
+    can :change_content,  DataObject, :system_id => system_memberships
+
+    can :manage,  DataObjectAttribute, :data_object_id => can_manage_data_object
+    can :read,    DataObjectAttribute, :data_object_id => can_read_data_object
+
+    can :manage,  DataObjectRow, :data_object_id => can_write_data_object
+    can :read,    DataObjectRow, :data_object_id => can_read_data_object
+
+    can :manage,  ImportJob, :data_object_id => can_manage_data_object
+    can :read,    ImportJob, :data_object_id => can_read_data_object
 
     #Data Object Relationship privileges
     #can :manage, DataObjectRelationship, :system_id => system_administrations ##TODO admin security groups (both objects )& administrators

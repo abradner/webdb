@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
     respond_to do |format|
       format.js { render :partial => 'shared/access_denied_popup'}
-      format.all { redirect_to :back }
+      format.all { redirect_to root_path }
     end
   end
 
