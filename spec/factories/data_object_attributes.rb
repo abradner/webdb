@@ -77,7 +77,27 @@ FactoryGirl.define do
       attribute_type "Float"
     end
 
+    factory :doa_multi do
+      sequence(:name) { |n| "multi_attr_#{n}" }
+      sequence(:label) { |n| "multi Attribute #{n}" }
+      attribute_type "Multi"
+      # Todo options
+    end
 
+    factory :doa_radio do
+      sequence(:name) { |n| "radio_attr_#{n}" }
+      sequence(:label) { |n| "Radio Attribute #{n}" }
+      attribute_type "Radio"
+      # Todo options
 
+    end
+
+    factory :doa_select do
+      sequence(:name) { |n| "select_attr_#{n}" }
+      sequence(:label) { |n| "Select Attribute #{n}" }
+      attribute_type "Select"
+      # Todo options
+
+    end
   end
 end
