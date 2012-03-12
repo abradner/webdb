@@ -7,7 +7,7 @@
       .field.line
         = f.label attr.name, attr.required ? required_field(attr.label) : attr.label
         .lastUnit
-          = f.text_field attr.name
+          = text_field_tag "data_object_row[#{attr.name}]", @data_object_row[attr.name] #CURSE YOU DYNAMIC ATTRIBUTES!!
     .field.line
       .field.actions
         = button_link_to "Cancel", system_data_object_path(@system, @data_object)

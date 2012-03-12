@@ -14,18 +14,70 @@
 
 
 FactoryGirl.define do
+  ATTRIBUTE_TYPES = AppConfig.attribute_types.keys
+
   factory :data_object_attribute do
 
+    #ATTRIBUTE_TYPES[rand(ATTRIBUTE_TYPES.length-1)]
 
-      association :data_object
+    association :data_object
+    sequence(:name) { |n| "attr_#{n}" }
+    sequence(:label) { |n| "Attribute #{n}" }
+    attribute_type "String"
+    length 40
+    required false
+    is_id false
+    editable true
+    visible true
+    column 1
+    sequence(:sort_order)
 
-      name "MyString"
-      label "MyString"
-      attribute_type "String"
-      length 1
-      required false
-      is_id false
-      editable false
-      column 1
+    factory(:doa_string) {}
+
+    factory :doa_date do
+      sequence(:name) { |n| "date_attr_#{n}" }
+      sequence(:label) { |n| "Date Attribute #{n}" }
+      attribute_type "Date"
     end
+
+    factory :doa_time do
+      sequence(:name) { |n| "time_attr_#{n}" }
+      sequence(:label) { |n| "time Attribute #{n}" }
+      attribute_type "Time"
+    end
+
+    factory :doa_date_time do
+      sequence(:name) { |n| "date_time_attr_#{n}" }
+      sequence(:label) { |n| "Date/time Attribute #{n}" }
+      attribute_type "DateTime"
+    end
+
+    factory :doa_char do
+      sequence(:name) { |n| "char_attr_#{n}" }
+      sequence(:label) { |n| "Character Attribute #{n}" }
+      attribute_type "Char"
+    end
+
+    factory :doa_text do
+      sequence(:name) { |n| "text_attr_#{n}" }
+      sequence(:label) { |n| "Text Attribute #{n}" }
+      attribute_type "Text"
+      length 2048
+    end
+
+    factory :doa_int do
+      sequence(:name) { |n| "int_attr_#{n}" }
+      sequence(:label) { |n| "Integer Attribute #{n}" }
+      attribute_type "Integer"
+    end
+
+    factory :doa_float do
+      sequence(:name) { |n| "float_attr_#{n}" }
+      sequence(:label) { |n| "float Attribute #{n}" }
+      attribute_type "Float"
+    end
+
+
+
+  end
 end

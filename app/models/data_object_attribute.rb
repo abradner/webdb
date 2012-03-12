@@ -20,6 +20,7 @@ class DataObjectAttribute
   #validates :name, :presence => true #, :if => Proc.new { |d| d.is_active?}
   validates_presence_of [:name, :label, :attribute_type, :sort_order]
   validates_inclusion_of [:required, :is_id, :editable, :visible], :in => [true, false]
+  validates_inclusion_of :attribute_type, :in => AppConfig.attribute_types.keys
 
   validates_length_of :name, :maximum => 45
   validates_length_of :label, :maximum => 255
@@ -31,7 +32,8 @@ class DataObjectAttribute
   validate :reserved_names
   validate :id_is_required
 
-  scope :visible_fields, where(:visible.eql? true) #TODO build visible field
+  scope :visible_fields, where(:visible => true)
+  scope :hidden_fields, where(:visible => false)
   scope :required, where(:required => true)
   scope :is_id, where(:is_id => true)
 

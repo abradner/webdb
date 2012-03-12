@@ -7,8 +7,15 @@ class DataObjectRowsController < ApplicationController
   load_and_authorize_resource :data_object
   load_and_authorize_resource :data_object_row, :through => :data_object
 
-  def edit
+  def edit; end
+  def new; end
 
+  def create
+    if @data_object_row.save
+      redirect_to system_data_object_path(@system, @data_object), :notice => "The data object row was successfully updated."
+    else
+      render :new
+    end
   end
 
   def update

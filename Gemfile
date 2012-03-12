@@ -52,7 +52,7 @@ end
 #gem 'pg'
 gem 'bson_ext'
 gem 'mysql'
-gem 'sqlite3'
+#gem 'sqlite3'
 gem 'mongoid'
 
 gem 'jquery-rails'

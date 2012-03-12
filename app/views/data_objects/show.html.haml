@@ -26,15 +26,18 @@
     .left.line
       %h3 Description:
     .row.information
-      %p=@data_object.description
-  -#.system_right_col
-  -#  .left.line
-  -#    %h3 Summary:
-  -#  .row.information
-  -#    -#%p Files Imported
-  -#    -#%p.light (blah)
-  -#    -#%p Authors
-  -#    -#%p.light (blah)
+      %p=@data_object.description.blank? ? "(Nothing Entered)" : @data_object.description
+  -if @data_object.data_object_attributes.hidden_fields.present?
+    .system_right_col
+      .left.line
+        %h3{:title => "The following attributes are hidden from view (values can be viewed by inspecting individual records):"} Hidden Attributes
+      .row.information
+        %p.light
+        %ul
+          - @data_object.data_object_attributes.hidden_fields.each do |attr|
+            %li{:title => "Internal Name: " << attr.name }=attr.label
+
+
 
 -#TODO Move this
 - cols = Array.new
@@ -45,23 +48,36 @@
 
 #container_page_content.wrapper
   %h3 Contents
-  %div#data_object_attr_table
-    %table.table.table-striped.table-bordered.table-condensed
-      %tr
-        - if @data_object.data_object_attributes.blank?
-          %h3 Data Object is Empty
-          %p.bold Data Object Attributes need to be configured
-        - else
+  - if @data_object.data_object_attributes.blank?
+    %p.bold Data Object has no attributes defined.
+    -if can? :manage, @data_object
+      %p Click "Configure" to define them.
+  - elsif  @data_object.data_object_rows.blank?
+    %p.bold Data Object is Empty.
+    -if can? :write, @data_object
+      %p You can add data by either:
+      %ul
+        %li Manually entering it by clicking the 'Add Record' button below
+        %li Importing a data file by clicking 'Import' at the top right.
+  - else
+    #data_object_attr_table
+      %table.table.table-striped.table-bordered.table-condensed
+        %tr
           %th Actions
           - @data_object.data_object_attributes.visible_fields.each do |attr|
             %th{:title => "Internal Name: " << attr.name }= attr.label
-      - @data_object.data_object_rows.each do |row|
-        %tr{:class => cycle('field_bg', 'field_nobg')}
-          %td
-            = button_link_to "", edit_system_data_object_data_object_row_path(@system, @data_object, row), :class => 'edit small_button', :title => "Edit"
-            = button_link_to "", system_data_object_data_object_row_path(@system, @data_object, row), :method => :delete, :confirm => "Are you sure you want to delete this row?", :class => "delete red small_button", :title => "Delete"
-          - @visible_attr_names.each do |name|
-            %td= row[name]
+        - @data_object.data_object_rows.each do |row|
+          %tr{:class => cycle('field_bg', 'field_nobg')}
+            %td
+              = button_link_to "", edit_system_data_object_data_object_row_path(@system, @data_object, row), :class => 'edit small_button', :title => "Edit"
+              = button_link_to "", system_data_object_data_object_row_path(@system, @data_object, row), :method => :delete, :confirm => "Are you sure you want to delete this row?", :class => "delete red small_button", :title => "Delete"
+            - @visible_attr_names.each do |name|
+              %td= row[name]
+  .field.line
+    .field.actions
+      -if can? :write, @data_object
+        = button_link_to "Add Record", new_system_data_object_data_object_row_path(@system, @data_object), :class => 'blue add', :title => "Add Record"
+
 
 
 
