@@ -46,6 +46,7 @@ class DataObject
     name.strip! if name
   end
 
+
   def deactivate!
     self.is_active = false
     save!(:validate => false)

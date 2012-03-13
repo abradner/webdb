@@ -6,6 +6,7 @@
   #container_page_buttons.right
     -if can? :change_content, @data_object
       =button_link_to "Import", import_system_data_object_path(@system, @data_object), :class => "green add", :remote => true
+    =button_link_to "Export", export_system_data_object_path(@system, @data_object), :class => "file"
     -if can? :manage, @data_object
       =button_link_to "Configure", configure_system_data_object_path(@system, @data_object), :class => "edit", :remote => true
 

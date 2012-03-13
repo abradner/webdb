@@ -103,6 +103,7 @@ class Ability
 
 
     can :show,            DataObject, :system_id => system_memberships
+    can :export,          DataObject, :system_id => system_memberships
     can :manage,          DataObject, :system_id => system_administrations
 
     can :write,           DataObject, :system_id => system_administrations

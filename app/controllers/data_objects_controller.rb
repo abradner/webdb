@@ -94,11 +94,48 @@ class DataObjectsController < ApplicationController
 
   end
 
+  def export
+
+    #Taking this from params will allow a custom export
+    attributes = @data_object.data_object_attributes.only(:name).collect(&:name)
+    include_headers = true
+
+    csv_string = FasterCSV.generate do |csv|
+      csv << attributes if include_headers
+
+      @data_object.data_object_rows.each do |row|
+        csv << attributes.map do |attr|
+          row[attr]
+        end
+      end
+    end
+
+    #Refer to system by schema name (or code if that's unavailable)
+    system_label = @data_object.system.schema_name.present? ? @data_object.system.schema_name : @data_object.system.code
+    dobj_label = sanitize(@data_object.name)
+
+    filename = "#{system_label}_#{dobj_label}_#{Time.now.to_s(:db)}.csv"
+
+    send_data csv_string, :type => "text/plain", :filename => filename, :disposition => 'attachment'
+
+  end
+
 
   private
   def prepare_attributes_for_wizard!
     @data_object_attributes = @data_object.data_object_attributes
     @data_object_attribute = DataObjectAttribute.new
+  end
+
+
+  # Sanitize the filename, stolen from CarrierWave since they insist on making it private
+  def sanitize(name)
+    name = name.gsub("\\", "/") # work-around for IE
+    name = File.basename(name)
+    name = name.gsub(CarrierWave::SanitizedFile.sanitize_regexp, "_")
+    name = "_#{name}" if name =~ /\A\.+\z/
+    name = "unnamed" if name.size == 0
+    return name.mb_chars.to_s
   end
 
 end
