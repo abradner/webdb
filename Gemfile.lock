@@ -94,7 +94,6 @@ GEM
     colored (1.2)
     colorize (0.5.8)
     columnize (0.3.4)
-    comma (3.0.3)
     cucumber (1.1.0)
       builder (>= 2.1.2)
       diff-lcs (>= 1.1.2)
@@ -333,7 +332,6 @@ DEPENDENCIES
   cheat
   coffee-rails (~> 3.1.1)
   colorize
-  comma
   cucumber
   cucumber-rails
   database_cleaner

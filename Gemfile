@@ -65,7 +65,7 @@ gem 'capistrano'
 gem 'capistrano_colors'
 
 gem 'fastercsv'
-gem 'comma'
+#gem 'comma'
 gem 'delayed_job'
 
 gem 'colorize' #Colourisable console output - http://colorize.rubyforge.org
