@@ -66,6 +66,7 @@ class DataObjectAttribute
     list.each do |opt|
       opt.chomp!
       opt.chomp!(' ')
+      opt.slice!(0) if opt.start_with?(" ")
     end
     list.compact!
     self.options = list.join(",")

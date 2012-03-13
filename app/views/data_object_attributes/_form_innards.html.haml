@@ -17,8 +17,13 @@
           .lastUnit
             = f.select :attribute_type, options_for_select(AppConfig.attribute_types.invert, @data_object_attribute.attribute_type)
         .field.line
+          = f.label :length, "Length/Decimal Places (if applicable):"
           .lastUnit
-            = f.text_field :length, :class => "small_text basic_field", :placeholder => "Length or Decimal Places"
+            = f.text_field :length, :class => "small_text basic_field", :placeholder => "Integer value"
+        .field.line
+          = f.label :options, "List of options (Comma separated, if applicable):"
+          .lastUnit
+            = f.text_field :options, :class => "small_text basic_field", :placeholder => "eg: First,Second,Third"
         .field.line
           %label= required_field("Attribute Options:")
           .lastUnit
