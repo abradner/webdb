@@ -92,6 +92,7 @@ Webdb::Application.routes.draw do
         #put :update_attributes
         get :configure
         get :import
+        get :export
         post :import_selected
         post :mapping_selected
 
